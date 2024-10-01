@@ -1,9 +1,9 @@
 ### Entorno de desarrollo
 ## Entorno virtual
 Para el entorno virtual se utilizará pipenv.
-- pipenv=2024.0.3
-Documentación: https://pipenv.pypa.io/en/latest/
-Documentación en español: https://pipenv-es.readthedocs.io/es/latest/
+- pipenv=2024.0.3\
+Documentación: https://pipenv.pypa.io/en/latest/ \
+Documentación en español: https://pipenv-es.readthedocs.io/es/latest/ \
 La instalación es:
 ```
 $ pip install --user pipenv
