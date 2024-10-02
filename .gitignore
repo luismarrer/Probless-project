@@ -1,2 +1,21 @@
-Pipfile
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# mypy
+.mypy_cache/
+
+# C extensions
+*.so
+
+# dotenv
+.env
+
+# virtualenv
+.venv
+venv/
+ENV/
+
+# pipenv
 Pipfile.lock
