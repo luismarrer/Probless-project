@@ -25,6 +25,8 @@ $ pipenv install
 ```
 ## Configuración de VSC para Django
 [Configurar VSC para Django (Actualizado 03/2024)](https://gist.github.com/hcosta/6e4066ad1b938c888546c5f0a9616c48)
+[Django Template](https://marketplace.visualstudio.com/items?itemName=bibhasdn.django-html)
+
 ## Inicializar proyecto de Django
 ```
 $ pipenv run django-admin startproject probless
@@ -32,6 +34,7 @@ $ pipenv run django-admin startproject probless
 ## Jerarquía del proyecto
 ```
 probless-backend/
+	account/
     manage.py
 	core/
     probless/
