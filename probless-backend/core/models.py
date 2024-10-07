@@ -16,9 +16,15 @@ class Ticket(models.Model):
 	id = models.AutoField(primary_key=True)
 	title = models.CharField(max_length=255)
 	description = models.TextField()
-	created_at = models.DateTimeField(auto_now_add=True)
-	updated_at = models.DateTimeField(auto_now=True)
 	user_id = models.ForeignKey('account.User', on_delete=models.CASCADE)
 	priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='low')
 	assigned_department_id = models.ForeignKey('workspace.Department', on_delete=models.CASCADE)
-	staus = models.CharField(max_length=15, choices=STATUS_CHOICES, default='open')
+	status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='open')
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	class Meta:
+		ordering = ['created_at', 'priority', 'status']
+
+	def __str__(self):
+		return self.title
