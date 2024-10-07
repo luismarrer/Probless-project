@@ -2,12 +2,23 @@ from django.db import models
 
 # Create your models here.
 class Ticket(models.Model):
+	PRIORITY_CHOICES = (
+		('low', 'Low'),
+		('medium', 'Medium'),
+		('high', 'High'),
+	)
+	STATUS_CHOICES = (
+		('open', 'Open'),
+		('in_progress', 'In Progress'),
+		('closed', 'Closed'),
+	)
+
 	id = models.AutoField(primary_key=True)
 	title = models.CharField(max_length=255)
 	description = models.TextField()
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-	user_id = models.ForeignKey('user', on_delete=models.CASCADE)
-	priority = models.TextField()
-	assigned_department_id = models.ForeignKey('department', on_delete=models.CASCADE)
-	staus = models.TextField()
+	user_id = models.ForeignKey('account.User', on_delete=models.CASCADE)
+	priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='low')
+	assigned_department_id = models.ForeignKey('workspace.Department', on_delete=models.CASCADE)
+	staus = models.CharField(max_length=15, choices=STATUS_CHOICES, default='open')

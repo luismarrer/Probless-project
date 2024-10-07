@@ -6,8 +6,8 @@ class Workspace(models.Model):
 	description = models.TextField()
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-	deleted_at = models.DateTimeField(null=True)
-	owner_id = models.ForeignKey('owner', on_delete=models.CASCADE)
+	# Temporalmente, eliminamos el ForeignKey a Owner para crear la migración básica
+	owner_id = models.ForeignKey('account.Owner', on_delete=models.CASCADE)
 
 class Department(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -15,4 +15,4 @@ class Department(models.Model):
 	description = models.TextField()
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-	workspace_id = models.ForeignKey('workspace', on_delete=models.CASCADE)
+	workspace_id = models.ForeignKey('Workspace', on_delete=models.CASCADE)
