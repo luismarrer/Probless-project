@@ -1,15 +1,13 @@
 <template>
     <div class="container-fluid">
       <main class="form-signin m-auto" style="width: 800px;">
-        <form>
+        <form> 
           <!-- Sign In Title with Horizontal Lines -->
           <div class="sign-in-title text-white">
             <span>Create Account</span>
           </div>
  
- 
- 
- 
+
           <div class="row">
             <!-- Left Column: Department and Password -->
             <div class="col-md-6">
