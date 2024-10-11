@@ -1,20 +1,29 @@
 <template>
   <div id="app">
-    <NewComponent />
+    <!-- Use the new component name here -->
+    <SignInComponent />
   </div>
-</template>
-
-<script>
-import NewComponent from './components/NewComponent.vue';
-
-export default {
-  name: 'App',
-  components: {
-    NewComponent
-  }
-};
-</script>
-
-<style>
-/* Your styles here */
-</style>
+ </template>
+ 
+ 
+ <script>
+  // Import the renamed component
+  import SignInComponent from './components/SignInComponent.vue';
+ 
+ 
+  export default {
+    name: 'App',
+    components: {
+      // Register the new component
+      SignInComponent
+    }
+  };
+ </script>
+ 
+ 
+ <style>
+ /* Add any global styles if needed */
+ </style>
+ 
+ 
+ 
