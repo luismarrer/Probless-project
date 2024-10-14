@@ -17,3 +17,8 @@ class OwnerSignupForm(UserCreationForm):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150)
     password = forms.CharField(widget=forms.PasswordInput)
+
+class CreateUserForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'username', 'email', 'role', 'password1', 'password2']

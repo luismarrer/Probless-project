@@ -13,6 +13,9 @@
                 <li><a href="{% url 'signup_owner' %}">Sign Up as Owner</a></li>
                 <li><a href="{% url 'login' %}">Login</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% if user.is_owner %}
+                    <li><a href="{% url 'create_user' %}">Create a new user</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>

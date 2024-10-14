@@ -1,10 +1,13 @@
 from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .forms import OwnerSignupForm, LoginForm
-# from django.contrib.auth.models import CustomUser  # Asegúrate de que este sea tu modelo de usuario
+from .forms import OwnerSignupForm, LoginForm, CreateUserForm
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.models import CustomUser
 
-# Vista para el registro de un Owner
+
+# Owner sign up view
 class OwnerSignupView(View):
     def get(self, request):
         form = OwnerSignupForm()
@@ -14,11 +17,12 @@ class OwnerSignupView(View):
         form = OwnerSignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Iniciar sesión automáticamente después de registrarse
-            return redirect('dashboard')  # Redirigir al dashboard
+            login(request, user)
+            return redirect('dashboard') # Redirect to dashboard after sign up succesfully
         return render(request, 'account/registration/signup_owner.html', {'form': form})
 
-# Vista para el inicio de sesión
+
+# Login view
 class UserLoginView(View):
     def get(self, request):
         form = LoginForm()
@@ -32,16 +36,40 @@ class UserLoginView(View):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('dashboard')  # Redirigir al dashboard
+                return redirect('dashboard')  # Redirect to dashboard after login succesfully
         return render(request, 'account/registration/login.html', {'form': form})
 
+# Logout view
 class LogoutView(View):
     def get(self, request):
-        logout(request)  # Llamada a la función de logout de Django
-        return redirect('login')  # Redirigir al login después de cerrar sesión
+        logout(request)
+        return redirect('login')  # Redirect to login after log out
 
 
-# Vista para el dashboard
+@method_decorator(login_required, name='dispatch')
+class CreateUserView(View):
+    def get(self, request):
+        if not request.user.is_owner:
+            return redirect('dashboard')  # Redirect if not owner
+
+        form = CreateUserForm()
+        return render(request, 'account/registration/create_user.html', {'form': form})
+
+    def post(self, request):
+        if not request.user.is_owner:
+            return redirect('dashboard')  # Redirect to dashboard if not owner
+
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_owner = False  # Ensures that the user is not an owner
+            user.save()
+
+            return redirect('dashboard')
+        return render(request, 'account/registration/create_user.html', {'form': form})
+
+
+# Dashboard view
 class DashboardView(View):
     def get(self, request):
-        return render(request, 'account/dashboard.html')  # Renderiza el dashboard
+        return render(request, 'account/dashboard.html')
