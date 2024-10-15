@@ -1,29 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Probless - Log In</title>
+    <title>Log In</title>
     <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your custom styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- Optional: Custom Styles -->
     <style>
-        /* Add any custom styles here */
+        /* Full-page height and background */
         .container-fluid {
             height: 100vh;
             display: flex;
             background: white;
         }
 
+        /* Center the form vertically and horizontally */
         .form-signin {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            margin: auto; /* Center form */
-            width: 800px; /* Same width as the Vue component */
+            width: 800px;
+            margin: auto;
         }
 
+        /* Center the button container */
+        .role-centered {
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        .btn-centered {
+            width: 50%;
+            margin: 100px auto;
+        }
+
+        /* Styling for the Sign In title with lines */
         .sign-in-title {
             display: flex;
             align-items: center;
@@ -35,7 +47,7 @@
         .sign-in-title::after {
             content: '';
             flex: 1;
-            border-bottom: 1px solid black; /* Line color */
+            border-bottom: 1px solid black;
             margin: 0 10px;
         }
 
@@ -43,14 +55,8 @@
             font-size: 1.5rem;
             font-weight: bold;
         }
-
-        .btn-centered {
-            width: 50%;
-            margin: 100px auto; /* Center button */
-        }
     </style>
 </head>
-
 <body>
     <div class="container-fluid">
         <main class="form-signin">
@@ -60,20 +66,22 @@
                     <span>Welcome Back!</span>
                 </div>
                 <div class="row">
-                    <!-- Left Column: Department and Password -->
+                    <!-- Left Column: Password -->
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
                             <label for="floatingPassword">Password</label>
                         </div>
                     </div>
+                    <!-- Right Column: Email -->
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required>
+                            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
                             <label for="floatingEmail">E-mail</label>
                         </div>
                     </div>
                 </div>
+                <!-- Centered Login Button -->
                 <div class="form-floating mb-3 role-centered">
                     <div class="btn-centered">
                         <button class="btn btn-danger btn-lg w-100 py-2" type="submit">Log In</button>
@@ -85,9 +93,6 @@
     </div>
 
     <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

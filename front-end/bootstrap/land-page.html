@@ -1,50 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Probless - Landing Page</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your custom styles -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Probless - Landing Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: white;
+    }
+
+    /* Custom Button Styles */
+    .custom-btn {
+      width: 70px;
+      height: 35px;
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      text-align: center;
+    }
+
+    /* Adjust the gap if needed */
+    .d-flex.gap-2 {
+      gap: 15px; /* Adjust space between buttons */
+    }
+  </style>
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 navbar-shrink" id="mainNav">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#page-top">Probless</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" 
-                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#about">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portfolio">Settings</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">.......</a></li>
-                    <!-- Add custom classes for both buttons -->
-                    <div class="d-flex gap-2">
-                        <a href="signin.html" class="btn btn-danger custom-btn">Sign In</a>
-                        <a href="login.html" class="btn btn-danger custom-btn">Log In</a>
-                    </div>
-                </ul>
-            </div>
-        </div>
-    </nav>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 navbar-shrink" id="mainNav">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#page-top">Probless</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ms-auto my-2 my-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#about">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="#portfolio">Settings</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">.......</a></li>
 
-    <!-- Main Content Area -->
-    <div class="container mt-5">
-        <h1>Welcome to Probless</h1>
-        <p>Your solution for managing tickets and improving workflow.</p>
-        <!-- Add more content as needed -->
+          <!-- Buttons -->
+          <div class="d-flex gap-2">
+            <a href="sign-up.html" class="btn btn-danger custom-btn">Sign In</a>
+            <a href="log-in.html" class="btn btn-danger custom-btn">Log In</a>
+          </div>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
