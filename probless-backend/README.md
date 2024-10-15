@@ -64,6 +64,7 @@ DATABASES = {
 
 Correr servidor es `python manage.py runserver`\
 Sincronización inicial de la base de datos: `python manage.py migrate`
+**Temporalmente, eliminamos el ForeignKey a Owner para crear la migración básica**
 
 ## Sobre produción
 En producción se debe configurar `DEBUG = False`. Se encuentra en `probless/settings.py`.
