@@ -1,29 +1,15 @@
 <template>
   <div id="app">
-    <!-- Use the new component name here -->
-    <SignInComponent />
+    <router-view></router-view> <!-- This will render the current route's component -->
   </div>
- </template>
- 
- 
- <script>
-  // Import the renamed component
-  import SignInComponent from './components/SignInComponent.vue';
- 
- 
-  export default {
-    name: 'App',
-    components: {
-      // Register the new component
-      SignInComponent
-    }
-  };
- </script>
- 
- 
- <style>
- /* Add any global styles if needed */
- </style>
- 
- 
- 
+</template>
+
+<script>
+export default {
+  name: 'App',
+};
+</script>
+
+<style>
+/* Add any global styles if needed */
+</style>

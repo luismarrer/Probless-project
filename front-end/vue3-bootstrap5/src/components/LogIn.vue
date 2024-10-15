@@ -4,48 +4,26 @@
             <form>
                 <!-- Sign In Title with Horizontal Lines -->
                 <div class="sign-in-title">
-                    <span>Create Account</span>
+                    <span>Welcome Back!</span>
                 </div>
-
-
-
-
                 <div class="row">
                     <!-- Left Column: Department and Password -->
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingDepartment" placeholder="Department">
-                            <label for="floatingDepartment">Department</label>
-                        </div>
-
-
-                        <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">Provided Password</label>
+                            <label for="floatingPassword">Password</label>
                         </div>
                     </div>
-
-
-                    <!-- Right Column: Username and Email -->
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
-                            <label for="floatingEmail">Company email</label>
-                        </div>
-
-
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingUsername" placeholder="Username">
-                            <label for="floatingUsername">Username</label>
+                            <label for="floatingEmail">E-mail</label>
                         </div>
                     </div>
                 </div>
-                <!-- Role Input Centered Below the Two Columns -->
                 <div class="form-floating mb-3 role-centered">
-                    <input type="text" class="form-control text-centered" id="floatingRole" placeholder="Role">
-                    <label for="floatingRole">Role</label>
                     <div class="btn-centered">
-                        <button class="btn btn-danger btn-lg w-100 py-2" type="submit">Sign In</button>
+                        <button class="btn btn-danger btn-lg w-100 py-2" type="submit">Log In</button>
                         <p class="mt-5 mb-3 text-body-secondary text-center">© 2024</p>
                     </div>
                 </div>
