@@ -4,12 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Probless - Sign In</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your custom styles -->
+    <title>Sign In</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Add any custom styles here */
         .container-fluid {
             height: 100vh;
             display: flex;
@@ -20,8 +17,18 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            margin: auto; /* Center form */
-            width: 800px; /* Same width as the Vue component */
+            width: 800px;
+            margin: auto;
+        }
+
+        .role-centered {
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        .btn-centered {
+            width: 50%;
+            margin: 100px auto;
         }
 
         .sign-in-title {
@@ -35,7 +42,7 @@
         .sign-in-title::after {
             content: '';
             flex: 1;
-            border-bottom: 1px solid black; /* Line color */
+            border-bottom: 1px solid black;
             margin: 0 10px;
         }
 
@@ -43,17 +50,12 @@
             font-size: 1.5rem;
             font-weight: bold;
         }
-
-        .btn-centered {
-            width: 50%;
-            margin: 100px auto; /* Center button */
-        }
     </style>
 </head>
 
 <body>
     <div class="container-fluid">
-        <main class="form-signin">
+        <main class="form-signin m-auto">
             <form>
                 <!-- Sign In Title with Horizontal Lines -->
                 <div class="sign-in-title">
@@ -64,12 +66,11 @@
                     <!-- Left Column: Department and Password -->
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingDepartment" placeholder="Department" required>
+                            <input type="text" class="form-control" id="floatingDepartment" placeholder="Department">
                             <label for="floatingDepartment">Department</label>
                         </div>
-
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
                             <label for="floatingPassword">Provided Password</label>
                         </div>
                     </div>
@@ -77,12 +78,11 @@
                     <!-- Right Column: Username and Email -->
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required>
+                            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
                             <label for="floatingEmail">Company email</label>
                         </div>
-
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingUsername" placeholder="Username" required>
+                            <input type="text" class="form-control" id="floatingUsername" placeholder="Username">
                             <label for="floatingUsername">Username</label>
                         </div>
                     </div>
@@ -90,10 +90,11 @@
 
                 <!-- Role Input Centered Below the Two Columns -->
                 <div class="form-floating mb-3 role-centered">
-                    <input type="text" class="form-control text-centered" id="floatingRole" placeholder="Role" required>
+                    <input type="text" class="form-control" id="floatingRole" placeholder="Role">
                     <label for="floatingRole">Role</label>
                 </div>
 
+                <!-- Sign In Button -->
                 <div class="btn-centered">
                     <button class="btn btn-danger btn-lg w-100 py-2" type="submit">Sign In</button>
                     <p class="mt-5 mb-3 text-body-secondary text-center">© 2024</p>
@@ -102,10 +103,7 @@
         </main>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
