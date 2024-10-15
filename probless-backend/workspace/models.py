@@ -5,7 +5,7 @@ class Workspace(models.Model):
 	name = models.CharField(max_length=255)
 	description = models.TextField()
 	# Temporalmente, eliminamos el ForeignKey a Owner para crear la migración básica
-	owner_id = models.ForeignKey('account.Owner', on_delete=models.CASCADE) # owner_id activado
+	user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, null=True, blank=True) # owner_id activado
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
@@ -15,6 +15,7 @@ class Workspace(models.Model):
 class Department(models.Model):
 	id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=255)
+	user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, null=True, blank=True)
 	description = models.TextField()
 	workspace_id = models.ForeignKey('Workspace', on_delete=models.CASCADE)
 	created_at = models.DateTimeField(auto_now_add=True)

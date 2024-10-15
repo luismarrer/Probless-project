@@ -1,0 +1,17 @@
+{% extends "account/layout.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h1>Login</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Muestra el formulario -->
+        <button type="submit">Login</button>
+    </form>
+    {% if form.non_field_errors %}
+        <div class="error">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+{% endblock %}
