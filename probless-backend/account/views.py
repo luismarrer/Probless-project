@@ -10,8 +10,8 @@ from django.contrib.auth.decorators import login_required
 # Owner sign up view
 class OwnerSignupView(View):
     def get(self, request):
-        form = OwnerSignupForm()
-        return render(request, 'account/registration/signup_owner.html', {'form': form})
+        form = OwnerSignupForm
+        return render(request, 'signup_owner.html', {'form': form})
 
     def post(self, request):
         form = OwnerSignupForm(request.POST)
@@ -19,14 +19,14 @@ class OwnerSignupView(View):
             user = form.save()
             login(request, user)
             return redirect('dashboard') # Redirect to dashboard after sign up succesfully
-        return render(request, 'account/registration/signup_owner.html', {'form': form})
+        return render(request, 'signup_owner.html', {'form': form})
 
 
 # Login view
 class UserLoginView(View):
     def get(self, request):
         form = LoginForm()
-        return render(request, 'account/registration/login.html', {'form': form})
+        return render(request, 'login.html', {'form': form})
 
     def post(self, request):
         form = LoginForm(request.POST)
@@ -37,7 +37,7 @@ class UserLoginView(View):
             if user is not None:
                 login(request, user)
                 return redirect('dashboard')  # Redirect to dashboard after login succesfully
-        return render(request, 'account/registration/login.html', {'form': form})
+        return render(request, 'login.html', {'form': form})
 
 # Logout view
 class LogoutView(View):
@@ -53,7 +53,7 @@ class CreateUserView(View):
             return redirect('dashboard')  # Redirect if not owner
 
         form = CreateUserForm()
-        return render(request, 'account/registration/create_user.html', {'form': form})
+        return render(request, 'create_user.html', {'form': form})
 
     def post(self, request):
         if not request.user.is_owner:
@@ -66,10 +66,10 @@ class CreateUserView(View):
             user.save()
 
             return redirect('dashboard')
-        return render(request, 'account/registration/create_user.html', {'form': form})
+        return render(request, 'create_user.html', {'form': form})
 
 
 # Dashboard view
 class DashboardView(View):
     def get(self, request):
-        return render(request, 'account/dashboard.html')
+        return render(request, 'dashboard.html')
