@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probless - Log In</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your custom styles -->
+    <style>
+        /* Add any custom styles here */
+        .container-fluid {
+            height: 100vh;
+            display: flex;
+            background: white;
+        }
+
+        .form-signin {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: auto; /* Center form */
+            width: 800px; /* Same width as the Vue component */
+        }
+
+        .sign-in-title {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sign-in-title::before,
+        .sign-in-title::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid black; /* Line color */
+            margin: 0 10px;
+        }
+
+        .sign-in-title span {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .btn-centered {
+            width: 50%;
+            margin: 100px auto; /* Center button */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <main class="form-signin">
+            <form>
+                <!-- Sign In Title with Horizontal Lines -->
+                <div class="sign-in-title">
+                    <span>Welcome Back!</span>
+                </div>
+                <div class="row">
+                    <!-- Left Column: Department and Password -->
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required>
+                            <label for="floatingEmail">E-mail</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-floating mb-3 role-centered">
+                    <div class="btn-centered">
+                        <button class="btn btn-danger btn-lg w-100 py-2" type="submit">Log In</button>
+                        <p class="mt-5 mb-3 text-body-secondary text-center">© 2024</p>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+</body>
+
+</html>

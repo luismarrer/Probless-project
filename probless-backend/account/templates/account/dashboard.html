@@ -1,0 +1,18 @@
+{% extends "account/layout.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Welcome to the Dashboard</h1>
+    {% if user.is_owner %}
+        <h1>Owner Dashboard</h1>
+        <h2>Tickets to manage</h2>
+        <p>Here are your assigned tickets:</p>
+        <h2>Your tickets</h2>
+        <p>Here you can see your profile and tickets.</p>
+        <!-- Sección de tickets asignados a los Owners -->
+    {% else %}
+        <h2>User Dashboard</h2>
+        <p>Here you can see your profile and tickets.</p>
+    {% endif %}
+{% endblock %}

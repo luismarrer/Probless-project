@@ -1,0 +1,17 @@
+{% extends "account/layout.html" %}
+
+{% block title %}Sign Up as Owner{% endblock %}
+
+{% block content %}
+    <h1>Sign Up as Owner</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Muestra el formulario -->
+        <button type="submit">Sign Up</button>
+    </form>
+    {% if form.non_field_errors %}
+        <div class="error">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+{% endblock %}
