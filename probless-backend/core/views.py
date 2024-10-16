@@ -42,7 +42,6 @@ def create_ticket(request, workspace_id, department_id):
     workspace = Workspace.objects.get(id=workspace_id)
     department = workspace.department_set.get(id=department_id)
     form = TicketForm(workspace=workspace)
-    print(form)
     if request.method == 'GET':
         return render(request, 'create_ticket.html',
                       {

@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from .forms import OwnerSignupForm, LoginForm, CreateUserForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from .models import CustomUser
 # from django.contrib.auth.models import CustomUser
 
 
@@ -38,7 +39,7 @@ class UserLoginView(View):
             if user is not None:
                 login(request, user)
                 # Redirect to dashboard after login succesfully
-                return redirect('dashboard')
+                return redirect('show_workspaces')
         return render(request, 'login.html', {'form': form})
 
 # Logout view
@@ -56,7 +57,8 @@ class CreateUserView(View):
         if not request.user.is_owner:
             return redirect('dashboard')  # Redirect if not owner
 
-        form = CreateUserForm()
+        user = CustomUser.objects.get(id=request.user.id)
+        form = CreateUserForm(user=user)
         return render(request, 'create_user.html', {'form': form})
 
     def post(self, request):

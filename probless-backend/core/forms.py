@@ -3,7 +3,7 @@ from .models import Ticket
 from workspace.models import Department
 
 class TicketForm(forms.ModelForm):
-    def __init__(self, *args, workspace=None, **kwargs):
+    def __init__(self, *args, workspace, **kwargs):
         # Llamamos al constructor de la superclase para inicializar el formulario
         super().__init__(*args, **kwargs)
 
