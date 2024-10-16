@@ -49,7 +49,7 @@ def create_ticket(request, workspace_id, department_id):
                       })
     else:
         try:
-            form = TicketForm(request.POST)
+            form = TicketForm(request.POST, workspace=workspace)
             new_ticket = form.save(commit=False)
             new_ticket.user_id = request.user
             new_ticket.save()

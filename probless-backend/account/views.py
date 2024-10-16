@@ -20,7 +20,7 @@ class OwnerSignupView(View):
             user = form.save()
             login(request, user)
             # Redirect to dashboard after sign up succesfully
-            return redirect('workspace')
+            return redirect('show_workspaces')
         return render(request, 'signup_owner.html', {'form': form})
 
 
@@ -55,21 +55,27 @@ class LogoutView(View):
 class CreateUserView(View):
     def get(self, request):
         if not request.user.is_owner:
-            return redirect('dashboard')  # Redirect if not owner
-
+            workspace_name = request.user.workspace.name
+            department_name = request.user.department.name
+            return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)
         user = CustomUser.objects.get(id=request.user.id)
         form = CreateUserForm(user=user)
         return render(request, 'create_user.html', {'form': form})
 
     def post(self, request):
         if not request.user.is_owner:
-            return redirect('dashboard')  # Redirect to dashboard if not owner
+            workspace = request.user.workspace.name
+            department = request.user.department.name
+
+            return redirect('dashboard', workspace=workspace, department=department)  # Redirect to dashboard if not owner
 
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_owner = False  # Ensures that the user is not an owner
             user.save()
-
-            return redirect('dashboard')
+            workspace = request.user.workspace.name
+            department = request.user.department.name
+            print(workspace, department)
+            return redirect('dashboard', workspace=workspace, department=department)
         return render(request, 'create_user.html', {'form': form})

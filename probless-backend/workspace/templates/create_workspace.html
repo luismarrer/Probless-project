@@ -2,6 +2,7 @@
 
 {% block content %}
 	<form method="POST">
+		{% csrf_token %}
 		<h1>Create Workspace</h1>
 		{{error}}
 		{% csrf_token %}
