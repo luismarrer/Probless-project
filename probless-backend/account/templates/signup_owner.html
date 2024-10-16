@@ -1,12 +1,13 @@
 {% extends "layout.html" %}
 
-{% block title %}Sign Up as Owner{% endblock %}
+{% block title %}Sign Up{% endblock %}
 
 {% block content %}
-    <h1>Sign Up as Owner</h1>
+    <h1>Sign Up</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}  <!-- Muestra el formulario -->
+		<!-- Muestra el formulario -->
+        {{ form.as_p }}
         <button type="submit">Sign Up</button>
     </form>
     {% if form.non_field_errors %}

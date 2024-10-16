@@ -24,7 +24,6 @@ class Ticket(models.Model):
 		('closed', 'Closed'),
 	)
 
-	id = models.AutoField(primary_key=True)
 	title = models.CharField(max_length=255)
 	description = models.TextField()
 	user_id = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)

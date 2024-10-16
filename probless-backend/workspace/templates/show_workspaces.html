@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+	<h1>Workspaces</h1>
+	<ul>
+		{% for workspace in workspaces %}
+			<li><a href="{% url 'workspace_detail' workspace.id %}">{{ workspace.name }}</a></li>
+		{% endfor %}
+	</ul>
+{% endblock %}

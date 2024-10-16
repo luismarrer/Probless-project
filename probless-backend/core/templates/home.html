@@ -1,26 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Probless{% endblock %}</title>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                <li><a href="{% url 'signup_owner' %}">Sign Up as Owner</a></li>
-                <li><a href="{% url 'login' %}">Log In</a></li>
-                <li><a href="{% url 'logout' %}">Log Out</a></li>
-                {% if user.is_owner %}
-                    <li><a href="{% url 'create_user' %}">Create a new user</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </header>
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+	<h1>Welcome to Probless</h1>
+	<p>Probless is a platform that allows you to create workspaces and tickets to manage your projects.</p>
+	<p>Sign up to start using Probless.</p>
+	<button type="button" onclick="window.location='{% url 'signup_owner' %}'">
+		Sign Up
+	</button>
+{% endblock %}

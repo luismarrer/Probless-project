@@ -3,16 +3,34 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-    <h1>Welcome to the Dashboard</h1>
-    {% if user.is_owner %}
-        <h1>Owner Dashboard</h1>
+    <h1>Welcome to the {{department.name}}</h1>
+    {% if user.is_admin %}
+	<!-- Sección de tickets asignados a los Admin -->
+	<div class="container">
         <h2>Tickets to manage</h2>
-        <p>Here are your assigned tickets:</p>
-        <h2>Your tickets</h2>
-        <p>Here you can see your profile and tickets.</p>
-        <!-- Sección de tickets asignados a los Owners -->
-    {% else %}
-        <h2>User Dashboard</h2>
-        <p>Here you can see your profile and tickets.</p>
-    {% endif %}
+	</div>
+	{% endif %}
+	<!-- Sección de tickets creados por usuarios -->
+	<div class="container">
+        <h2>My tickets</h2>
+		{% if tickets %}
+			<ul>
+			{% for ticket in tickets %}
+				<li>
+					<a href="{% url 'ticket_detail' workspace.id department.id ticket.id %}">
+					{{ ticket.title }}
+					{{ ticket.description }}
+					</a>
+				</li>
+			{% endfor %}
+			</ul>
+		{% else %}
+        <p>No tickets.</p>
+		{% endif %}
+
+	</div>
+
+	<button type="button" onclick="window.location='{% url 'create_ticket' workspace.id department.id %}'">
+		Create a new ticket
+	</button>
 {% endblock %}

@@ -169,4 +169,4 @@ Pipfile.lock
 # database
 *.sqlite3
 
-.DS_Store
+*.DS_Store

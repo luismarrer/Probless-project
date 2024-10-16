@@ -1,7 +1,6 @@
 from django.db import models
 
 class Workspace(models.Model):
-	id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=255)
 	description = models.TextField()
 	# Temporalmente, eliminamos el ForeignKey a Owner para crear la migración básica
@@ -13,7 +12,6 @@ class Workspace(models.Model):
 		return self.name
 
 class Department(models.Model):
-	id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=255)
 	user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, null=True, blank=True)
 	description = models.TextField()

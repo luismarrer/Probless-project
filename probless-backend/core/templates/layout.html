@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Probless{% endblock %}</title>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                <li><a href="{% url 'signup_owner' %}">Sign Up as Owner</a></li>
-                <li><a href="{% url 'login' %}">Log In</a></li>
-                <li><a href="{% url 'logout' %}">Log Out</a></li>
-                {% if user.is_owner %}
-                    <li><a href="{% url 'create_user' %}">Create a new user</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </header>
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Probless | {% block title %}{% endblock %}</title>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					{% if user.is_owner %}
+						<li><a href="{% url 'show_workspaces' %}">Workspaces</a></li>
+						<li><a href="{% url 'create_user' %}">Create a new user</a></li>
+						<li><a href="{% url 'create_workspace' %}">Create a new workspace</a></li>
+					{% endif %}
+					{% if user.is_authenticated %}
+						<li><a href="{% url 'logout' %}">Log Out</a></li>
+					{% else %}
+						<li><a href="{% url 'signup_owner' %}">Sign Up</a></li>
+						<li><a href="{% url 'login' %}">Log In</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+		</header>
+			{% block content %}
+			{% endblock %}
+	</body>
 </html>

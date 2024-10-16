@@ -18,7 +18,8 @@ class OwnerSignupView(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('dashboard') # Redirect to dashboard after sign up succesfully
+            # Redirect to dashboard after sign up succesfully
+            return redirect('workspace')
         return render(request, 'signup_owner.html', {'form': form})
 
 
@@ -36,10 +37,13 @@ class UserLoginView(View):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('dashboard')  # Redirect to dashboard after login succesfully
+                # Redirect to dashboard after login succesfully
+                return redirect('dashboard')
         return render(request, 'login.html', {'form': form})
 
 # Logout view
+
+
 class LogoutView(View):
     def get(self, request):
         logout(request)
@@ -67,9 +71,3 @@ class CreateUserView(View):
 
             return redirect('dashboard')
         return render(request, 'create_user.html', {'form': form})
-
-
-# Dashboard view
-class DashboardView(View):
-    def get(self, request):
-        return render(request, 'dashboard.html')

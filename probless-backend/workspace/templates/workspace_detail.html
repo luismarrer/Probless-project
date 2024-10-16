@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+	<h1>{{ workspace.name }}</h1>
+	<p>{{ workspace.description }}</p>
+	<ul>
+		{% for department in departments %}
+			<li>
+				<a href="{% url 'dashboard' workspace_name=workspace.name department_name=department.name %}">
+				<h2>{{ department.name }}</h2>
+				<p>{{ department.description }}</p>
+				</a>
+			</li>
+		{% endfor %}
+	</ul>
+
+	<button type="button" onclick="window.location='{% url 'create_department' workspace.id %}'">
+		Create a new department
+	</button>
+
+{% endblock %}
