@@ -4,10 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log In</title>
-    <!-- Bootstrap CSS -->
+    <title>Sign In</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> <!-- Optional: Custom Styles -->
     <style>
         body {
             background-image: url(imgs/sign-ub-background.png);
@@ -25,7 +23,6 @@
             display: flex;
         }
 
-
         .form-signin {
             display: flex;
             flex-direction: column;
@@ -33,7 +30,6 @@
             width: 800px;
             margin: auto;
         }
-
 
         .role-centered {
             width: 50%;
@@ -44,7 +40,6 @@
             width: 50%;
             margin: 100px auto;
         }
-
 
         .sign-in-title {
             display: flex;
@@ -83,44 +78,76 @@
 
 <body>
     <div class="container-fluid">
-        <main class="form-signin">
+        <main class="form-signin m-auto">
             <form>
                 <!-- Sign In Title with Horizontal Lines -->
                 <div class="sign-in-title">
-                    <span>Welcome Back!</span>
+                    <span>Create Account</span>
                 </div>
 
                 <div class="card">
                     <div class="row">
-                        <!-- Left Column: Password -->
+                        <!-- Left Column: Department and Password -->
                         <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingDepartment"
+                                    placeholder="Department">
+                                <label for="floatingDepartment">First Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingDepartment"
+                                    placeholder="Department">
+                                <label for="floatingDepartment">Provided Password</label>
+                            </div>
                             <div class="form-floating mb-3">
                                 <input type="password" class="form-control" id="floatingPassword"
                                     placeholder="Password">
-                                <label for="floatingPassword">Password</label>
+                                <label for="floatingPassword">Confirm Password</label>
                             </div>
                         </div>
-                        <!-- Right Column: Email -->
+
+                        <!-- Right Column: Username and Email -->
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingEmail"
                                     placeholder="name@example.com">
-                                <label for="floatingEmail">E-mail</label>
+                                <label for="floatingEmail">Last Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="floatingEmail"
+                                    placeholder="name@example.com">
+                                <label for="floatingEmail">Company email</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingUsername" placeholder="Username">
+                                <label for="floatingUsername">Username</label>
                             </div>
                         </div>
                     </div>
-                    <!-- Centered Login Button -->
+
+                    <!-- Role Input Centered Below the Two Columns -->
                     <div class="form-floating mb-3 role-centered">
-                        <div class="btn-centered">
-                            <button class="btn w-100 py-2" type="submit">Log In</button>
-                            <p class="mt-5 mb-3 text-body-secondary text-center">© 2024</p>
-                        </div>
+                        <input type="text" class="form-control" id="floatingRole" placeholder="Role">
+                        <label for="floatingRole">Department</label>
+
+                    </div>
+                    <div class="form-floating mb-3 role-centered">
+                        <input type="text" class="form-control" id="floatingRole" placeholder="Role">
+                        <label for="floatingRole">Role</label>
+
+                    </div>
+
+
+                    <!-- Sign In Button -->
+                    <div class="btn-centered">
+                        <button class="btn w-100 py-2" type="submit">Sign In</button>
+
                     </div>
             </form>
         </main>
     </div>
     </div>
-    <!-- Bootstrap JS and dependencies -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
