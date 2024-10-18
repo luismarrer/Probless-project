@@ -11,16 +11,20 @@ from .models import CustomUser
 # Owner sign up view
 class OwnerSignupView(View):
     def get(self, request):
+        print('Hola')
         form = OwnerSignupForm
         return render(request, 'signup_owner.html', {'form': form})
 
     def post(self, request):
         form = OwnerSignupForm(request.POST)
+        print('Antes del is-valid()')
         if form.is_valid():
             user = form.save()
             login(request, user)
+            print(f'Usuario logueado: {user}')
             # Redirect to dashboard after sign up succesfully
             return redirect('show_workspaces')
+        print(form.errors)
         return render(request, 'signup_owner.html', {'form': form})
 
 
@@ -42,9 +46,8 @@ class UserLoginView(View):
                 return redirect('show_workspaces')
         return render(request, 'login.html', {'form': form})
 
+
 # Logout view
-
-
 class LogoutView(View):
     def get(self, request):
         logout(request)
