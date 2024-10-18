@@ -7,10 +7,21 @@
     <title>Sign In</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background-image: url(imgs/sign-ub-background.png);
+            background-image: url(imgs/sign-ub-background.png);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            height: 100vh;
+            margin: 0;
+
+        }
+
         .container-fluid {
             height: 100vh;
             display: flex;
-            background: white;
         }
 
         .form-signin {
@@ -44,11 +55,24 @@
             flex: 1;
             border-bottom: 1px solid black;
             margin: 0 10px;
+            border-color: white;
         }
 
         .sign-in-title span {
             font-size: 1.5rem;
             font-weight: bold;
+            color: white;
+        }
+
+        .btn {
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(194, 78, 217, 0.7);
+            color: rgba(194, 78, 217, 1);
+            padding: 5px 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
     </style>
 </head>
@@ -62,45 +86,50 @@
                     <span>Create Account</span>
                 </div>
 
-                <div class="row">
-                    <!-- Left Column: Department and Password -->
-                    <div class="col-md-6">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingDepartment" placeholder="Department">
-                            <label for="floatingDepartment">Department</label>
+                <div class="card">
+                    <div class="row">
+                        <!-- Left Column: Department and Password -->
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingDepartment"
+                                    placeholder="Department">
+                                <label for="floatingDepartment">Department</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="floatingPassword"
+                                    placeholder="Password">
+                                <label for="floatingPassword">Provided Password</label>
+                            </div>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">Provided Password</label>
+
+                        <!-- Right Column: Username and Email -->
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="floatingEmail"
+                                    placeholder="name@example.com">
+                                <label for="floatingEmail">Company email</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingUsername" placeholder="Username">
+                                <label for="floatingUsername">Username</label>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Right Column: Username and Email -->
-                    <div class="col-md-6">
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
-                            <label for="floatingEmail">Company email</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingUsername" placeholder="Username">
-                            <label for="floatingUsername">Username</label>
-                        </div>
+                    <!-- Role Input Centered Below the Two Columns -->
+                    <div class="form-floating mb-3 role-centered">
+                        <input type="text" class="form-control" id="floatingRole" placeholder="Role">
+                        <label for="floatingRole">Role</label>
                     </div>
-                </div>
 
-                <!-- Role Input Centered Below the Two Columns -->
-                <div class="form-floating mb-3 role-centered">
-                    <input type="text" class="form-control" id="floatingRole" placeholder="Role">
-                    <label for="floatingRole">Role</label>
-                </div>
+                    <!-- Sign In Button -->
+                    <div class="btn-centered">
+                        <button class="btn w-100 py-2" type="submit">Sign In</button>
 
-                <!-- Sign In Button -->
-                <div class="btn-centered">
-                    <button class="btn btn-danger btn-lg w-100 py-2" type="submit">Sign In</button>
-                    <p class="mt-5 mb-3 text-body-secondary text-center">© 2024</p>
-                </div>
+                    </div>
             </form>
         </main>
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

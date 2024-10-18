@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Probless Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
-        /* Sidebar styles */
         .sidebar {
             height: 100vh;
             position: sticky;
@@ -22,15 +24,21 @@
             transition: transform 0.2s ease;
         }
 
-        /* Create Ticket Button Styles */
         .create-ticket-button {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 1000;
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(194, 78, 217, 0.7);
+            color: rgba(194, 78, 217, 1);
+            padding: 5px 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* Modal Overlay Styles */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -44,7 +52,16 @@
             z-index: 10000;
         }
 
-        /* Modal Content Styles */
+        .navbar-brand {
+            font-family: 'Tinos', serif;
+            font-weight: bold;
+            font-size: 2rem;
+            background: linear-gradient(rgba(194, 78, 217), rgba(181, 91, 130));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .modal-content {
             background: white;
             padding: 20px;
@@ -52,8 +69,68 @@
             width: 400px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
+
+        .btn {
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(194, 78, 217, 0.7);
+            color: rgba(194, 78, 217, 1);
+            padding: 5px 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Flex container for two rows on the left and ticket rows on the right */
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Left column containing two rows */
+        .left-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        /* Each section in the left column */
+        .left-row {
+            background-color: #f2f0f0;
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+
+        }
+
+        /* Right column containing three rows for tickets */
+        .right-column {
+            background-color: #f2f0f0;
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 10px;
+        }
+
+        /* Ticket sections in the right column */
+        .ticket-row {
+            flex: 1;
+            background-color: #f2f0f0;
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h2 {
+            margin: 0;
+        }
     </style>
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 navbar-shrink" id="mainNav">
@@ -64,8 +141,6 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#about">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#services">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="#portfolio">Settings</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Profile</a></li>
                 </ul>
@@ -75,55 +150,71 @@
 
     <!-- Main Dashboard Content -->
     <div class="container-fluid mt-5 pt-5">
-        <img id="toggleSidebar" src="https://icons.veryicon.com/png/o/miscellaneous/godserver/expand-sidebar.png" alt="Toggle Sidebar" class="sidebar-toggle-icon mb-3" />
+        <img id="toggleSidebar" src="imgs/side-bar.png" alt="Toggle Sidebar" class="sidebar-toggle-icon mb-3"
+            style="width: 50px; height: auto;" />
+    </div>
 
-        <div class="row">
-            <!-- Sidebar -->
-            <div id="sidebar" class="col-md-1 bg-light sidebar">
-                <ul class="list-group">
-                    <li class="list-group-item"><a href="#">My Tickets</a></li>
-                    <li class="list-group-item"><a href="#">Ticket History</a></li>
-                    <li class="list-group-item"><a href="#">User Management</a></li>
-                    <li class="list-group-item"><a href="#">.....</a></li>
-                </ul>
-            </div>
-
-            <!-- Main Content Area -->
-            <div id="mainContent" class="col-md-9">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Open tickets</h5>
-                                <p class="card-text">No open tickets...</p>
-                            </div>
-                        </div>
+    <!-- Dashboard with two rows on the left and three rows on the right -->
+    <div class="dashboard-container">
+        <!-- Left Column with two rows -->
+        <div class="left-column">
+            <div class="left-row">
+                <h2></h2>
+                <div class="card flex-fill w-100 draggable">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Tickets by Status</h5>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Resolved tickets</h5>
-                                <p class="card-text">No tickets had been solved...</p>
+                    <div class="card-body d-flex">
+                        <div class="align-self-center w-100">
+                            <div class="py-3">
+                                <div class="chart chart-xs">
+                                    <canvas id="chartjs-dashboard-pie" class="chart-pie"></canvas>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Pending Tickets</h5>
-                                <p class="card-text">No tickets pending...</p>
-                            </div>
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>open</td>
+                                        <td class="text-end">15</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Solved</td>
+                                        <td class="text-end">80</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pending</td>
+                                        <td class="text-end">5</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- Create Ticket Button -->
-                <button class="btn btn-danger create-ticket-button" id="createTicketButton">
-                    Create Ticket
-                </button>
+            </div>
+            <div class="left-row">
+                <h2></h2>
+            </div>
+        </div>
+
+        <!-- Right Column with three rows for tickets -->
+        <div class="right-column">
+            <div class="ticket-row">
+                <h2>Open Tickets</h2>
+            </div>
+            <div class="ticket-row">
+                <h2>Solved Tickets</h2>
+            </div>
+            <div class="ticket-row">
+                <h2>Pending Tickets</h2>
             </div>
         </div>
     </div>
+
+    <!-- Create Ticket Button -->
+    <button class="create-ticket-button" id="createTicketButton">
+        Create Ticket
+    </button>
 
     <!-- Create Ticket Modal -->
     <div id="modalOverlay" class="modal-overlay" style="display:none;">
@@ -150,7 +241,7 @@
                     <label for="department" class="form-label">Department</label>
                     <input type="text" id="department" class="form-control">
                 </div>
-                <button type="submit" class="btn btn-danger">Create</button>
+                <button type="submit" class="btn">Create</button>
                 <button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
             </form>
         </div>
@@ -158,32 +249,22 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('mainContent');
         const modalOverlay = document.getElementById('modalOverlay');
         const createTicketButton = document.getElementById('createTicketButton');
         const cancelButton = document.getElementById('cancelButton');
-        const toggleSidebar = document.getElementById('toggleSidebar');
-
-        // Toggle Sidebar
-        toggleSidebar.addEventListener('click', function() {
-            sidebar.classList.toggle('d-none');
-            mainContent.classList.toggle('col-md-9');
-            mainContent.classList.toggle('col-md-12');
-        });
 
         // Show Modal
-        createTicketButton.addEventListener('click', function() {
+        createTicketButton.addEventListener('click', function () {
             modalOverlay.style.display = 'flex';
         });
 
         // Close Modal
-        cancelButton.addEventListener('click', function() {
+        cancelButton.addEventListener('click', function () {
             modalOverlay.style.display = 'none';
         });
 
         // Handle Form Submission
-        document.getElementById('createTicketForm').addEventListener('submit', function(event) {
+        document.getElementById('createTicketForm').addEventListener('submit', function (event) {
             event.preventDefault();
             const ticket = {
                 title: document.getElementById('title').value,
@@ -195,5 +276,37 @@
             modalOverlay.style.display = 'none'; // Close the modal after ticket creation
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var chartsPie = document.querySelectorAll(".chart-pie");
+
+        chartsPie.forEach(function (chart) {
+            if (!chart.getAttribute('data-chart-initialized')) {
+                console.log("Initializing chart:", chart); // Debugging line
+                new Chart(chart, {
+                    type: "pie",
+                    data: {
+                        labels: ["Open", "Solved", "Pending"],
+                        datasets: [{
+                            data: [15, 80, 5],
+                            backgroundColor: ['#e08bdc', '#a35fc2', '#de57be'], // Changed for testing
+                            borderWidth: 5
+                        }]
+                    },
+                    options: {
+                        responsive: !window.MSInputMethodContext,
+                        maintainAspectRatio: false,
+                        legend: {
+                            display: false
+                        },
+                        cutoutPercentage: 75
+                    }
+                });
+                chart.setAttribute("data-chart-initialized", "true");
+            }
+        });
+    </script>
 </body>
+
 </html>
