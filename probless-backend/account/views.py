@@ -43,8 +43,19 @@ class UserLoginView(View):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                # Redirect to dashboard after login succesfully
-                return redirect('show_workspaces')
+
+                if hasattr(user, 'is_owner') and user.is_owner:
+
+                    return redirect('show_workspaces') # Redirect to dashboard after login succesfully
+
+                department = user.dept
+                workspace_name = department.workspace_id.name
+                department_name = department.name
+
+                if workspace_name and department_name:
+
+                    return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)
+
         return render(request, 'login.html', {'form': form})
 
 
@@ -60,27 +71,37 @@ class LogoutView(View):
 class CreateUserView(View):
     def get(self, request):
         if not request.user.is_owner:
-            workspace_name = request.user.workspace.name
-            department_name = request.user.department.name
+            department = request.user.dept
+            if department is None:
+                return redirect('error_page')
+
+            workspace_name = department.workspace_id.name
+            department_name = department.name
             return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)
+
         user = CustomUser.objects.get(id=request.user.id)
         form = CreateUserForm(user=user)
         return render(request, 'create_user.html', {'form': form})
 
     def post(self, request):
         if not request.user.is_owner:
-            workspace = request.user.workspace.name
-            department = request.user.department.name
+            department = request.user.dept
+            if department is None:
+                return redirect('error_page')
+            workspace_name = department.workspace_id.name
+            department_name = department.name
 
-            return redirect('dashboard', workspace=workspace, department=department)  # Redirect to dashboard if not owner
+            return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)  # Redirect to dashboard if not owner
 
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_owner = False  # Ensures that the user is not an owner
             user.save()
-            workspace = request.user.workspace.name
-            department = request.user.department.name
-            print(workspace, department)
-            return redirect('dashboard', workspace=workspace, department=department)
+
+            department = user.dept
+            workspace_name = department.workspace_id.name
+            department_name = department.name
+
+            return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)
         return render(request, 'create_user.html', {'form': form})
