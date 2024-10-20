@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
 # from django.contrib.auth.models import CustomUser
+from django.views.decorators.csrf import csrf_protect
 
 
 # Owner sign up view
@@ -55,6 +56,7 @@ class LogoutView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_protect, name='dispatch')
 class CreateUserView(View):
     def get(self, request):
         if not request.user.is_owner:
