@@ -1,11 +1,20 @@
 {% extends 'layout.html' %}
 
+{% block title %}Workspaces{% endblock %}
+
 {% block content %}
 	<h1>Workspaces</h1>
 	{% csrf_token %}
-	<ul>
-		{% for workspace in workspaces %}
-			<li><a href="{% url 'workspace_detail' workspace.id %}">{{ workspace.name }}</a></li>
-		{% endfor %}
-	</ul>
+	<div class="container text-center">
+		<ul class="row">
+			{% for workspace in workspaces %}
+				<div class="card mx-3 col" style="width: 19rem;">
+						<a class="card-body" href="{% url 'workspace_detail' workspace.id %}">
+							<h5 class="card-title">{{workspace.name}}</h5>
+							<p class="card-text">{{workspace.description}}</p>
+						</a>
+				</div>
+			{% endfor %}
+		</ul>
+	</div>
 {% endblock %}

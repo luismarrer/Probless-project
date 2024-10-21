@@ -12,28 +12,28 @@ from workspace.models import Workspace
 def home(request):
     return render(request, 'home.html')
 
+
 # Dashboard view
-
-
 class DashboardView(LoginRequiredMixin, View):
     login_url = '/login/'  # Redirige a esta URL si no está autenticado
     # Opción para redirigir al usuario después de autenticarse
     redirect_field_name = 'next'
 
     def get(self, request, workspace_name, department_name):
-        workspace = Workspace.objects.get(name=workspace_name)
+        workspace = Workspace.objects.get(name=workspace_name, user=request.user)
         department = workspace.department_set.get(name=department_name)
         tickets = Ticket.objects.filter(user_id=request.user)
+        tickets_department = Ticket.objects.filter(assigned_department_id=department)
         return render(request, 'dashboard.html',
                       {
                           'workspace': workspace,
                           'department': department,
-                          'tickets': tickets
+                          'tickets': tickets,
+                          'tickets_department': tickets_department
                       })
 
+
 # Ticket view
-
-
 @login_required
 def create_ticket(request, workspace_id, department_id):
     """

@@ -4,11 +4,25 @@
 
 {% block content %}
     <h1>Welcome to the {{department.name}}</h1>
-    {% if user.is_admin %}
-	<!-- Sección de tickets asignados a los Admin -->
-	<div class="container">
-        <h2>Tickets to manage</h2>
-	</div>
+    {% if user.role == 'admin' %}
+		<!-- Sección de tickets asignados a los Admin -->
+		<div class="container">
+			<h2>Tickets to manage</h2>
+			{% if tickets_department %}
+			<ul>
+			{% for ticket_department in tickets_department %}
+				<li>
+					<a href="{% url 'ticket_detail' workspace.id department.id ticket_department.id %}">
+					{{ ticket_department.title }}
+					{{ ticket_department.description }}
+					</a>
+				</li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			<p>No tickets.</p>
+		{% endif %}
+		</div>
 	{% endif %}
 	<!-- Sección de tickets creados por usuarios -->
 	<div class="container">
