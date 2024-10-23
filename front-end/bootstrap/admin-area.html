@@ -35,8 +35,7 @@
 
         .top-half {
             height: 50%;
-            background-color: #a8a7a7;
-            overflow-y: auto;
+            overflow-: auto;
         }
 
         .bottom-half {
@@ -307,20 +306,19 @@
     <div class="split-container">
 
         <!-- Top Half -->
-        <div class="top-half bg-light">
+        <div class="top-half">
             <div class="container-fluid mt-5 pt-5">
-                <h5 class="managing-ticket">My Tickets: <a class="see-all" href="admin-area.html">See all</a>
-                </h5>
+                <h5 class="managing-ticket">My Tickets: <a class="see-all" href="admin-area.html">See all</a></h5>
 
-
-                <div class="container mt-4">
+                <!-- Scrollable Container -->
+                <div class="scroll-container mt-4">
                     <div class="row custom-row">
                         <!-- Ticket 1 -->
-                        <div class="col-2">
+                        <div class="col-2 ticket">
                             <div class="d-flex align-items-center mb-2">
                                 <a href="admin-ticket.html">
                                     <div class="status-square rounded-3"></div>
-                                </a>
+                                </a><!-- Status square -->
                                 <p class="border-bottom mb-0 ms-2">Date</p>
                             </div>
                             <div class="d-flex align-items-center mb-2">
@@ -330,7 +328,7 @@
                                 <p class="border-bottom mb-0 ms-2">Title</p>
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-2 ticket">
                             <div class="d-flex align-items-center mb-2">
                                 <p class="border-bottom mb-0">09/08/23</p>
                             </div>
@@ -342,15 +340,15 @@
                             </div>
                         </div>
                         <!-- Vertical Divider -->
-                        <div class="col-1  justify-content-center align-items-center">
+                        <div class="col-1 justify-content-center align-items-center">
                             <div class="vertical-divider"></div>
                         </div>
                         <!-- Ticket 2 -->
-                        <div class="col-2">
+                        <div class="col-2 ticket">
                             <div class="d-flex align-items-center mb-2">
                                 <a href="admin-ticket.html">
                                     <div class="status-square rounded-3"></div>
-                                </a>
+                                </a><!-- Status square -->
                                 <p class="border-bottom mb-0 ms-2">Date</p>
                             </div>
                             <div class="d-flex align-items-center mb-2">
@@ -360,7 +358,7 @@
                                 <p class="border-bottom mb-0 ms-2">Title</p>
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-2 ticket">
                             <div class="d-flex align-items-center mb-2">
                                 <p class="border-bottom mb-0">09/08/23</p>
                             </div>
@@ -371,99 +369,19 @@
                                 <p class="border-bottom mb-0">Monitoring</p>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        <!-- Additional Tickets Here -->
 
-            </div>
-        </div>
+                        <div class="col-2 ticket">
 
 
-
-        <!-- Bottom Half -->
-
-        <div class="bottom-half">
-            <div class="container-fluid mt-3">
-                <h5 class="managing-ticket">Tickets To Manage: See all</h5>
-
-                <div class="scrollable-content">
-
-                    <div class="row mt-5 justify-content-center">
-                        <div class="col-1 text-black text-center">Status</div>
-                        <div class="col-1 text-black text-center">Priority</div>
-                        <div class="col-2 text-black text-center">Name</div>
-                        <div class="col-2 text-black text-center">Title</div>
-                        <div class="col-1 text-black text-center">Date</div>
-                        <div class="col-2 text-black text-center">Department</div>
-                        <div class="col-1 text-black text-center">ID</div>
-                    </div>
-                    <div class="row mt-4 ticket-row justify-content-center">
-                        <div class="col-1 text-black align-items-center">
-                            <a href="admin-ticket.html">
-                                <div class="status-circle rounded-circle me-2"></div>
-                            </a>
-                            Pending
                         </div>
-                        <div class="col-1 text-black text-center">High</div>
-                        <div class="col-2 text-black text-center">Michelle Irrizary</div>
-                        <div class="col-2 text-black text-center">Monitor not turning on</div>
-                        <div class="col-1 text-black text-center">09/08/24</div>
-                        <div class="col-2 text-black text-center">Human Resources</div>
-                        <div class="col-1 text-black text-center">#7192809</div>
-                        <hr style="width: 90%; margin: 20px auto;">
                     </div>
-                </div>
-
-
-                <div class="row mt-3 justify-content-center">
-                    <div class="col-1 text-black text-center">Status</div>
-                    <div class="col-1 text-black text-center">Priority</div>
-                    <div class="col-2 text-black text-center">Name</div>
-                    <div class="col-2 text-black text-center">Title</div>
-                    <div class="col-1 text-black text-center">Date</div>
-                    <div class="col-2 text-black text-center">Department</div>
-                    <div class="col-1 text-black text-center">ID</div>
-                </div>
-                <div class="row mt-4 ticket-row justify-content-center">
-                    <div class="col-1 text-black align-items-center">
-                        <div class="status-circle rounded-circle me-2"></div>
-                        Pending
-                    </div>
-                    <div class="col-1 text-black text-center">High</div>
-                    <div class="col-2 text-black text-center">Michelle Irrizary</div>
-                    <div class="col-2 text-black text-center">Monitor not turning on</div>
-                    <div class="col-1 text-black text-center">09/08/24</div>
-                    <div class="col-2 text-black text-center">Human Resources</div>
-                    <div class="col-1 text-black text-center">#7192809</div>
-                    <hr style="width: 90%; margin: 20px auto;">
-                </div>
-
-
-                <div class="row mt-3 justify-content-center">
-                    <div class="col-1 text-black text-center">Status</div>
-                    <div class="col-1 text-black text-center">Priority</div>
-                    <div class="col-2 text-black text-center">Name</div>
-                    <div class="col-2 text-black text-center">Title</div>
-                    <div class="col-1 text-black text-center">Date</div>
-                    <div class="col-2 text-black text-center">Department</div>
-                    <div class="col-1 text-black text-center">ID</div>
-                </div>
-                <div class="row mt-4 ticket-row justify-content-center">
-                    <div class="col-1 text-black align-items-center">
-                        <div class="status-circle rounded-circle me-2"></div>
-                        Pending
-                    </div>
-                    <div class="col-1 text-black text-center">High</div>
-                    <div class="col-2 text-black text-center">Michelle Irrizary</div>
-                    <div class="col-2 text-black text-center">Monitor not turning on</div>
-                    <div class="col-1 text-black text-center">09/08/24</div>
-                    <div class="col-2 text-black text-center">Human Resources</div>
-                    <div class="col-1 text-black text-center">#7192809</div>
-                    <hr style="width: 90%; margin: 20px auto;">
-                </div>
-                <div class="scrollable-content">
-
                 </div>
             </div>
+
+
+            <!--________________________________________________________-->
+
 
 
             <!-- Create Ticket Button -->

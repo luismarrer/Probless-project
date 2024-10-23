@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probless Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rhodium+Libre:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Rhodium Libre font -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Rhodium Libre', serif;
+        }
+
+        .split-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .top-half,
+        .bottom-half {
+            height: 50%;
+
+            /* Enables vertical scrolling */
+
+            /* Adjust height as needed */
+        }
+
+        .top-half {
+            height: 50%;
+            background-color: #a8a7a7;
+            overflow-y: auto;
+        }
+
+        .bottom-half {
+            height: 50%;
+            background-color: white;
+            color: white;
+            overflow-y: auto;
+        }
+
+        #mainNav {
+            background-color: #ffffff;
+            /* Change this to your desired color */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* Optional shadow for depth */
+            z-index: 1000;
+            /* Ensure it stays above other elements */
+        }
+
+        .navbar-nav .nav-link {
+            color: #333;
+            /* Change link color as needed */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #007bff;
+            /* Change hover color as needed */
+        }
+
+        .create-ticket-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: transparent;
+
+
+            color: black;
+            padding: 5px 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .navbar-brand {
+            font-family: 'Tinos', serif;
+            font-weight: bold;
+            font-size: 2rem;
+            background-clip: text;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: black;
+        }
+
+        .btn {
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(194, 78, 217, 0.7);
+            color: rgba(194, 78, 217, 1);
+            padding: 5px 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+
+
+        .status-square {
+            width: 60px;
+            /* Adjust size as needed */
+            height: 60px;
+            /* Adjust size as needed */
+            background-color: green;
+            /* Adjust color as needed */
+            display: inline-block;
+            flex-shrink: 0;
+            /* Prevent flexbox from shrinking the square */
+
+
+        }
+
+        .custom-row {
+            display: grid;
+            grid-template-columns: repeat(2, auto) 1px repeat(2, auto);
+            gap: 10px;
+        }
+
+        .custom-row>[class*='col-'] {
+            padding-right: 0;
+            padding-left: 0;
+        }
+
+        .border-bottom {
+            border-bottom: 1px solid #303030;
+            /* Adjust color as needed */
+        }
+
+        .mb-0 {
+            margin-bottom: 0;
+        }
+
+        .ms-2 {
+            margin-left: 0.5rem;
+            /* Adjust spacing as needed */
+        }
+
+        .d-flex.align-items-center {
+            height: 80px;
+            /* Ensure the height matches the status square */
+        }
+
+        .vertical-divider {
+            width: 1px;
+            height: 85%;
+            background-color: #000;
+
+
+        }
+
+        .col-2 p {
+            margin-bottom: 0;
+            padding-left: 0;
+        }
+
+        .col-2 .d-flex {
+            margin-bottom: 0.5rem;
+        }
+
+        hr {
+            color: black;
+            margin: 20px auto;
+        }
+
+        .status-circle {
+            width: 20px;
+            height: 20px;
+            background-color: orange;
+            display: inline-block;
+        }
+
+        .ticket-row div {
+            position: relative;
+        }
+
+
+
+        .ticket-row div:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            /* Width of the vertical line */
+            background-color: #000;
+            /* Color of the vertical line */
+            z-index: 1;
+        }
+
+        .managing-ticket {
+            font-size: 1.5rem;
+            color: #000;
+        }
+
+        .custom-btn {
+            width: auto;
+            height: 35px;
+            font-size: 0.9rem;
+            padding: 5px 10px;
+            text-align: center;
+            align-items: center;
+            background: linear-gradient(rgba(194, 78, 217), rgba(181, 91, 130));
+        }
+
+        /* Chatbox Styles */
+        .chatbox-container {
+            position: fixed;
+            bottom: 0;
+            right: -350px;
+            /* Start off-screen */
+            width: 300px;
+            height: 400px;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10000;
+            transition: right 0.3s ease;
+            /* Slide-in effect */
+        }
+
+        .chatbox-header {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbox-content {
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        .chatbox-footer {
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chatbox-footer input {
+            flex-grow: 1;
+            margin-right: 5px;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 navbar-shrink" id="mainNav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#page-top">Probless</a>
+            <a class="nav-link" id="createTicketButton">Create Ticket</a>
+            <span style="margin: 0 10px;"></span>
+            <a class="nav-link" id="createWorkspaceButton">Create Workspace</a>
+            <span style="margin: 0 10px;"></span>
+            <a class="nav-link" href="dashboard.html">Dashboard</a></li>
+            <span style="margin: 0 10px;"></span>
+            <a class="nav-link" href="workspace.html">Workspaces</a></li>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#portfolio">Settings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Profile</a></li>
+                    <a href="land-page.html"
+                        class="btn custom-btn nav-link d-flex justify-content-center text-white">Log Out</a>
+                    <!-- white-text managing -->
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Split into Top and Bottom -->
+    <div class="split-container">
+
+        <!-- Top Half -->
+        <div class="top-half bg-light">
+            <div class="container-fluid mt-5 pt-5">
+                <h5 class="managing-ticket">There are currently no open tickets in your queue.
+                </h5>
+
+
+                <div class="container mt-4">
+                    <div class="row custom-row">
+                        <!-- Ticket 1 -->
+                        <div class="col-2">
+                            <div class="d-flex align-items-center mb-2">
+                                <a href="admin-ticket.html">
+
+                                </a>
+
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex align-items-center mb-2">
+
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+
+                            </div>
+                        </div>
+                        <!-- Vertical Divider -->
+
+                        <!-- Ticket 2 -->
+                        <div class="col-2">
+                            <div class="d-flex align-items-center mb-2">
+                                <a href="admin-ticket.html">
+
+                                </a>
+
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex align-items-center mb-2">
+
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- Bottom Half -->
+
+        <div class="bottom-half">
+            <div class="container-fluid mt-3">
+                <h5 class="managing-ticket">You're all caught up! No tickets pending at the moment.</h5>
+
+
+            </div>
+        </div>
+
+
+        <!-- Create Ticket Button -->
+
+        <!-- Create Ticket Modal -->
+        <div id="modalOverlay" class="modal-overlay" style="display:none;">
+            <div class="modal-content">
+                <h5>Create a New Ticket</h5>
+                <form id="createTicketForm">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" id="title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="priority" class="form-label">Priority</label>
+                        <select id="priority" class="form-select" required>
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="department" class="form-label">Department</label>
+                        <input type="text" id="department" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn">Create</button>
+                    <button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
+                    <button type="submit" class="btn btn-secondary" id="openAIChat">AI</button>
+
+                </form>
+            </div>
+
+            <!-- Chatbox Structure -->
+            <div id="chatbox" class="chatbox-container">
+                <div class="chatbox-header">
+                    <h5>AI Chat Assistance</h5>
+                    <button id="closeChat" class="btn-close">X</button>
+                </div>
+                <div class="chatbox-content text-black">
+                    <p>Welcome to AI Assistance! How can I help you with your ticket?</p>
+                    <!-- Chat messages can be dynamically added here -->
+                </div>
+                <div class="chatbox-footer">
+                    <input type="text" id="chatInput" placeholder="Type your message here..." />
+                    <button class="btn custom-btn">Send</button>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Create Workspace Modal -->
+        <div id="modalwkOverlay" class="modal-overlay" style="display:none;">
+            <div class="modal-content">
+                <h5>Create a New Workspace</h5>
+                <form id="createWorkspaceForm">
+                    <div class="mb-3">
+                        <label for="workspaceTitle" class="form-label">Workspace Title</label>
+                        <input type="text" id="workspaceTitle" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="workspaceDescription" class="form-label">Description</label>
+                        <textarea id="workspaceDescription" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Create</button>
+                    <button type="button" class="btn btn-secondary" id="cancelwkButton">Cancel</button>
+                </form>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            const modalOverlay = document.getElementById('modalOverlay');
+            const createTicketButton = document.getElementById('createTicketButton');
+            const cancelButton = document.getElementById('cancelButton');
+
+            // Show Modal
+            createTicketButton.addEventListener('click', function () {
+                modalOverlay.style.display = 'flex';
+            });
+
+            // Close Modal
+            cancelButton.addEventListener('click', function () {
+                modalOverlay.style.display = 'none';
+            });
+
+            // Handle Form Submission
+            document.getElementById('createTicketForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const ticket = {
+                    title: document.getElementById('title').value,
+                    description: document.getElementById('description').value,
+                    priority: document.getElementById('priority').value,
+                    department: document.getElementById('department').value
+                };
+                console.log('Ticket created:', ticket);
+                modalOverlay.style.display = 'none'; // Close the modal after ticket creation
+            });
+        </script>
+
+        <script>
+            const modalwkOverlay = document.getElementById('modalwkOverlay');
+            const createWorkspaceButton = document.getElementById('createWorkspaceButton');
+            const cancelwkButton = document.getElementById('cancelwkButton');
+
+            // Show Workspace Modal
+            createWorkspaceButton.addEventListener('click', function () {
+                modalwkOverlay.style.display = 'flex';
+            });
+
+            // Close Workspace Modal
+            cancelwkButton.addEventListener('click', function () {
+                modalwkOverlay.style.display = 'none';
+            });
+
+            // Handle Workspace Form Submission
+            document.getElementById('createWorkspaceForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const workspace = {
+                    title: document.getElementById('workspaceTitle').value,
+                    description: document.getElementById('workspaceDescription').value
+                };
+                console.log('Workspace created:', workspace);
+                modalwkOverlay.style.display = 'none'; // Close the modal after workspace creation
+            });
+
+        </script>
+
+        <script>
+            const chatbox = document.getElementById('chatbox');
+            const openAIChat = document.getElementById('openAIChat');
+            const closeChat = document.getElementById('closeChat');
+
+            // Open Chatbox
+            openAIChat.addEventListener('click', function () {
+                chatbox.style.right = '0';
+            });
+
+            // Close Chatbox
+            closeChat.addEventListener('click', function () {
+                chatbox.style.right = '-350px';
+            });
+        </script>
+</body>
+
+</html>
