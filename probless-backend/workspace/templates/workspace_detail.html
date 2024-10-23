@@ -17,8 +17,21 @@
 		{% endfor %}
 	</ul>
 
+	<!-- Button to create department -->
 	<button type="button" onclick="window.location='{% url 'create_department' workspace.id %}'">
 		Create a new department
 	</button>
+	
+	{% if user.is_owner %}
+	<!-- Button to update workspace -->
+	<button type="button" onclick="window.location='{% url 'update_workspace' workspace.id %}'">
+		Update Workspace
+	</button>
 
+	<!-- Button to delete workspace -->
+	<form method="POST" action="{% url 'delete_workspace' workspace.id %}">
+		{% csrf_token %}
+		<button type="submit">Delete Workspace</button>
+	</form>
+	{% endif %}
 {% endblock %}

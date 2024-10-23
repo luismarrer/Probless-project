@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views import View
@@ -41,8 +41,8 @@ def create_ticket(request, workspace_id, department_id):
     """
     workspace = Workspace.objects.get(id=workspace_id)
     department = workspace.department_set.get(id=department_id)
-    form = TicketForm(workspace=workspace)
     if request.method == 'GET':
+        form = TicketForm(workspace=workspace, show_documentation=False)
         return render(request, 'create_ticket.html',
                       {
                           'form': form
@@ -63,12 +63,26 @@ def create_ticket(request, workspace_id, department_id):
 
 
 @login_required
-def ticket_detail(request, ticket_id, workspace_id, department_id):
-	"""
-	Ticket detail view - GET(READ)
-	"""
-	ticket = Ticket.objects.get(id=ticket_id)
-	return render(request, 'ticket_detail.html',
-				  {
-					  'ticket': ticket
-				  })
+def ticket_detail(request, ticket_id):
+    """
+    View for ticket details - GET (READ)
+    """
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    
+    # Verifica si el usuario es el propietario del ticket o un administrador
+    if ticket.user_id == request.user or request.user.role == 'admin':
+        if request.method == 'POST':
+            # Lógica para manejar el ticket (solo para admins)
+            documentation = request.POST.get('documentation')
+            ticket.documentation = documentation  # Asegúrate de que el campo exista en el modelo Ticket
+            ticket.status = 'closed'  # O cualquier lógica que necesites
+            ticket.save()
+            return redirect('ticket_detail', ticket_id=ticket.id)
+        else:
+            # Renderiza la plantilla con los detalles del ticket
+            return render(request, 'ticket_detail.html', {'ticket': ticket})
+    else:
+        return render(request, 'ticket_detail.html', {
+            'ticket': ticket,
+            'error': 'You do not have permission to manage this ticket.'
+        })

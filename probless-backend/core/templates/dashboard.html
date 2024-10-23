@@ -47,4 +47,16 @@
 	<button type="button" onclick="window.location='{% url 'create_ticket' workspace.id department.id %}'">
 		Create a new ticket
 	</button>
+	{% if user.is_owner %}
+	<!-- Button to update workspace -->
+		<button type="button" onclick="window.location='{% url 'update_department'  workspace.id department.id %}'">
+			Update Department
+		</button>
+
+		<!-- Button to delete workspace -->
+		<form method="POST" action="{% url 'delete_department' workspace.id department.id %}">
+			{% csrf_token %}
+			<button type="submit">Delete Department</button>
+		</form>
+	{% endif %}
 {% endblock %}

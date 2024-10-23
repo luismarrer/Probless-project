@@ -1,7 +1,7 @@
-{% extends 'layout.html' %}
-
-{% block content %}
-	<h1>{{ticket.title}}</h1>
-	{{ticket.description}}
-
-{% endblock %}
+{% if request.user.role == 'admin' %}
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="documentation" placeholder="Document the solution here..."></textarea>
+        <button type="submit">Documentar solución</button>
+    </form>
+{% endif %}

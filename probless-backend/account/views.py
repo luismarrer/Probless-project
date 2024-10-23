@@ -1,5 +1,6 @@
 from django.views import View
-from django.shortcuts import render, redirect
+from workspace.models import Department
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from .forms import OwnerSignupForm, LoginForm, CreateUserForm
 from django.utils.decorators import method_decorator
@@ -105,3 +106,10 @@ class CreateUserView(View):
 
             return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)
         return render(request, 'create_user.html', {'form': form})
+
+
+def owner_user_view(request):
+    owner = request.user
+    departments_owned_by_owner = Department.objects.filter(user=owner)
+    users = CustomUser.objects.filter(dept__in=departments_owned_by_owner)
+    return render(request, 'show_users.html', {'users': users, 'owner': owner})

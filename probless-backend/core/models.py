@@ -26,6 +26,7 @@ class Ticket(models.Model):
 
 	title = models.CharField(max_length=255)
 	description = models.TextField()
+	documentation = models.TextField(blank=True, null=True)
 	user_id = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
 	priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='low')
 	assigned_department_id = models.ForeignKey('workspace.Department', on_delete=models.CASCADE)

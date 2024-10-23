@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Workspace, Department
 from .forms import WorkspaceForm, DepartmentForm
-
+from django.http import Http404
 # Create your views here.
 
 
@@ -68,6 +68,31 @@ def create_workspace(request):
                           })
 
 
+def update_workspace(request, workspace_id):
+    workspace = get_object_or_404(Workspace, id=workspace_id)  # Recieve workspace or return 404 error
+
+    if request.method == 'POST':
+        form = WorkspaceForm(request.POST, instance=workspace)
+        if form.is_valid():
+            form.save()
+            return redirect('workspace_detail', workspace_id=workspace.id)
+    else:
+        form = WorkspaceForm(instance=workspace)
+
+    return render(request, 'update_workspace.html', {'form': form, 'workspace': workspace})
+
+
+def delete_workspace(request, workspace_id):
+    workspace = get_object_or_404(Workspace, id=workspace_id)
+
+    if request.method == 'POST':
+        workspace.delete()  # Eliminamos el workspace
+        return redirect('show_workspaces')  # Redirigimos a la lista de workspaces (puedes cambiar el destino)
+
+    return render(request, 'confirm_delete.html', {'workspace': workspace})
+
+
+
 # Department views
 
 @login_required
@@ -114,13 +139,41 @@ def create_department(request, workspace_id):
                           })
 
 
-@login_required
-def show_departments(request):
-    """
-    Department view for all users - GET(READ)
-    """
-    departments = Department.objects.all()
-    return render(request, 'show_departments.html',
-                  {
-                      'departments': departments
-                  })
+# @login_required
+# def show_departments(request):
+#     """
+#     Department view for all users - GET(READ)
+#     """
+#     departments = Department.objects.all()
+#     return render(request, 'show_departments.html',
+#                   {
+#                       'departments': departments
+#                   })
+
+def update_department(request, department_id, workspace_id):
+    workspace = get_object_or_404(Workspace, id=workspace_id)
+    department = get_object_or_404(Department, id=department_id, workspace_id=workspace)  # Recieve department or return 404 error
+
+    if request.method == 'POST':
+        form = DepartmentForm(request.POST, instance=department)
+        if form.is_valid():
+            form.save()
+            return redirect('workspace_detail',  workspace_id=workspace.id)
+    else:
+        form = DepartmentForm(instance=department)
+
+    return render(request, 'update_department.html',
+                  {'form': form,
+                    'department': department,
+                    'workspace': workspace
+                    })
+
+def delete_department(request, workspace_id, department_id):
+    workspace = get_object_or_404(Workspace, id=workspace_id)
+    department = get_object_or_404(Department, id=department_id, workspace_id=workspace)
+
+    if request.method == 'POST':
+        department.delete()
+        return redirect('workspace_detail', workspace_id=workspace.id)
+
+    return render(request, 'confirm_delete.html', {'department': department, 'workspace': workspace})
