@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 from .models import Ticket
 from .forms import TicketForm
-from workspace.models import Workspace
+from workspace.models import Department, Workspace
 
 # Create your views here.
 
@@ -20,18 +20,27 @@ class DashboardView(LoginRequiredMixin, View):
     redirect_field_name = 'next'
 
     def get(self, request, workspace_name, department_name):
-        workspace = Workspace.objects.get(name=workspace_name, user=request.user)
-        department = workspace.department_set.get(name=department_name)
-        tickets = Ticket.objects.filter(user_id=request.user)
-        tickets_department = Ticket.objects.filter(assigned_department_id=department)
-        return render(request, 'dashboard.html',
-                      {
-                          'workspace': workspace,
-                          'department': department,
-                          'tickets': tickets,
-                          'tickets_department': tickets_department
-                      })
+        try:
+            # Buscar el departamento al que pertenece el usuario y obtener el workspace
+            department = Department.objects.get(name=department_name, workspace_id__name=workspace_name)
+            
+            # Asegurarse de que el usuario esté en el departamento
+            if request.user.dept != department:
+                return redirect('error_page')  # Puedes redirigir a una página de error si el usuario no pertenece
 
+            workspace = department.workspace_id  # Obtener el workspace del departamento
+            tickets = Ticket.objects.filter(user_id=request.user)
+            tickets_department = Ticket.objects.filter(assigned_department_id=department)
+
+            return render(request, 'dashboard.html',
+                          {
+                              'workspace': workspace,
+                              'department': department,
+                              'tickets': tickets,
+                              'tickets_department': tickets_department
+                          })
+        except Department.DoesNotExist:
+            return redirect('error_page')
 
 # Ticket view
 @login_required
@@ -63,21 +72,21 @@ def create_ticket(request, workspace_id, department_id):
 
 
 @login_required
-def ticket_detail(request, ticket_id):
+def ticket_detail(request, ticket_id, workspace_id, department_id):
     """
     View for ticket details - GET (READ)
     """
     ticket = get_object_or_404(Ticket, id=ticket_id)
-    
+
     # Verifica si el usuario es el propietario del ticket o un administrador
     if ticket.user_id == request.user or request.user.role == 'admin':
         if request.method == 'POST':
             # Lógica para manejar el ticket (solo para admins)
             documentation = request.POST.get('documentation')
             ticket.documentation = documentation  # Asegúrate de que el campo exista en el modelo Ticket
-            ticket.status = 'closed'  # O cualquier lógica que necesites
+            ticket.status = 'Closed'  # O cualquier lógica que necesites
             ticket.save()
-            return redirect('ticket_detail', ticket_id=ticket.id)
+            return redirect('ticket_detail', workspace_id=workspace_id, department_id=department_id, ticket_id=ticket.id)
         else:
             # Renderiza la plantilla con los detalles del ticket
             return render(request, 'ticket_detail.html', {'ticket': ticket})

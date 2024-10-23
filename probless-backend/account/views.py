@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from django.views import View
 from workspace.models import Department
 from django.shortcuts import render, redirect, get_object_or_404
@@ -74,7 +75,8 @@ class CreateUserView(View):
         if not request.user.is_owner:
             department = request.user.dept
             if department is None:
-                return redirect('error_page')
+                messages.error(request, 'No department assigned to your account.')
+                return redirect('assign_department_page')
 
             workspace_name = department.workspace_id.name
             department_name = department.name
