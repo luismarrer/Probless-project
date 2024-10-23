@@ -23,12 +23,17 @@
 								<li><a class="dropdown-item" href="{% url 'show_workspaces' %}">All Workspaces</a></li>
 							</ul>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'create_user' %}">
+						<li class="nav-item dropdown">
+							<a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								<button type="button" class="btn btn-primary btn-sm">
 									Create a new user
 								</button>
 							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="{% url 'create_user' %}">Create User</a></li>
+								<li><a class="dropdown-item" href="{% url 'show_users' %}">Show all users</a></li>
+								<!-- Más opciones si lo deseas -->
+							</ul>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'create_workspace' %}">
@@ -49,6 +54,10 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'signup_owner' %}">Log In</a>
 						</li>
+					{% endif %}
+					{% if user.is_authenticated %}
+						<!-- Mostrar el nombre de usuario al final -->
+						<p class="nav-link">{{ user.username }}</p>
 					{% endif %}
 				</ul>
 			</nav>

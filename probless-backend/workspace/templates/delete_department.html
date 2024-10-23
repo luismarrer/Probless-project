@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Are you sure you want to delete the department "{{ department.name }}"?</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'workspace_detail' workspace.id %}">Cancel</a>
+</form>
+
+{% endblock %}

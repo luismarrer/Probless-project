@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Users managed by {{ owner.username }}</h2>
+
+{% if users %}
+<ul>
+    {% for user in users %}
+        <li>{{user.dept.name}} - {{user.first_name}} {{user.last_name}} ({{ user.username }})</li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>No users found for this owner.</p>
+{% endif %}
+{% endblock %}
