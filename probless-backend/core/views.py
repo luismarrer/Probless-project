@@ -25,12 +25,14 @@ class DashboardView(LoginRequiredMixin, View):
             department = Department.objects.get(name=department_name, workspace_id__name=workspace_name)
             
             # Asegurarse de que el usuario esté en el departamento
-            if request.user.dept != department:
+            if not request.user.is_owner and request.user.dept != department:
                 return redirect('error_page')  # Puedes redirigir a una página de error si el usuario no pertenece
 
             workspace = department.workspace_id  # Obtener el workspace del departamento
             tickets = Ticket.objects.filter(user_id=request.user)
             tickets_department = Ticket.objects.filter(assigned_department_id=department)
+            tickets_department = Ticket.objects.filter(assigned_department_id=department).exclude(status='Closed')
+
 
             return render(request, 'dashboard.html',
                           {
@@ -86,7 +88,10 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
             ticket.documentation = documentation  # Asegúrate de que el campo exista en el modelo Ticket
             ticket.status = 'Closed'  # O cualquier lógica que necesites
             ticket.save()
-            return redirect('ticket_detail', workspace_id=workspace_id, department_id=department_id, ticket_id=ticket.id)
+
+            workspace_name = ticket.assigned_department_id.workspace_id.name
+            department_name = ticket.assigned_department_id.name
+            return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)
         else:
             # Renderiza la plantilla con los detalles del ticket
             return render(request, 'ticket_detail.html', {'ticket': ticket})
