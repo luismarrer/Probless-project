@@ -7,6 +7,7 @@
 <p>Description: {{ ticket.description }}</p>
 <p>Priority: {{ ticket.get_priority_display }}</p>
 <p>Status: {{ ticket.get_status_display }}</p>
+<p>Department: {{ ticket.assigned_department_id.name }}</p>
 
 {% if user.role == 'admin' %}
     <form method="POST">

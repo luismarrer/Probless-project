@@ -3,7 +3,8 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-    <h1>Welcome to the {{department.name}}</h1>
+    <h1>Welcome to {{department.workspace_id.name}}</h1>
+	<h2>Department: {{department.name}}</h2>
     {% if user.role == 'admin' %}
 		<!-- Sección de tickets asignados a los Admin -->
 		<div class="container">
