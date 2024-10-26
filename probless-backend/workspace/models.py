@@ -15,7 +15,7 @@ class Department(models.Model):
 	name = models.CharField(max_length=255)
 	user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, null=True, blank=True)
 	description = models.TextField()
-	workspace_id = models.ForeignKey('Workspace', on_delete=models.CASCADE)
+	workspace_id = models.ForeignKey('Workspace', on_delete=models.CASCADE, related_name='departments')
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 

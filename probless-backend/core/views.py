@@ -23,14 +23,13 @@ class DashboardView(LoginRequiredMixin, View):
         try:
             # Buscar el departamento al que pertenece el usuario y obtener el workspace
             department = Department.objects.get(name=department_name, workspace_id__name=workspace_name)
-            
+
             # Asegurarse de que el usuario esté en el departamento
             if not request.user.is_owner and request.user.dept != department:
                 return redirect('error_page')  # Puedes redirigir a una página de error si el usuario no pertenece
 
             workspace = department.workspace_id  # Obtener el workspace del departamento
-            tickets = Ticket.objects.filter(user_id=request.user)
-            tickets_department = Ticket.objects.filter(assigned_department_id=department)
+            tickets = Ticket.objects.filter(user_id=request.user).exclude(status='Closed')
             tickets_department = Ticket.objects.filter(assigned_department_id=department).exclude(status='Closed')
 
 
@@ -39,7 +38,7 @@ class DashboardView(LoginRequiredMixin, View):
                               'workspace': workspace,
                               'department': department,
                               'tickets': tickets,
-                              'tickets_department': tickets_department
+                              'tickets_department': tickets_department,
                           })
         except Department.DoesNotExist:
             return redirect('error_page')
@@ -51,12 +50,14 @@ def create_ticket(request, workspace_id, department_id):
     Create ticket view - POST(CREATE)
     """
     workspace = Workspace.objects.get(id=workspace_id)
-    department = workspace.department_set.get(id=department_id)
+    department = Department.objects.get(id=department_id)
     if request.method == 'GET':
         form = TicketForm(workspace=workspace, show_documentation=False)
         return render(request, 'create_ticket.html',
                       {
-                          'form': form
+                          'form': form,
+                          'workspace_name': workspace.name,
+                          'department_name': department.name,
                       })
     else:
         try:
@@ -68,8 +69,10 @@ def create_ticket(request, workspace_id, department_id):
         except ValueError:
             return render(request, 'create_ticket.html',
                           {
-                              'form': form,
-                              'error': 'Bad data passed in. Try again'
+                                'form': form,
+                                'workspace_name': workspace.name,
+                                'department_name': department.name,
+                                'error': 'Bad data passed in. Try again',
                           })
 
 

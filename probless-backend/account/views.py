@@ -3,11 +3,10 @@ from django.views import View
 from workspace.models import Department
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
-from .forms import OwnerSignupForm, LoginForm, CreateUserForm
+from .forms import ChangePasswordForm, OwnerSignupForm, LoginForm, CreateUserForm, UpdateUserForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
-# from django.contrib.auth.models import CustomUser
 from django.views.decorators.csrf import csrf_protect
 
 
@@ -110,8 +109,58 @@ class CreateUserView(View):
         return render(request, 'create_user.html', {'form': form})
 
 
-def owner_user_view(request):
+def owner_users_view(request):
     owner = request.user
     departments_owned_by_owner = Department.objects.filter(user=owner)
     users = CustomUser.objects.filter(dept__in=departments_owned_by_owner)
     return render(request, 'show_users.html', {'users': users, 'owner': owner})
+
+
+@login_required
+@csrf_protect
+def update_user(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+
+    if request.method == 'POST':
+        form = UpdateUserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('show_users')
+    else:
+        form = UpdateUserForm(instance=user)
+
+    return render(request, 'update_user.html', {'form': form, 'user': user})
+
+@login_required
+def delete_user(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+
+    if request.method == 'POST':
+        user.delete()
+        return redirect('show_users')
+
+    return render(request, 'delete_user.html', {'user': user})
+
+
+@login_required
+def change_password(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+
+    if request.method == "POST":
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            new_password = form.cleaned_data['new_password']
+            user.set_password(new_password)
+            user.save()
+            return redirect('update_user', user_id=user.id)  # Redirige de nuevo al perfil de usuario
+    else:
+        form = ChangePasswordForm()
+
+    return render(request, 'change_password.html', {'form': form, 'user': user})
+
+
+# View detail info of the user
+@login_required
+def view_detail_user(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    return render(request, 'view_detail_user.html', {'view_detail_user': user})

@@ -69,3 +69,27 @@ class CreateUserForm(UserCreationForm):
     # Método para formatear la etiqueta de cada opción en el campo 'dept'
     def format_department_label(self, department):
         return f"{department.workspace_id.name} - {department.name}"
+
+
+class UpdateUserForm(forms.ModelForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'username', 'email', 'dept', 'role']  # All info of user except for the password
+
+    def save(self, commit=True):
+        return super().save(commit=commit)
+
+
+class ChangePasswordForm(forms.Form):
+    new_password = forms.CharField(widget=forms.PasswordInput, label="New Password")
+    confirm_password = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get("new_password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if new_password and confirm_password and new_password != confirm_password:
+            self.add_error("confirm_password", "Passwords do not match.")
+        return cleaned_data
