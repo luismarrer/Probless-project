@@ -44,6 +44,11 @@
 						</li>
 					{% endif %}
 					{% if user.is_authenticated %}
+						{% if not user.is_owner %}
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'dashboard' workspace_name=user.dept.workspace_id.name department_name=user.dept.name %}">Dashboard</a>
+							</li>
+						{% endif %}
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'logout' %}">Log Out</a>
 						</li>
@@ -57,7 +62,7 @@
 					{% endif %}
 					{% if user.is_authenticated %}
 						<!-- Mostrar el nombre de usuario al final -->
-						<p class="nav-link">{{ user.username }}</p>
+						<a class="nav-link" href="{% url 'view_detail_user' user.id %}">{{ user.username }}</a>
 					{% endif %}
 				</ul>
 			</nav>
