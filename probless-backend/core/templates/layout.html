@@ -42,6 +42,15 @@
 								</button>
 							</a>
 						</li>
+						{% if workspace and department %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'tickets_history' workspace.name department.name %}">
+								<button type="button" class="btn btn-primary btn-sm">
+									Tickets History
+								</button>
+							</a>
+						</li>
+						{% endif %}
 					{% endif %}
 					{% if user.is_authenticated %}
 						{% if not user.is_owner %}

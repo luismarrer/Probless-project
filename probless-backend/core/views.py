@@ -103,3 +103,16 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
             'ticket': ticket,
             'error': 'You do not have permission to manage this ticket.'
         })
+
+def tickets_history(request, workspace_name, department_name):
+    print(f"Workspace name: {workspace_name}, Department Name: {department_name}")
+    workspace = Workspace.objects.get(name=workspace_name)
+    department = Department.objects.get(name=department_name)
+
+    closed_tickets = Ticket.objects.filter(user_id=request.user, status='Closed', assigned_department_id=department)
+
+    return render(request, 'tickets_history.html', {
+        'closed_tickets': closed_tickets,
+        'workspace_name': workspace.name,
+        'department_name': department.name,
+    })
