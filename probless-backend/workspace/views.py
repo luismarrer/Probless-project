@@ -27,10 +27,13 @@ def workspace_detail(request, workspace_id):
     """
     workspace = Workspace.objects.get(pk=workspace_id)
     departments = Department.objects.filter(workspace_id=workspace)
+
+    workspace_name = workspace.name
     return render(request, 'workspace_detail.html',
                   {
                       'workspace': workspace,
-                      'departments': departments
+                      'workspace_name': workspace_name,
+                      'departments': departments,
                   })
 
 
