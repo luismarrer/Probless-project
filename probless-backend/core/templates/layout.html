@@ -105,7 +105,7 @@
 						</li>
                         {% if workspace and department %}
                         <li class="nav-item">
-							<a class="nav-link" href="{% url 'tickets_history' workspace.name department.name %}">
+							<a class="nav-link" href="{% url 'tickets_history' workspace.id department.id %}">
 								<button type="button" class="btn btn-sm text-white" style="background: #2a309c;">Tickets History</button>
                             </a>
                         </li>

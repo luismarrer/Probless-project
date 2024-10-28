@@ -29,6 +29,6 @@
         {% endfor %}
     </tbody>
 </table>
-<a href="{% url 'dashboard' workspace_name department_name %}" class="btn btn-secondary mb-3" style="background:  #2a309c;">Back to Dashboard</a>
+<button type="button" class="btn btn-primary" onclick="window.history.back();">Go to Dashboard</button>
 </div>
 {% endblock%}
