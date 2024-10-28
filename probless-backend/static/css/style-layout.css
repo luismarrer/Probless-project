@@ -1,0 +1,48 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Rhodium Libre', serif;
+}
+
+
+#mainNav {
+    background-color: #ffffff;
+    /* Change this to your desired color */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Optional shadow for depth */
+    z-index: 1000;
+    /* Ensure it stays above other elements */
+}
+
+
+.navbar-nav .nav-link {
+    color: #333;
+}
+
+
+.navbar-nav .nav-link:hover {
+    color: #007bff;
+}
+
+
+.navbar-brand {
+    font-family: 'Tinos', serif;
+    font-weight: bold;
+    font-size: 2rem;
+    background-clip: text;
+}
+
+.custom-btn {
+    width: auto;
+    height: 35px;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    text-align: center;
+    align-items: center;
+    background: linear-gradient(rgba(194, 78, 217), rgba(181, 91, 130));
+}
+
+.btn-sm {
+background-color: #ca7cde;
+}

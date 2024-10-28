@@ -1,0 +1,306 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Rhodium Libre', serif;
+}
+
+
+.split-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+
+.top-half,
+.bottom-half {
+    height: 50%;
+
+
+    /* Enables vertical scrolling */
+
+
+    /* Adjust height as needed */
+}
+
+
+.top-half {
+    height: 50%;
+    background-color: #a8a7a7;
+    overflow-: auto;
+}
+
+
+.bottom-half {
+    height: 50%;
+    background-color: white;
+    color: white;
+    overflow-y: auto;
+}
+
+
+#mainNav {
+    background-color: #ffffff;
+    /* Change this to your desired color */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Optional shadow for depth */
+    z-index: 1000;
+    /* Ensure it stays above other elements */
+}
+
+
+.navbar-nav .nav-link {
+    color: #333;
+    /* Change link color as needed */
+}
+
+
+.navbar-nav .nav-link:hover {
+    color: #007bff;
+    /* Change hover color as needed */
+}
+
+
+.create-ticket-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: transparent;
+
+
+
+
+    color: black;
+    padding: 5px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+
+.navbar-brand {
+    font-family: 'Tinos', serif;
+    font-weight: bold;
+    font-size: 2rem;
+    background-clip: text;
+}
+
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    color: black;
+}
+
+
+.btn {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(194, 78, 217, 0.7);
+    color: rgba(194, 78, 217, 1);
+    padding: 5px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+
+
+
+
+.status-square {
+    width: 60px;
+    /* Adjust size as needed */
+    height: 60px;
+    /* Adjust size as needed */
+    background-color: green;
+    /* Adjust color as needed */
+    display: inline-block;
+    flex-shrink: 0;
+    /* Prevent flexbox from shrinking the square */
+
+
+
+
+}
+
+
+.custom-row {
+    display: grid;
+    grid-template-columns: repeat(2, auto) 1px repeat(2, auto);
+    gap: 10px;
+}
+
+
+.custom-row>[class*='col-'] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+
+.border-bottom {
+    border-bottom: 1px solid #303030;
+    /* Adjust color as needed */
+}
+
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+
+.ms-2 {
+    margin-left: 0.5rem;
+    /* Adjust spacing as needed */
+}
+
+
+.d-flex.align-items-center {
+    height: 80px;
+    /* Ensure the height matches the status square */
+}
+
+
+.vertical-divider {
+    width: 1px;
+    height: 85%;
+    background-color: #000;
+
+
+
+
+}
+
+
+.col-2 p {
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+
+.col-2 .d-flex {
+    margin-bottom: 0.5rem;
+}
+
+
+hr {
+    color: black;
+    margin: 20px auto;
+}
+
+
+.status-circle {
+    width: 20px;
+    height: 20px;
+    background-color: orange;
+    display: inline-block;
+}
+
+
+.ticket-row div {
+    position: relative;
+}
+
+
+
+
+
+
+.ticket-row div:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    /* Width of the vertical line */
+    background-color: #000;
+    /* Color of the vertical line */
+    z-index: 1;
+}
+
+
+.managing-ticket {
+    font-size: 1.5rem;
+    color: #000;
+}
+
+
+.custom-btn {
+    width: auto;
+    height: 35px;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    text-align: center;
+    align-items: center;
+    background: linear-gradient(rgba(194, 78, 217), rgba(181, 91, 130));
+}
+
+
+/* Chatbox Styles */
+.chatbox-container {
+    position: fixed;
+    bottom: 0;
+    right: -350px;
+    /* Start off-screen */
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+    transition: right 0.3s ease;
+    /* Slide-in effect */
+}
+
+
+.chatbox-header {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.chatbox-content {
+    padding: 10px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+
+.chatbox-footer {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.chatbox-footer input {
+    flex-grow: 1;
+    margin-right: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
