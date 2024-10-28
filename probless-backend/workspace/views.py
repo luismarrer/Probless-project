@@ -26,7 +26,7 @@ def workspace_detail(request, workspace_id):
     Workspace view for authenticated users - GET(READ)
     """
     workspace = Workspace.objects.get(pk=workspace_id)
-    departments = Department.objects.filter(workspace_id=workspace)
+    departments = Department.objects.filter(workspace_id=workspace, user=request.user)
 
     workspace_name = workspace.name
     return render(request, 'workspace_detail.html',

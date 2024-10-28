@@ -26,7 +26,7 @@ class DashboardView(LoginRequiredMixin, View):
     def get(self, request, workspace_name, department_name):
         try:
             # Buscar el departamento al que pertenece el usuario y obtener el workspace
-            department = Department.objects.get(name=department_name, workspace_id__name=workspace_name)
+            department = Department.objects.get(name=department_name, workspace_id__name=workspace_name, user=request.user)
 
             # Asegurarse de que el usuario esté en el departamento
             if not request.user.is_owner and request.user.dept != department:
