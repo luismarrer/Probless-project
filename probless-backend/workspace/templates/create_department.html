@@ -4,12 +4,12 @@
 
 {% block content %}
 
-
+<div class="text-white">
 	<h1 class="mt-5 pt-5 text-white">Create a new department</h1>
 	<form method="POST">
 		{% csrf_token %}
 		{{ form.as_p }}
 		<button type="submit">Create</button>
 	</form>
-
+</div>
 {% endblock %}

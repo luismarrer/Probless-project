@@ -2,6 +2,7 @@
 
 
 {% block content %}
+<div class="text-white">
 	<form method="POST">
 		{% csrf_token %}
 		<h1 class="mt-5 pt-5 text-white">Create Workspace</h1>
@@ -10,4 +11,5 @@
 		{{ form.as_p }}
 		<button type="submit">Create</button>
 	</form>
+</div>
 {% endblock %}
