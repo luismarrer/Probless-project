@@ -1,11 +1,12 @@
 {% extends 'layout.html' %}
 
-{% block title %}Tickets Hsitory{% endblock %}
+
 
 {% block content %}
+<div class="card mt-5 pt-5">
 <br>
 <table class="table table-striped table-bordered">
-    <thead>
+    <thead">
         <tr>
             <th scope="col">Ticket ID</th>
             <th scope="col">Descripción</th>
@@ -28,5 +29,6 @@
         {% endfor %}
     </tbody>
 </table>
-<a href="{% url 'dashboard' workspace_name department_name %}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+<a href="{% url 'dashboard' workspace_name department_name %}" class="btn btn-secondary mb-3" style="background:  #2a309c;">Back to Dashboard</a>
+</div>
 {% endblock%}
