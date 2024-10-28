@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h2>Users managed by {{ owner.username }}</h2>
+<h2 class="mt-5 pt-5 text-white">Users managed by {{ owner.username }}</h2>
 
 {% if users %}
 <ul>
@@ -13,6 +13,6 @@
     {% endfor %}
 </ul>
 {% else %}
-    <p>No users found for this owner.</p>
+    <p class="text-white">No users found for this owner.</p>
 {% endif %}
 {% endblock %}

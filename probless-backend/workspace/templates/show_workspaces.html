@@ -3,18 +3,24 @@
 {% block title %}Workspaces{% endblock %}
 
 {% block content %}
-	<h1>Workspaces</h1>
-	{% csrf_token %}
-	<div class="container text-center">
-		<ul class="row">
-			{% for workspace in workspaces %}
-				<div class="card mx-3 col" style="width: 19rem;">
-						<a class="card-body" href="{% url 'workspace_detail' workspace.id %}">
-							<h5 class="card-title">{{workspace.name}}</h5>
-							<p class="card-text">{{workspace.description}}</p>
-						</a>
-				</div>
-			{% endfor %}
-		</ul>
-	</div>
-{% endblock %}
+<div class="container-fluid mt-5 pt-5 text-white">
+    <h1>Workspaces</h1>
+    
+    <!-- Button to create a new workspace -->
+    
+    <div class="row mt-4 text-black">
+      {% csrf_token %}
+      {% for workspace in workspaces %}
+      <div class="card mx-3 col" style="width: 19rem;">
+        <a class="card-body" href="{% url 'workspace_detail' workspace.id %}">
+          <h5 class="card-title">{{ workspace.name }}</h5>
+          <p class="card-text">{{ workspace.description }}</p>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <a href="{% url 'create_workspace' %}" class="btn custom-btn nav-link d-flex justify-content-center text-white mt-4" style="max-width: 200px; width: fit-content; margin-left: 20px;padding: 10px; white-space: nowrap; background: #2a309c;">
+      Create New Workspace
+  </a>
+  {% endblock %}

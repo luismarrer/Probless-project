@@ -1,37 +1,58 @@
 {% extends 'layout.html' %}
 
-{% block title %}Workspace Details{% endblock %}
 
 {% block content %}
 
-	<h1>{{ workspace.name }}</h1>
-	<p>{{ workspace.description }}</p>
-	<ul>
-		{% for department in departments %}
-			<li>
-				<a href="{% url 'dashboard' workspace_name=workspace.name department_name=department.name %}">
-				<h2>{{ department.name }}</h2>
-				<p>{{ department.description }}</p>
-				</a>
-			</li>
-		{% endfor %}
-	</ul>
 
-	<!-- Button to create department -->
-	<button type="button" onclick="window.location='{% url 'create_department' workspace.id %}'">
-		Create a new department
-	</button>
-	
-	{% if user.is_owner %}
-	<!-- Button to update workspace -->
-	<button type="button" onclick="window.location='{% url 'update_workspace' workspace.id %}'">
-		Update Workspace
-	</button>
+<div class="container-fluid mt-5 pt-5">
+    <h1 class="text-white">Workspaces</h1>
+    <div class="row mt-4">
+        <div class="card mx-3 col" style="width: rem;">
+            <h1 class="mt-2 p-2">{{ workspace.name }}</h1>
+            <p>{{ workspace.description }}</p>
+            <hr>
 
-	<!-- Button to delete workspace -->
-	<form method="POST" action="{% url 'delete_workspace' workspace.id %}">
-		{% csrf_token %}
-		<button type="submit">Delete Workspace</button>
-	</form>
-	{% endif %}
+            <h4>Departments:</h4>
+            <ul>
+                {% for department in departments %}
+                    <li>
+                        <a href="{% url 'dashboard' workspace_name=workspace.name department_name=department.name %}" class='nav-link'>
+                            <h2>{{ department.name }}</h2>
+                            <p>{{ department.description }}</p>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+
+
+    </div>
+</div>
+</div>
+
+
+
+            <!-- Button to create department -->
+            <a href="{% url 'create_department' workspace.id %}" class="btn custom-btn nav-link d-flex justify-content-center text-white mt-5" style="max-width: 200px; width: fit-content; margin-left: 20px; padding: 10px; white-space: nowrap; background: #2a309c;">
+                Create New Department
+            </a>
+
+            {% if user.is_owner %}
+            <!-- Button to update workspace -->
+            <a href="{% url 'update_workspace' workspace.id %}" class="btn custom-btn nav-link d-flex justify-content-center text-white mt-4" style="max-width: 200px; width: fit-content; margin-left: 20px; padding: 10px; white-space: nowrap; background: #2a309c;">
+                Update Workspace
+            </a>
+
+            <!-- Button to delete workspace -->
+            <form method="POST" action="{% url 'delete_workspace' workspace.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit " class="btn custom-btn nav-link d-flex justify-content-center text-white mt-4 " style="max-width: 200px; width: fit-content; margin-left: 20px; padding: 10px; white-space: nowrap; background: #2a309c;">
+                    Delete Workspace
+                </button>
+            </form>
+            {% endif %}
+ 
+
 {% endblock %}

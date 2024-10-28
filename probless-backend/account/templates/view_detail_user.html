@@ -1,9 +1,7 @@
 {% extends "layout.html" %}
 
-{% block title %}User Profile{% endblock %}
-
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-5 pt-5 text-white">
     <h2>{{ view_detail_user.username }}'s Profile</h2>
     <ul class="list-group">
         <li class="list-group-item"><strong>First Name: </strong> {{ view_detail_user.first_name }}</li>
@@ -13,4 +11,5 @@
         <li class="list-group-item"><strong>Role: </strong> {{ view_detail_user.get_role_display }}</li>
     </ul>
 </div>
+
 {% endblock %}

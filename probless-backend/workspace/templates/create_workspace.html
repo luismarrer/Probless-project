@@ -1,11 +1,10 @@
 {% extends 'layout.html' %}
 
-{% block title %}Create Workspace{% endblock %}
 
 {% block content %}
 	<form method="POST">
 		{% csrf_token %}
-		<h1>Create Workspace</h1>
+		<h1 class="mt-5 pt-5 text-white">Create Workspace</h1>
 		{{error}}
 		{% csrf_token %}
 		{{ form.as_p }}

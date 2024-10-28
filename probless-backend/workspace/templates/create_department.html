@@ -4,7 +4,8 @@
 
 {% block content %}
 
-	<h1>Create a new department</h1>
+
+	<h1 class="mt-5 pt-5 text-white">Create a new department</h1>
 	<form method="POST">
 		{% csrf_token %}
 		{{ form.as_p }}
