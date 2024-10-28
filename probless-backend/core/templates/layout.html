@@ -1,85 +1,146 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-		<title>Probless | {% block title %}{% endblock %}</title>
-	</head>
-	<body>
-		<header>
-			<nav>
-				<ul class="nav nav-pills">
-					{% if user.is_owner %}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Probless Dashboard</title>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rhodium+Libre:wght@400;700&display=swap"
+        rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style-layout.css' %}" />
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Rhodium Libre', serif;
+            background: linear-gradient(rgba(214, 116, 219), rgba(228, 206, 237));
+        }
+
+        #mainNav {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar-nav .nav-link {
+            color: #333;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #007bff;
+        }
+
+        .navbar-brand {
+            font-family: 'Tinos', serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+
+        .custom-btn {
+            width: auto;
+            height: 35px;
+            font-size: 0.9rem;
+            padding: 5px 10px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(194, 78, 217), rgba(181, 91, 130));
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 navbar-shrink" id="mainNav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#page-top">Probless</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <!-- Left-aligned Links (Buttons) -->
+                <ul class="navbar-nav me-auto">
+                    {% if user.is_owner %}
+                        <!-- Workspaces Dropdown -->
+						
+                        <!-- Users Dropdown -->
+                        <li class="nav-item dropdown">
+							<a class="nav-link" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Manage Users</a>
+                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+								<li><a class="dropdown-item" href="{% url 'create_user' %}">Create User</a></li>
+                                <li><a class="dropdown-item" href="{% url 'show_users' %}">Show all users</a></li>
+                            </ul>
+                        </li>
+						
+                        <!-- Create Workspace Link -->
+                        <li class="nav-item">
+							<a class="nav-link" href="{% url 'create_workspace' %}">
+								<button type="button" class="btn btn-sm text-white" style="background: #2a309c;">Create a new workspace</button>
+                            </a>
+                        </li>
+						
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Workspaces</a>
-							<ul class="dropdown-menu">
+							<a class="nav-link dropdown-toggle" href="#" id="workspaceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Workspaces</a>
+							<ul class="dropdown-menu" aria-labelledby="workspaceDropdown">
 								{% if workspaces_ctx %}
 									{% for workspace in workspaces_ctx %}
-										<li><a class="dropdown-item" href="{% url 'workspace_detail' workspace.id %}">{{workspace.name}}</a></li>
+									<li><a class="dropdown-item" href="{% url 'workspace_detail' workspace.id %}">{{ workspace.name }}</a></li>
 									{% endfor %}
-									<li><hr class="dropdown-divider"></li>
+									<li><hr class="dropdown-divider" /></li>
 								{% endif %}
 								<li><a class="dropdown-item" href="{% url 'show_workspaces' %}">All Workspaces</a></li>
 							</ul>
 						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								<button type="button" class="btn btn-primary btn-sm">
-									Create a new user
-								</button>
-							</a>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="{% url 'create_user' %}">Create User</a></li>
-								<li><a class="dropdown-item" href="{% url 'show_users' %}">Show all users</a></li>
-								<!-- Más opciones si lo deseas -->
-							</ul>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'create_workspace' %}">
-								<button type="button" class="btn btn-primary btn-sm">
-									Create a new workspace
-								</button>
-							</a>
-						</li>
-						{% if workspace and department %}
-						<li class="nav-item">
+                        {% if workspace and department %}
+                        <li class="nav-item">
 							<a class="nav-link" href="{% url 'tickets_history' workspace.name department.name %}">
-								<button type="button" class="btn btn-primary btn-sm">
-									Tickets History
-								</button>
-							</a>
-						</li>
-						{% endif %}
-					{% endif %}
-					{% if user.is_authenticated %}
-						{% if not user.is_owner %}
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'dashboard' workspace_name=user.dept.workspace_id.name department_name=user.dept.name %}">Dashboard</a>
-							</li>
-						{% endif %}
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-						</li>
-					{% else %}
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'signup_owner' %}">Sign Up</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'signup_owner' %}">Log In</a>
-						</li>
-					{% endif %}
-					{% if user.is_authenticated %}
-						<!-- Mostrar el nombre de usuario al final -->
-						<a class="nav-link" href="{% url 'view_detail_user' user.id %}">{{ user.username }}</a>
-					{% endif %}
-				</ul>
-			</nav>
-		</header>
-		<main>
-			{% block content %}
-			{% endblock %}
-		</main>
-	</body>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+								<button type="button" class="btn btn-sm text-white" style="background: #2a309c;">Tickets History</button>
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+
+                
+
+                <!-- Right-aligned Links (User Info and Auth) -->
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'view_detail_user' user.id %}">{{ user.username }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn custom-btn nav-link text-white" href="{% url 'logout' %}">Log Out</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="btn custom-btn nav-link" href="{% url 'signup_owner' %}">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn custom-btn nav-link" href="{% url 'login' %}">Log In</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

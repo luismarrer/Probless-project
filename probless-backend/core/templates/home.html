@@ -1,15 +1,278 @@
-{% extends 'layout.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}Home{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probless</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tinos:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+
+    <!-- TINOS font for about us message -->
+    <link rel="stylesheet" href="style-land-page.css">
+</head>
+
+<style>
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+.custom-btn {
+    width: 70px;
+    height: 35px;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    text-align: center;
+    align-items: center;
+    background: linear-gradient(rgba(194, 78, 217), rgba(181, 91, 130));
+}
+
+
+.wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+h2 {
+    font-family: 'Tinos', serif;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+
+.about-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    font-family: 'Tinos', serif;
+    opacity: 0;
+    transition: opacity 2s ease-in;
+}
+
+
+h5 {
+    font-size: 4rem;
+    font-weight: bold;
+    color: black;
+}
+
+
+.navbar-brand {
+    font-family: 'Tinos', serif;
+    font-weight: bold;
+    font-size: 2rem;
+    background: linear-gradient(rgba(194, 78, 217), rgba(181, 91, 130));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+
+p {
+    font-size: 1.5rem;
+    color: black;
+}
+
+
+.icons-github {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    size: 6rem;
+    background: linear-gradient(rgba(194, 78, 217), rgba(181, 91, 130));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+
+}
+
+
+.icons-github i {
+    font-size: 3rem;
+}
+
+
+/* Add a class that toggles the visibility */
+.fade-in-visible {
+    opacity: 1 !important;
+}
+
+
+.text1 {
+    font-family: 'Tinos', serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: black;
+}
+
+
+.text2 {
+    background: linear-gradient(rgba(194, 78, 217), rgba(181, 91, 130));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid black;
+    margin: 0 10px;
+}
+
+</style>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Probless</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#about">About Us<span class="sr-only"></span></a>
+
+
+                </li>
+                <li class="nav-item">
+                    <div class="d-flex gap-2">
+						<a href="{% url 'signup_owner' %}" class="btn custom-btn nav-link text-white">Sign In</a>
+                        <!-- white-text managing -->
+                        <a href="{% url 'login' %}" class="btn custom-btn nav-link text-white">Log In</a>
+                        <!-- white-text managing -->
+
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container-fluid d-flex align-items-center vh-100">
+        <div class="wrapper position-relative">
+            <div id="aboutMessage" class="about-message fst-italic lh-1 mb-4">
+                <h5>Introducing Probless: Your <span class="text2">AI-Powered</span> Ticket Management Solution</h5>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="bg-light py-5" id="about">
+        <div class="container px-5">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-xxl-8">
+                    <div class="text-center my-5">
+                        <h2 class="display-5 fw-bolder"><span class="text-gradient d-inline"></span></h2>
+                        <p class="lead fw-light mb-4">
+                            <span class="text1">Who are we?</span>
+                        </p>
+                        <div class="col">
+                            <p class="text-muted">
+                                We are a team of innovators dedicated to simplifying IT workflows for startups.
+                                Probless is a smart, AI-powered platform designed to streamline the process of solving
+                                IT issues. Our
+                                goal
+                                is to reduce the frustration and time wasted on handling tickets by providing proactive
+                                solutions before
+                                a
+                                ticket is even created.
+
+
+                            <div class="icons-github">
+                                <div class="text">
+                                    <a class="text-gradient" href="https://github.com/luismarrer"><i
+                                            class="bi bi-github"></i></a>
+                                    <hr>
+                                    <p>Luis
+                                        <hr>Marrero
+                                    </p>
+                                </div>
+                                <div class="text">
+                                    <a class="text-gradient" href="https://github.com/MikeHe2"><i
+                                            class="bi bi-github"></i></a>
+                                    <hr>
+                                    <p>Michael
+                                        <hr>
+                                        Hernandez
+                                    </p>
+                                </div>
+                                <div class="text">
+                                    <a class="text-gradient" href="https://github.com/nellyretto"><i
+                                            class="bi bi-github"></i></a>
+                                    <hr>
+                                    <p>Danielys
+                                        <hr>
+                                        Carrasquillo
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <footer class="bg-white py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0">Copyright &copy; Probless 2024</div>
+                </div>
+                <div class="col-auto">
+                    <a class="small" href="https://github.com/luismarrer/Probless-project">Probless</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript fade-in effect -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add the class after the page has loaded
+            const aboutMessage = document.getElementById("aboutMessage");
+            setTimeout(function () {
+                aboutMessage.classList.add("fade-in-visible");
+            }, 100); // Delay before the fade-in
+        });
+    </script>
+
+
+</body>
+
+
+</html>
+
+
+
+{% block title %}{% endblock %}
 
 {% block content %}
-	<h1>Welcome to Probless</h1>
-	<p>Probless is a platform that allows you to create workspaces and tickets to manage your projects.</p>
-	<p>Sign up to start using Probless.</p>
-	<button type="button" onclick="window.location='{% url 'signup_owner' %}'">
-		Sign Up
-	</button>
-	<button type="button" onclick="window.location='{% url 'login' %}'">
-		Login
-	</button>
+
+
 {% endblock %}
