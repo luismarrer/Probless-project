@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-           /* background-image: url(imgs/sign-ub-background.png); */
+            background-image: url("{% static 'imgs/sign-log-background.png' %}"); /* Make sure to use the correct path and file name */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -84,7 +84,7 @@
                 {% csrf_token %}
                 <!-- Sign In Title with Horizontal Lines -->
                 <div class="sign-in-title">
-                    <span>Create Account</span>
+                    <span>Create New User</span>
                 </div>
 
                 <div class="card">
