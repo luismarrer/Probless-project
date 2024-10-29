@@ -10,8 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Probless Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rhodium+Libre:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="{% static 'css/style-dashboard.css' %}">
 </head>
 
@@ -20,7 +18,7 @@
     body {
         height: 100%;
         margin: 0;
-        font-family: 'Rhodium Libre', serif;
+
     }
 
     .split-container {
@@ -132,7 +130,7 @@
         <!-- Bottom Half -->
         <div class="bottom-half">
             <div class="container-fluid mt-3">
-                <h5 class="managing-ticket">Tickets To Manage</h5>
+                <h5 class="managing-ticket">My Tickets</h5>
                 {% if tickets %}
                 <div class="scrollable-content">
                     <div class="row mt-5 justify-content-center">
@@ -154,7 +152,7 @@
                         <div class="col-1 text-black text-center">{{ ticket.priority }}</div>
                         <div class="col-2 text-black text-center">{{ ticket.name }}</div>
                         <div class="col-2 text-black text-center">{{ ticket.title }}</div>
-                        <div class="col-1 text-black text-center">{{ ticket.date }}</div>
+                        <div class="col-1 text-black text-center">{{ ticket.created_at }}</div>
                         <div class="col-2 text-black text-center">{{ ticket.department }}</div>
                         <div class="col-1 text-black text-center">#{{ ticket.id }}</div>
                         <hr style="width: 90%; margin: 20px auto;">

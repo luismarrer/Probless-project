@@ -26,7 +26,7 @@ class DashboardView(LoginRequiredMixin, View):
     def get(self, request, workspace_name, department_name):
         try:
             # Buscar el departamento al que pertenece el usuario y obtener el workspace
-            department = Department.objects.get(name=department_name, workspace_id__name=workspace_name, user=request.user)
+            department = Department.objects.get(name=department_name, workspace_id__name=workspace_name)
 
             # Asegurarse de que el usuario esté en el departamento
             if not request.user.is_owner and request.user.dept != department:
@@ -143,7 +143,8 @@ def get_ai_solution(description):
         response = client.chat.completions.create(
             model="gpt-4-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistan taht solves problem from users tickets"},
+                {"role": "system", "content": """You are a helpful assistan taht solves problem from users tickets.
+                                                Your answer can. Your answer should not be more than 5 solutions, try not to be more than 130 words"""},
                 {"role": "user", "content": description},
             ],
         )
