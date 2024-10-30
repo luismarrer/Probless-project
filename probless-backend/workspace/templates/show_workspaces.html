@@ -3,24 +3,26 @@
 {% block title %}Workspaces{% endblock %}
 
 {% block content %}
-<div class="container-fluid mt-3">
-    <h1>Workspaces</h1>
-    
-    <!-- Button to create a new workspace -->
-    
-    <div class="row mt-4 text-black">
-      {% csrf_token %}
-      {% for workspace in workspaces %}
-      <div class="card mx-3 col" style="width: 19rem;">
-        <a class="card-body" href="{% url 'workspace_detail' workspace.id %}">
-          <h5 class="card-title">{{ workspace.name }}</h5>
-          <p class="card-text">{{ workspace.description }}</p>
-        </a>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-  <a href="{% url 'create_workspace' %}" class="btn custom-btn nav-link d-flex justify-content-center text-white mt-4" style="max-width: 200px; width: fit-content; margin-left: 20px;padding: 10px; white-space: nowrap; background: #2a309c;">
-      Create New Workspace
-  </a>
-  {% endblock %}
+	<div class="container mt-5">
+		<h2>Workspaces</h2>
+		<div class="d-flex flex-wrap mt-4">
+			<ul class="list-group list-group-horizontal-sm list-unstyled">
+				{% for workspace in workspaces %}
+					<li class="mx-2 my-2 card workspace">
+						<a href="{% url 'workspace_detail' workspace.id %}" class="text-decoration-none h-100 w-100 ">
+							<div class="card-title">
+								<h3 class="workspace-title">{{ workspace.name }}</h3>
+							</div>
+						</a>
+					</li>
+				{% endfor %}
+				<!-- Card to Create New Workspace -->
+				<li class="mx-2 my-2 card text-bg-secondary workspace">
+					<a href="{% url 'create_workspace' %}" class="text-decoration-none workspace-title text-center text-white h-100 w-100 d-flex align-items-center justify-content-center">
+						Create Workspace
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}

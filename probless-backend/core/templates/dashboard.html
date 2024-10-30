@@ -1,135 +1,52 @@
 {% extends 'layout.html' %}
 {% load static %}
 
+{%block title%}{{ department.name }}{%endblock%}
+
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Probless Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style-dashboard.css' %}">
-</head>
-
-<style>
-    html,
-    body {
-        height: 100%;
-        margin: 0;
-
-    }
-
-    .split-container {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-    }
-
-    .top-half,
-    .bottom-half {
-        height: 50%;
-        overflow-y: auto;
-    }
-
-    .top-half {
-        background-color: #cccccc;
-    }
-
-    .bottom-half {
-        background-color: white;
-    }
-
-    .scrollable-content {
-        max-height: calc(100% - 50px);
-        padding: 10px;
-    }
-
-    .btn {
-        background-color: transparent;
-        border: none;
-        border-bottom: 2px solid rgba(194, 78, 217, 0.7);
-        color: rgba(194, 78, 217, 1);
-        padding: 5px 10px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .ticket-row div {
-        position: relative;
-    }
-
-    .ticket-row div:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100%;
-        width: 1px;
-        background-color: #000;
-        z-index: 1;
-    }
-
-    .status-circle {
-        width: 18px;
-        height: 18px;
-        background-color: orange;
-        display: inline-block;
-    }
-
-    .managing-ticket {
-        font-size: 1.5rem;
-        color: #000;
-    }
-</style>
-
-<body>
     <div class="split-container">
         <!-- Top Half -->
         {% if user.role == 'admin' %}
-        <div class="top-half">
-            <div class="container-fluid mt-3">
-                <div class="scrollable-content">
-                    <h5 class="managing-ticket pt-5 mt-5">Tickets To Manage</h5>
-                    {% if tickets_department %}
-                    <div class="row mt-5 justify-content-center">
-                        <div class="col-1 text-black text-center">Status</div>
-                        <div class="col-1 text-black text-center">Priority</div>
-                        <div class="col-2 text-black text-center">Name</div>
-                        <div class="col-2 text-black text-center">Title</div>
-                        <div class="col-1 text-black text-center">Date</div>
-                        <div class="col-2 text-black text-center">Department</div>
-                        <div class="col-1 text-black text-center">ID</div>
-                    </div>
-                    <!-- Ticket entries -->
-                    {% for ticket_department in tickets_department %}
-                    <div class="row mt-4 ticket-row justify-content-center">
-                        <div class="col-1 text-black align-items-center">
-                            <!--div class="status-circle rounded-circle-5 me-2"></div-->
-                            {{ ticket_department.status }}
-                        </div>
-                        <div class="col-1 text-black text-center">{{ ticket_department.priority }}</div>
-                        <div class="col-2 text-black text-center">{{ ticket_department.name }}</div>
-                        <div class="col-2 text-black text-center">{{ ticket_department.title }}</div>
-                        <div class="col-1 text-black text-center">{{ ticket_department.date }}</div>
-                        <div class="col-2 text-black text-center">{{ ticket_department.department }}</div>
-                        <div class="col-1 text-black text-center">#{{ ticket_department.id }}</div>
-                        <hr style="width: 90%; margin: 20px auto;">
-                    </div>
-                    {% endfor %}
-                    {% else %}
-                    <p>No tickets.</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+			<div class="top-half">
+				<div class="container">
+					<div class="scrollable-content">
+						<h5 class="managing-ticket mt-4">Tickets To Manage</h5>
+						{% if tickets_department %}
+						<div class="row mt-5 justify-content-center">
+							<div class="col-1 text-black text-center">Status</div>
+							<div class="col-1 text-black text-center">Priority</div>
+							<div class="col-2 text-black text-center">Name</div>
+							<div class="col-2 text-black text-center">Title</div>
+							<div class="col-1 text-black text-center">Date</div>
+							<div class="col-2 text-black text-center">Department</div>
+							<div class="col-1 text-black text-center">ID</div>
+						</div>
+						<!-- Ticket entries -->
+						{% for ticket_department in tickets_department %}
+						<div class="row mt-4 ticket-row justify-content-center">
+							<div class="col-1 text-black align-items-center">
+								<!--div class="status-circle rounded-circle-5 me-2"></div-->
+								{{ ticket_department.status }}
+							</div>
+							<div class="col-1 text-black text-center">{{ ticket_department.priority }}</div>
+							<div class="col-2 text-black text-center">{{ ticket_department.name }}</div>
+							<div class="col-2 text-black text-center">{{ ticket_department.title }}</div>
+							<div class="col-1 text-black text-center">{{ ticket_department.date }}</div>
+							<div class="col-2 text-black text-center">{{ ticket_department.department }}</div>
+							<div class="col-1 text-black text-center">#{{ ticket_department.id }}</div>
+							<hr style="width: 90%; margin: 20px auto;">
+						</div>
+						{% endfor %}
+						{% else %}
+						<p>No tickets.</p>
+						{% endif %}
+					</div>
+				</div>
+			</div>
         {% endif %}
-
         <!-- Bottom Half -->
         <div class="bottom-half">
-            <div class="container-fluid mt-3">
+            <div class="container mt-3">
                 <h5 class="managing-ticket">My Tickets</h5>
                 {% if tickets %}
                 <div class="scrollable-content">
@@ -182,7 +99,4 @@
         <button class="btn custom-btn mt-2 text-white" style="background: #2a309c; margin-left: 20px;">Delete Department</button>
     </form>
     {% endif %}
-</body>
-
-</html>
 {% endblock %}

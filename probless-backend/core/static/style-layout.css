@@ -32,9 +32,4 @@ body {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(rgba(194, 78, 217), rgba(181, 91, 130));
-    color: #fff;
-}
-.btn-sm {
-background-color: #ca7cde;
 }

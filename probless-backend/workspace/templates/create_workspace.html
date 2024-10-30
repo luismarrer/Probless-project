@@ -1,31 +1,33 @@
 {% extends 'layout.html' %}
-
-{% block title %}Create Workspace{% endblock %}
+{% block title %}Create a Workspace{% endblock %}
 
 {% block content %}
-	<div class="text-white container">
-		<h4 class="mt-5 pt-5 text-white">Create Workspace</h4>
-		<form method="POST">
-			{{error}}
-			{% csrf_token %}
-			<p>
-		<label for="id_name">Name:</label>
-		<input type="text" name="name" maxlength="255" required="" id="id_name">
-		
-		
-		</p>
-
-		
-		<p>
-		<label for="id_description">Description:</label>
-		<textarea name="description" cols="40" rows="10" required="" id="id_description"></textarea>
-		
-		
-			
-		
-		</p>
-			<button type="submit">Create</button>
-		</form>
-	</form>
+	<div class="d-flex align-items-center pt-5">
+		<div class="container h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-12 col-md-9 col-lg-7 col-xl-6">
+					<div class="card forms"> 
+						<div class="card-body p-5">
+							<h2 class="text-uppercase text-center mb-5">Create Your Workspace</h2>
+							<form method="POST" action="{% url 'create_workspace' %}">
+								{% csrf_token %}
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example3cg">Workspace Name</label>
+									{{ form.name }}
+								</div>
+								<div class="form-outline mb-4">
+									<label class="form-label form-label-lg" for="form3Example2cg">Description</label>
+									{{ form.description }}
+								</div>
+								<div class="d-flex justify-content-end">
+									<button type="button" class="btn" onclick="window.history.back();">Cancel</button>
+									<button type="submit" class="btn btn-primary">Create</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-{% endblock %}
+{% endblock content %}

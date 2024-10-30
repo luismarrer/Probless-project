@@ -56,7 +56,8 @@ class UserLoginView(View):
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect('login')  # Redirect to login after log out
+        # Redirect to login after log out
+        return redirect('login')  
 
 
 @method_decorator(login_required, name='dispatch')

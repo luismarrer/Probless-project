@@ -7,6 +7,7 @@ from .models import Ticket
 from .forms import TicketForm
 from workspace.models import Department, Workspace
 from openai import OpenAI
+import re
 
 
 # OpenAI client
@@ -77,11 +78,21 @@ def create_ticket(request, workspace_id, department_id):
             description = form.cleaned_data["description"]
             ai_response = get_ai_solution(description)
 
+            processed_response = []
+            for line in ai_response.splitlines():
+                line = line.strip()  # Limpiar espacios en blanco
+                if re.match(r'^\s*[\*\-•]\s*', line) or re.match(r'^\s*\d+\.\s*', line):
+                    processed_response.append(f"<li>{line}</li>")  # Convertir bullet a elemento de lista
+                elif line:  # Si no está vacío, lo agrega como párrafo
+                    processed_response.append(f"<p>{line}</p>")
+                
+            full_response = "<br/>".join(processed_response)
+
             return render(request, 'create_ticket.html', {
                 'form': form,
                 'workspace_name': workspace.id,
                 'department_name': department.id,
-                'ai_response': ai_response,
+                'ai_response': full_response,
             })
 
         if form.is_valid():
@@ -152,7 +163,8 @@ def get_ai_solution(description):
             model="gpt-4-turbo",
             messages=[
                 {"role": "system", "content": """You are a helpful assistan taht solves problem from users tickets.
-                                                Your answer can. Your answer should not be more than 5 solutions, try not to be more than 130 words"""},
+                                                 Make the user feel that you are concerned about their problem.  There is no follow-up on the issue.
+                                                 Your answer should not be more than 6 solutions, try not to be more than 130 words"""},
                 {"role": "user", "content": description},
             ],
         )
