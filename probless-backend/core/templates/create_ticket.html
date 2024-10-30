@@ -2,23 +2,105 @@
 
 
 {% block content %}
-    <form method="POST">
-        <h1 class="mt-5 pt-5">Create Ticket</h1>
-        {% if error %}
-            <div class="error">{{ error }}</div>
-        {% endif %}
-        {% csrf_token %}
-        {{ form.as_p }}
 
-        <button type="submit">Create</button>
-        <button type="submit" name="use_ai" class="btn btn-secondary">Use AI</button>
-        <button type="button" class="btn btn-secondary" onclick="window.history.back();">Cancel</button>  <!-- Botón que utiliza JavaScript -->
-    </form>
 
-    {% if ai_response %}
-        <div class="ai_response mt-4">
-            <h4>AI Suggested Solution:</h4>
-            <p>{{ ai_response }}
-    {% endif %}
+<link rel="stylesheet" href="{% static 'style-ticket.css' %}">
+
+
+<section class="vh-100 bg-image" style="background-color: #E7E0EC;">
+   <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+       <div class="container h-100 mt-5 pt-5">
+           <div class="row d-flex justify-content-center align-items-center h-100">
+               <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                   <div class="card" style="border-radius: 15px;">
+                       <div class="card-body p-5">
+                           <h2 class="text-uppercase text-center mb-5">Create Ticket</h2>
+
+
+                           <form id="ticket-form" method="POST">
+                               {% if error %}
+                                   <div class="error">{{ error }}</div>
+                               {% endif %}
+
+
+                               {% csrf_token %}
+
+
+                               <div class="form-outline mb-4">
+                                   {{ form.title.label }}
+                                   {{ form.title }}
+                               </div>
+
+
+                               <div class="form-outline mb-4">
+                                   {{ form.description.label }}
+                                   {{ form.description }}
+                               </div>
+
+
+                               <div class="row">
+                                   <div class="col-md-6 mb-4">
+                                       <div class="form-outline">
+                                           {{ form.priority.label }}
+                                           {{ form.priority }}
+                                       </div>
+                                   </div>
+                                   <div class="col-md-6 mb-4">
+                                       <div class="form-outline">
+                                           {{ form.assigned_department_id.label }}
+                                           {{ form.assigned_department_id }}
+                                       </div>
+                                   </div>
+                               </div>
+
+
+                               <div class="row justify-content-between mt-4">
+                                   <div class="col-md-3">
+                                       <button type="submit" class="btn btn-primary btn-block btn-lg text-white">Create</button>
+                                   </div>
+
+
+                                   <div class="col-md-3 text-end">
+                                       <button type="button" class="btn btn-secondary btn-block btn-lg text-white" onclick="window.history.back();">Cancel</button>
+                                   </div>
+                               </div>
+                           </form>
+
+
+                           {% if ai_response %}
+                               <div class="ai_response mt-4">
+                                   <h4>AI Suggested Solution:</h4>
+                                   <p>{{ ai_response }}</p>
+                               </div>
+                           {% endif %}
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</section>
+
+
+<div class="floating-button text-center">
+   <h2>Want to get suggested solutions?</h2>
+   <button type="button" class="btn btn-primary btn-lg text-white mt-5" onclick="useAI()">Use AI</button>
+</div>
+
+
+<script>
+   function useAI() {
+       const form = document.getElementById('ticket-form');
+       const useAIInput = document.createElement('input');
+       useAIInput.type = 'hidden';
+       useAIInput.name = 'use_ai';
+       form.appendChild(useAIInput);
+       form.submit();
+   }
+</script>
+
 
 {% endblock %}
+
+
+
