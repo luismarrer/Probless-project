@@ -4,8 +4,8 @@
 {% block content %}
 
 
-<div class="container-fluid mt-5 pt-5">
-    <h1 class="text-white">Workspaces</h1>
+<div class="container-fluid mt-3">
+    <h1>Workspaces</h1>
     <div class="row mt-4">
         <div class="card mx-3 col" style="width: rem;">
             <h1 class="mt-2 p-2">{{ workspace.name }}</h1>
@@ -16,7 +16,7 @@
             <ul>
                 {% for department in departments %}
                     <li>
-                        <a href="{% url 'dashboard' workspace_name=workspace.name department_name=department.name %}" class='nav-link'>
+                        <a href="{% url 'dashboard' workspace.id department.id %}" class='nav-link'>
                             <h2>{{ department.name }}</h2>
                             <p>{{ department.description }}</p>
                         </a>

@@ -1,8 +1,7 @@
-html, body {
+body {
     height: 100%;
     margin: 0;
     font-family: 'Poppins', serif;
-    background: linear-gradient(rgba(214, 116, 219), rgba(228, 206, 237));
 }
 
 #mainNav {
@@ -20,7 +19,6 @@ html, body {
 }
 
 .navbar-brand {
-    font-family: 'Poppins', serif;
     font-weight: bold;
     font-size: 2rem;
 }
