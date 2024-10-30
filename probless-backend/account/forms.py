@@ -56,11 +56,10 @@ class CreateUserForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['password1'].widget.attrs.update({'class': 'form-control form-control-lg'})
         self.fields['password2'].widget.attrs.update({'class': 'form-control form-control-lg'})
-        # Filtrar departamentos por el usuario proporcionado
+
         if user:
             self.fields['dept'].queryset = Department.objects.filter(user=user)
 
-            # Personalizar la forma en que los departamentos se muestran en el formulario
         self.fields['dept'].label_from_instance = self.format_department_label
 
 
