@@ -13,7 +13,6 @@ from django.views.decorators.csrf import csrf_protect
 # Owner sign up view
 class OwnerSignupView(View):
     def get(self, request):
-        print('Hola')
         form = OwnerSignupForm
         return render(request, 'signup_owner.html', {'form': form})
 

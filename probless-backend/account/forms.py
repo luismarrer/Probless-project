@@ -9,18 +9,18 @@ class OwnerSignupForm(UserCreationForm):
         model = CustomUser
         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm Password'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+            'username': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control form-control-lg'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control form-control-lg'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Password'})
-        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Confirm Password'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control form-control-lg'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control form-control-lg'})
 
     def save(self, commit=True):
         user = super().save(commit = False)
@@ -31,12 +31,10 @@ class OwnerSignupForm(UserCreationForm):
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Username'
+        'class': 'form-control form-control-lg'
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'password'
+        'class': 'form-control form-control-lg'
     }))
 
 class CreateUserForm(UserCreationForm):
@@ -44,20 +42,20 @@ class CreateUserForm(UserCreationForm):
         model = CustomUser
         fields = ['first_name', 'last_name', 'username', 'email', 'role', 'dept', 'password1', 'password2']
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
-            'role': forms.Select(attrs={'class': 'form-control'}),  # Select para 'role'
-            'dept': forms.Select(attrs={'class': 'form-control'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm Password'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+            'username': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg'}),
+            'role': forms.Select(attrs={'class': 'form-control form-control-lg'}),  # Select para 'role'
+            'dept': forms.Select(attrs={'class': 'form-control form-control-lg'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control form-control-lg'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control form-control-lg'}),
         }
 
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Password'})
-        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Confirm Password'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control form-control-lg'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control form-control-lg'})
         # Filtrar departamentos por el usuario proporcionado
         if user:
             self.fields['dept'].queryset = Department.objects.filter(user=user)
