@@ -8,10 +8,10 @@ from .forms import TicketForm
 from workspace.models import Department, Workspace
 from openai import OpenAI
 
-# Create your views here.
 
 # OpenAI client
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
+
 
 def home(request):
     return render(request, 'home.html')
@@ -19,23 +19,28 @@ def home(request):
 
 # Dashboard view
 class DashboardView(LoginRequiredMixin, View):
-    login_url = '/login/'  # Redirige a esta URL si no está autenticado
-    # Opción para redirigir al usuario después de autenticarse
+    # Redirect to this URL if it is not authenticated
+    login_url = '/login/'
+
+    # Option to redirect the user after authenticating
     redirect_field_name = 'next'
 
-    def get(self, request, workspace_name, department_name):
+    def get(self, request, workspace_id, department_id):
         try:
-            # Buscar el departamento al que pertenece el usuario y obtener el workspace
-            department = Department.objects.get(name=department_name, workspace_id__name=workspace_name)
+            # Find the department to which the user belongs
+            department = Department.objects.get(
+                id=department_id, workspace_id=workspace_id)
 
-            # Asegurarse de que el usuario esté en el departamento
+            # Make sure the user is in the department
             if not request.user.is_owner and request.user.dept != department:
-                return redirect('error_page')  # Puedes redirigir a una página de error si el usuario no pertenece
+                return redirect('error_page')
 
-            workspace = department.workspace_id  # Obtener el workspace del departamento
-            tickets = Ticket.objects.filter(user_id=request.user).exclude(status='Closed')
-            tickets_department = Ticket.objects.filter(assigned_department_id=department).exclude(status='Closed')
-
+			# Get the department workspace
+            workspace = department.workspace_id  
+            tickets = Ticket.objects.filter(
+                user_id=request.user).exclude(status='Closed')
+            tickets_department = Ticket.objects.filter(
+                assigned_department_id=department).exclude(status='Closed')
 
             return render(request, 'dashboard.html',
                           {
@@ -46,6 +51,7 @@ class DashboardView(LoginRequiredMixin, View):
                           })
         except Department.DoesNotExist:
             return redirect('error_page')
+
 
 # Ticket view
 @login_required
@@ -73,8 +79,8 @@ def create_ticket(request, workspace_id, department_id):
 
             return render(request, 'create_ticket.html', {
                 'form': form,
-                'workspace_name': workspace.name,
-                'department_name': department.name,
+                'workspace_name': workspace.id,
+                'department_name': department.id,
                 'ai_response': ai_response,
             })
 
@@ -84,16 +90,15 @@ def create_ticket(request, workspace_id, department_id):
                 new_ticket = form.save(commit=False)
                 new_ticket.user_id = request.user
                 new_ticket.save()
-                return redirect('dashboard', workspace_name=workspace.name, department_name=department.name)
+                return redirect('dashboard', workspace_id=workspace.id, department_id=department.id)
             except ValueError:
                 return render(request, 'create_ticket.html',
-                            {
-                                    'form': form,
-                                    'workspace_name': workspace.name,
-                                    'department_name': department.name,
-                                    'error': 'Bad data passed in. Try again',
-                            })
-
+                              {
+                                  'form': form,
+                                  'workspace_name': workspace.name,
+                                  'department_name': department.name,
+                                  'error': 'Bad data passed in. Try again',
+                              })
 
 
 @login_required
@@ -108,7 +113,8 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
         if request.method == 'POST':
             # Lógica para manejar el ticket (solo para admins)
             documentation = request.POST.get('documentation')
-            ticket.documentation = documentation  # Asegúrate de que el campo exista en el modelo Ticket
+            # Asegúrate de que el campo exista en el modelo Ticket
+            ticket.documentation = documentation
             ticket.status = 'Closed'  # O cualquier lógica que necesites
             ticket.save()
 
@@ -124,17 +130,19 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
             'error': 'You do not have permission to manage this ticket.'
         })
 
+@login_required
 def tickets_history(request, workspace_id, department_id):
     workspace = Workspace.objects.filter(id=workspace_id)
-    department = Department.objects.get(id=department_id, workspace_id=workspace_id)
-    closed_tickets = Ticket.objects.filter(user_id=request.user, status='Closed', assigned_department_id=department)
+    department = Department.objects.get(
+        id=department_id, workspace_id=workspace_id)
+    closed_tickets = Ticket.objects.filter(
+        user_id=request.user, status='Closed', assigned_department_id=department)
 
     return render(request, 'tickets_history.html', {
         'closed_tickets': closed_tickets,
         'workspace_name': workspace,
         'department_name': department.name,
     })
-
 
 
 def get_ai_solution(description):
@@ -151,3 +159,7 @@ def get_ai_solution(description):
         return response.choices[0].message.content
     except Exception as e:
         return f"Error in AI processing: {str(e)}"
+
+
+def error(request):
+	return render(request, 'error_page.html')

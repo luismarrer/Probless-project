@@ -8,13 +8,19 @@
 		<!-- stylesheets -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="{% static 'css/style-layout.css' %}" />
+		<link rel="stylesheet" href="{% static 'style-layout.css' %}" />
 	</head>
 	<body>
 		<!-- Navigation Bar -->
 		<nav class="navbar navbar-expand-lg navbar-light py-3 navbar-shrink" id="mainNav">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="{% url 'show_workspaces' %}">Probless</a>
+				{% if user.is_owner %}
+					<a class="navbar-brand" href="{% url 'show_workspaces' %}">Probless</a>
+				{% elif not user.is_owner and workspace and department%}
+					<a class="navbar-brand" href="#">Probless</a>
+				{% else %}
+					<a class="navbar-brand" onclick="window.history.back();">Probless</a>
+				{% endif %}
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>

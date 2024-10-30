@@ -18,14 +18,10 @@ class OwnerSignupView(View):
 
     def post(self, request):
         form = OwnerSignupForm(request.POST)
-        print('Antes del is-valid()')
         if form.is_valid():
             user = form.save()
             login(request, user)
-            print(f'Usuario logueado: {user}')
-            # Redirect to dashboard after sign up succesfully
             return redirect('show_workspaces')
-        print(form.errors)
         return render(request, 'signup_owner.html', {'form': form})
 
 
@@ -45,17 +41,14 @@ class UserLoginView(View):
                 login(request, user)
 
                 if hasattr(user, 'is_owner') and user.is_owner:
-
-                    return redirect('show_workspaces') # Redirect to dashboard after login succesfully
+                    return redirect('show_workspaces')
 
                 department = user.dept
-                workspace_name = department.workspace_id.name
-                department_name = department.name
+                workspace_id = department.workspace_id.id
+                department_id = department.id
 
-                if workspace_name and department_name:
-
-                    return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)
-
+                if workspace_id and department_id:
+                    return redirect('dashboard', workspace_id=workspace_id, department_id=department_id)
         return render(request, 'login.html', {'form': form})
 
 
@@ -73,12 +66,13 @@ class CreateUserView(View):
         if not request.user.is_owner:
             department = request.user.dept
             if department is None:
-                messages.error(request, 'No department assigned to your account.')
+                messages.error(
+                    request, 'No department assigned to your account.')
                 return redirect('assign_department_page')
 
-            workspace_name = department.workspace_id.name
-            department_name = department.name
-            return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)
+            workspace_id = department.workspace_id.id
+            department_id = department.id
+            return redirect('dashboard', workspace_id=workspace_id, department_id=department_id)
 
         user = CustomUser.objects.get(id=request.user.id)
         form = CreateUserForm(user=user)
@@ -89,22 +83,24 @@ class CreateUserView(View):
             department = request.user.dept
             if department is None:
                 return redirect('error_page')
-            workspace_name = department.workspace_id.name
-            department_name = department.name
+            workspace_id = department.workspace_id.id
+            department_id = department.id
 
-            return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)  # Redirect to dashboard if not owner
+            # Redirect to dashboard if not owner
+            return redirect('dashboard', workspace_id=workspace_id, department_id=department_id)
 
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_owner = False  # Ensures that the user is not an owner
+            # Ensures that the user is not an owner
+            user.is_owner = False  
             user.save()
 
             department = user.dept
-            workspace_name = department.workspace_id.name
-            department_name = department.name
+            workspace_id = department.workspace_id.id
+            department_id = department.id
 
-            return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)
+            return redirect('dashboard', workspace_id=workspace_id, department_id=department_id)
         return render(request, 'create_user.html', {'form': form})
 
 
@@ -130,6 +126,7 @@ def update_user(request, user_id):
 
     return render(request, 'update_user.html', {'form': form, 'user': user})
 
+
 @login_required
 def delete_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
@@ -151,7 +148,8 @@ def change_password(request, user_id):
             new_password = form.cleaned_data['new_password']
             user.set_password(new_password)
             user.save()
-            return redirect('update_user', user_id=user.id)  # Redirige de nuevo al perfil de usuario
+            # Redirige de nuevo al perfil de usuario
+            return redirect('update_user', user_id=user.id)
     else:
         form = ChangePasswordForm()
 
