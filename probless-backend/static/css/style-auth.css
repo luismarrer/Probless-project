@@ -1,0 +1,16 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.gradient-custom-3 {
+    /* fallback for old browsers */
+    background: #f1f1f1 !important;
+
+    }
+
+.custom-button-auth {
+
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: #4d9afd !important;
+color: white;
+}
