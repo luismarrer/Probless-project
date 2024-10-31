@@ -1,18 +1,48 @@
 {% extends "layout.html" %}
 
-{% block content %}
-<h2 class="mt-5 pt-5 text-white">Users managed by {{ owner.username }}</h2>
+{% block title %}Users{% endblock %}
 
-{% if users %}
-<ul>
-    {% for user in users %}
-        <li>{{user.dept.name}} - {{user.first_name}} {{user.last_name}} ({{ user.username }})
-            <a href="{% url 'update_user' user.id %}"> Update |</a>
-            <a href="{% url 'delete_user' user.id %}"> Delete</a>
-        </li>
-    {% endfor %}
-</ul>
-{% else %}
-    <p class="text-white">No users found for this owner.</p>
-{% endif %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mt-5 pt-5">Users managed by {{ owner.username }}</h2>
+    
+    {% if users %}
+    <ul>
+        <div class="table-responsive-sm">
+            <table class="table table-light caption-top table-hover">
+                <caption>Users</caption>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for user in users %}
+                        <tr onclick="window.location.href='{% url "update_user" user.id %}'">
+                            <td>
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="event.stopPropagation(); 
+                                                            if(confirm('Are you sure want to delete {{ user.username }}?')) { 
+                                                                window.location.href='{% url "delete_user" user.id %}';}">
+                                    delete
+                                </button>
+                                {{ user.first_name }} {{ user.last_name }}
+                            </td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.dept }}</td>
+                            <td>{{ user.role }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    </ul>
+    {% else %}
+        <p>No users found for this owner.</p>
+    {% endif %}
 {% endblock %}
+</div>

@@ -1,10 +1,14 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{%block title%}{{ department.name }}{%endblock%}
+{% block title %}{{ department.name }}{% endblock %}
 
 {% block content %}
-    <div class="split-container">
+    <div class="container mt-5">
+		<div>
+			<h2>{{ department.name }}</h2>
+			<p>{{ department.description }}</p>
+		</div>
         <!-- Top Half -->
         {% if user.role == 'admin' %}
 			<div class="top-half">
@@ -47,56 +51,48 @@
         <!-- Bottom Half -->
         <div class="bottom-half">
             <div class="container mt-3">
-                <h5 class="managing-ticket">My Tickets</h5>
+				<div>
+                	<h3>My Tickets</h3>
+					<a href="">see all</a>
+				</div>
                 {% if tickets %}
-                <div class="scrollable-content">
-                    <div class="row mt-5 justify-content-center">
-                        <div class="col-1 text-black text-center">Status</div>
-                        <div class="col-1 text-black text-center">Priority</div>
-                        <div class="col-2 text-black text-center">Name</div>
-                        <div class="col-2 text-black text-center">Title</div>
-                        <div class="col-1 text-black text-center">Date</div>
-                        <div class="col-2 text-black text-center">Department</div>
-                        <div class="col-1 text-black text-center">ID</div>
-                    </div>
-                    <!-- Ticket entries -->
-                    {% for ticket in tickets %}
-                    <div class="row mt-4 ticket-row justify-content-center">
-                        <div class="col-1 text-black align-items-center">
-                            <!--div class="status-circle rounded-circle me-2"></di-->
-                            {{ ticket.status }}
-                        </div>
-                        <div class="col-1 text-black text-center">{{ ticket.priority }}</div>
-                        <div class="col-2 text-black text-center">{{ ticket.name }}</div>
-                        <div class="col-2 text-black text-center">{{ ticket.title }}</div>
-                        <div class="col-1 text-black text-center">{{ ticket.created_at }}</div>
-                        <div class="col-2 text-black text-center">{{ ticket.department }}</div>
-                        <div class="col-1 text-black text-center">#{{ ticket.id }}</div>
-                        <hr style="width: 90%; margin: 20px auto;">
-                    </div>
+					<ol class="list-group list-group-horizontal-sm list-unstyled">				
+                    {% for ticket in tickets|slice:":4" %}
+						<li class="mx-2 my-2 ticket card mb-3">
+							<a href="{% url 'ticket_detail' workspace.id department.id ticket.id %}">
+								<div class="row g-0">
+									<div class="col-md-4">
+									</div>
+									<div class="col-md-8">
+										<div class="card-body">
+											<h5 class="card-title">{{ ticket.title }}</h5>
+											<p class="card-text">{{ ticket.description }}</p>
+											<p class="card-text"><small class="text-body-secondary">{{ ticket.created_at|date:"SHORT_DATE_FORMAT" }}</small></p>
+										</div>
+									</div>
+								</div>
+							</a>
+						</li>
                     {% endfor %}
-                </div>
+					</ol>
                 {% else %}
-                <p>No tickets.</p>
+                	<p>No tickets.</p>
                 {% endif %}
-            </div>
+			</div>
         </div>
+		<!-- Buttons -->
+		<div class="d-flex justify-content-end">
+			{% if user.is_owner %}
+			<a href="{% url 'delete_department' workspace.id department.id %}" class="btn btn-danger mt-2 mx-1">
+				Delete Department
+			</a>
+			<a href="{% url 'update_department' workspace.id department.id %}" class="btn btn-primary mt-2 mx-1" >
+				Update Department
+			</a>
+			{% endif %}
+			<a href="{% url 'create_ticket' workspace.id department.id %}" class="btn btn-primary mt-2 mx-1" >
+				Create a new ticket
+			</a>
+		</div>
     </div>
-
-    <button class="btn mt-2 text-white" style="background: #2a309c; margin-left: 20px;" onclick="window.location='{% url 'create_ticket' workspace.id department.id %}'">
-        Create a new ticket
-    </button>
-
-    {% if user.is_owner %}
-    <!-- Button to update workspace -->
-    <button class="btn custom-btn mt-2 text-white" style="background: #2a309c; margin-left: 20px;" onclick="window.location='{% url 'update_department' workspace.id department.id %}'">
-        Update Department
-    </button>
-
-    <!-- Button to delete workspace -->
-    <form method="POST" action="{% url 'delete_department' workspace.id department.id %}">
-        {% csrf_token %}
-        <button class="btn custom-btn mt-2 text-white" style="background: #2a309c; margin-left: 20px;">Delete Department</button>
-    </form>
-    {% endif %}
 {% endblock %}

@@ -115,28 +115,28 @@ def owner_users_view(request):
 @login_required
 @csrf_protect
 def update_user(request, user_id):
-    user = get_object_or_404(CustomUser, id=user_id)
+    user_to_update = get_object_or_404(CustomUser, id=user_id)
 
     if request.method == 'POST':
-        form = UpdateUserForm(request.POST, instance=user)
+        form = UpdateUserForm(request.POST, user=request.user, instance=user_to_update)
         if form.is_valid():
             form.save()
             return redirect('show_users')
     else:
-        form = UpdateUserForm(instance=user)
+        form = UpdateUserForm(user=request.user, instance=user_to_update)
 
-    return render(request, 'update_user.html', {'form': form, 'user': user})
+    return render(request, 'update_user.html', {'form': form, 'user': user_to_update})
 
 
 @login_required
 def delete_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
 
-    if request.method == 'POST':
+    if user:
         user.delete()
         return redirect('show_users')
 
-    return render(request, 'delete_user.html', {'user': user})
+    return render(request, 'show_users.html', {'user': user})
 
 
 @login_required

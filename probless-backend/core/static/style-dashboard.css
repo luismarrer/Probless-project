@@ -4,7 +4,6 @@
     height: 100vh;
 }
 
-
 .top-half,
 .bottom-half {
     height: 50%;
@@ -17,23 +16,17 @@
     overflow-y: auto;
 }
 
-
-
 .bottom-half {
     height: 50%;
     background-color: white;
-    color: white;
     overflow-y: auto;
 
 }
 
-.scrollable-content {
-    max-height: calc(100% - 50px);
-    /* Adjust as needed for header space */
-
-    /* Enables scrolling for the content area */
-    padding: 10px;
-
+.ticket {
+	width: 331.06px;
+	height: 152px;
+	overflow: hidden;
 }
 
 .custom-row {
@@ -42,35 +35,29 @@
     gap: 10px;
 }
 
-
 .custom-row>[class*='col-'] {
     padding-right: 0;
     padding-left: 0;
 }
-
 
 .border-bottom {
     border-bottom: 1px solid #303030;
     /* Adjust color as needed */
 }
 
-
 .mb-0 {
     margin-bottom: 0;
 }
-
 
 .ms-2 {
     margin-left: 0.5rem;
     /* Adjust spacing as needed */
 }
 
-
 .d-flex.align-items-center {
     height: 80px;
     /* Ensure the height matches the status square */
 }
-
 
 .vertical-divider {
     width: 1px;
@@ -78,23 +65,19 @@
     background-color: #000;
 }
 
-
 .col-2 p {
     margin-bottom: 0;
     padding-left: 0;
 }
 
-
 .col-2 .d-flex {
     margin-bottom: 0.5rem;
 }
-
 
 hr {
     color: black;
     margin: 20px auto;
 }
-
 
 .status-circle {
     width: 18px;
@@ -103,11 +86,9 @@ hr {
     display: inline-block;
 }
 
-
 .ticket-row div {
     position: relative;
 }
-
 
 .ticket-row div:not(:last-child)::after {
     content: '';
@@ -121,7 +102,6 @@ hr {
     /* Color of the vertical line */
     z-index: 1;
 }
-
 
 .managing-ticket {
     font-size: 1.5rem;
@@ -138,5 +118,3 @@ hr {
 	background-color: #000;
 	z-index: 1;
 }
-
-

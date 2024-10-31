@@ -7,13 +7,15 @@ class WorkspaceForm(forms.ModelForm):
 		fields = ['name', 'description']
 		widgets = {
 			'name': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
-			'description': forms.Textarea(attrs={
-										'class': 'form-control form-control-sm',
-										 	}),
+			'description': forms.Textarea(attrs={'class': 'form-control form-control-sm'}),
 			}
 
 class DepartmentForm(forms.ModelForm):
 	class Meta:
 		model = Department
 		fields = ['name', 'description']
+		widgets = {
+			'name': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+			'description': forms.Textarea(attrs={'class': 'form-control form-control-sm',}),
+			}
 

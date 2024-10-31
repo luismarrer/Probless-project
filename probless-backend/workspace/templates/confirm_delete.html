@@ -1,6 +1,0 @@
-<form method="POST">
-    {% csrf_token %}
-    <p>Are you sure you want to delete the workspace "{{ workspace.name }}"?</p>
-    <button type="submit">Yes, delete</button>
-    <a href="{% url 'workspace_detail' workspace.id %}">Cancel</a>
-</form>

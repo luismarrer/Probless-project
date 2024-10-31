@@ -74,7 +74,7 @@
 					<ul class="navbar-nav ms-auto">
 						{% if user.is_authenticated %}
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'view_detail_user' user.id %}">{{ user.username }}</a>
+								<a class="nav-link" href="{% url 'view_detail_user' user.id %}">{{ request.user.username }}</a>
 							</li>
 							<li class="nav-item">
 								<a class="btn nav-link" href="{% url 'logout' %}">

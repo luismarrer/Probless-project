@@ -29,6 +29,7 @@ class OwnerSignupForm(UserCreationForm):
             user.save()
         return user
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150, widget=forms.TextInput(attrs={
         'class': 'form-control form-control-lg'
@@ -36,6 +37,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control form-control-lg'
     }))
+
 
 class CreateUserForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -73,14 +75,38 @@ class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name', 'username', 'email', 'dept', 'role']  # All info of user except for the password
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+            'username': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg'}),
+            'role': forms.Select(attrs={'class': 'form-control form-control-lg'}),  # Select para 'role'
+            'dept': forms.Select(attrs={'class': 'form-control form-control-lg'}),
+        }
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs) 
+        
+        if user:
+            self.fields['dept'].queryset = Department.objects.filter(user=user)
+
+        self.fields['dept'].label_from_instance = self.format_department_label
+    
+    def format_department_label(self, department):
+        return f"{department.workspace_id.name} - {department.name}"
+
 
     def save(self, commit=True):
         return super().save(commit=commit)
 
 
 class ChangePasswordForm(forms.Form):
-    new_password = forms.CharField(widget=forms.PasswordInput, label="New Password")
-    confirm_password = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
+    new_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control form-control-lg'
+    }))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control form-control-lg'
+    }))
 
     def clean(self):
         cleaned_data = super().clean()
