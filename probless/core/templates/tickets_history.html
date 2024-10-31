@@ -1,34 +1,37 @@
 {% extends 'layout.html' %}
 
+{% block title %}Tickets History{% endblock %}
 
 
 {% block content %}
-<div class="card mt-5 pt-5">
-<br>
-<table class="table table-striped table-bordered">
-    <thead">
-        <tr>
-            <th scope="col">Ticket ID</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Fecha de Cierre</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for ticket in closed_tickets %}
-        <tr>
-            <td>{{ ticket.id }}</td>
-            <td>{{ ticket.description }}</td>
-            <td>{{ ticket.status }}</td>
-            <td>{{ ticket.updated_at }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="5" class="text-center">No hay tickets cerrados disponibles.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<button type="button" class="btn btn-primary" onclick="window.history.back();">Go to Dashboard</button>
-</div>
+	<div class="card mt-5 pt-5">
+	<br>
+	<table class="table table-striped table-bordered">
+		<thead">
+			<tr>
+				<th scope="col">Ticket ID</th>
+				<th scope="col">Descripción</th>
+				<th scope="col">Estado</th>
+				<th scope="col">Fecha de Cierre</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for ticket in closed_tickets %}
+			<tr>
+				<td>{{ ticket.id }}</td>
+				<td>{{ ticket.description }}</td>
+				<td>{{ ticket.status }}</td>
+				<td>{{ ticket.updated_at }}</td>
+			</tr>
+			{% empty %}
+			<tr>
+				<td colspan="5" class="text-center">No hay tickets cerrados disponibles.</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<button type="button" class="btn btn-primary" onclick="window.history.back();">
+		Go to Dashboard
+	</button>
+	</div>
 {% endblock%}

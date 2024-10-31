@@ -33,66 +33,70 @@
 {% block title %}Ticket{% endblock %}
 
 {% block content %}
-	<div class="mask d-flex align-items-center h-100 gradient-custom-3">
-		<div class="container h-100 mt-3 pt-3">
-			<div class="row d-flex justify-content-center align-items-center h-100">
-				<div class="col-md-6">
-					<div class="card shadow" style="border-radius: 15px;">
-						<div class="card-body p-5">
-							<h2 class="text-uppercase text-center mb-5">Create Ticket</h2>
-							<form id="ticket-form" method="POST">
-								{% if error %}
-									<div class="alert alert-danger" role="alert">{{ error }}</div>
-								{% endif %}
-								{% csrf_token %}
-								<div class="form-outline mb-4">
-									<label class="form-label form-label-lg" for="form3Example2cg">Title</label>
-									{{ form.title }}
-								</div>
-								<div class="form-outline mb-4">
-									<label class="form-label form-label-lg" for="form3Example2cg">Description</label>
-									{{ form.description }}
-								</div>
-								<div class="row">
-									<div class="col-md-6 mb-4">
-										<div class="form-outline">
-											<label class="form-label form-label-lg" for="form3Example2cg">Priority</label>
-											{{ form.priority }}
-										</div>
-									</div>
-									<div class="col-md-6 mb-4">
-										<div class="form-outline">
-											<label class="form-label form-label-lg" for="form3Example2cg">Assign Department</label>
-											{{ form.assigned_department_id }}
-										</div>
-									</div>
-								</div>
-								<!-- Cancel and Create Buttons -->
-								<div class="row justify-content-between mt-4">
-									<div class="col-md-1 col-sm-3 text-end">
-										<button type="button" class="btn" onclick="window.history.back();">Cancel</button>
-									</div>
-									<div class="col-md-5 col-sm-6">
-										<button type="submit" class="btn btn-primary">Close</button>
-									</div>
-									<!-- Button to get AI suggestion -->
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100 mt-3 pt-3">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-6">
+                <div class="card shadow" style="border-radius: 15px;">
+                    <div class="card-body p-5">
+                        <h2 class="text-uppercase text-center mb-5">Ticket Details</h2>
+                        
+                        {% if error %}
+                            <div class="alert alert-danger" role="alert">{{ error }}</div>
+                        {% endif %}
 
-	<script>
-	function useAI() {
-		const form = document.getElementById('ticket-form');
-		const useAIInput = document.createElement('input');
-		useAIInput.type = 'hidden';
-		useAIInput.name = 'use_ai';
-		form.appendChild(useAIInput);
-		form.submit();
-	}
-	</script>
+                        <div class="mb-4">
+                            <label class="form-label form-label-lg">Title</label>
+                            <p class="form-control form-control-lg">{{ ticket.title }}</p>
+                        </div>
+
+                        
+                        <div class="mb-4">
+                            <label class="form-label form-label-lg">Description</label>
+                            <p class="form-control form-control-lg">{{ ticket.description }}</p>
+                        </div>
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            
+                            {% if request.user.role == 'admin' %}
+                        
+                            <div class="form-outline mb-4">
+                                <label cclass="form-control form-control-lg" for="priority">Priority</label>
+                                {{ form.priority }}
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-control form-control-lg"" for="assigned_department_id">Assigned Department</label>
+                                {{ form.assigned_department_id }}
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label form-label-lg" for="status">Status</label>
+                                <select id="status" name="status" class="form-control form-control-lg">
+                                    <option value="open" {% if ticket.status == 'Open' %}selected{% endif %}>Open</option>
+                                    <option value="in_progress" {% if ticket.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                                    <option value="closed" {% if ticket.status == 'Closed' %}selected{% endif %}>Closed</option>
+                                </select>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label form-label-lg" for="documentation">Documentation</label>
+                                <textarea id="documentation" name="documentation" class="form-control form-control-lg" rows="4">{{ ticket.documentation }}</textarea>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">Update Ticket</button>
+                            </div>
+                            {% else %}
+                            <p>You do not have permission to manage this ticket.</p>
+                            {% endif %}
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

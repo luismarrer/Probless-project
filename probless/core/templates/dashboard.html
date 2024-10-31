@@ -35,8 +35,8 @@
 									{% for ticket_department in tickets_department %}
 										{% if forloop.counter <= 5 %}
 											<tr onclick="window.location.href='{% url 'ticket_detail' workspace.id department.id ticket_department.id %}'">
-												<td>{{ ticket_department.status }}</td>
-												<td>{{ ticket_department.priority }}</td>
+												<td class="d-flex align-items-center"><div class="circle rounded-circle me-2"></div>{{ ticket_department.status }}</td>
+												<td class="{% if ticket_department.priority == 'high' %}table-danger{% elif ticket_department.priority == 'medium' %}table-warning{% endif %}">{{ ticket_department.priority }}</td>
 												<td>{{ ticket_department.user_id.first_name }} {{ ticket_department.user_id.last_name }}</td>
 												<td>{{ ticket_department.title }}</td>
 												<td>{{ ticket_department.created_at|date:"SHORT_DATE_FORMAT" }}</td>
@@ -55,7 +55,7 @@
 			</div>
         {% endif %}
         <!-- Bottom Half -->
-        <div class="bottom-half">
+        <div class="bottom-half vh-100">
             <div class="container mt-3">
 				<div class="d-flex align-items-center">
                 	<h3>My Tickets</h3>
@@ -68,7 +68,8 @@
 								<li class="mx-2 my-2 ticket card mb-3">
 									<a href="{% url 'ticket_detail' workspace.id department.id ticket.id %}">
 										<div class="row g-0">
-											<div class="col-md-4">
+											<div class="d-flex justify-content-center align-items-center col-md-4">
+												<div class="status-square rounded-3"></div>
 											</div>
 											<div class="col-md-8">
 												<div class="card-body">

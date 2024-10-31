@@ -43,13 +43,13 @@ class DashboardView(LoginRequiredMixin, View):
                 user_id=request.user).exclude(status='Closed')
             tickets_department = Ticket.objects.filter(
                 assigned_department_id=department).exclude(status='Closed').annotate(
-    priority_order=Case(
-        When(priority="high", then=Value(1)),
-        When(priority="medium", then=Value(2)),
-        When(priority="low", then=Value(3)),
-        output_field=IntegerField(),
-    )
-).order_by('priority_order')
+                priority_order=Case(
+                    When(priority="high", then=Value(1)),
+                    When(priority="medium", then=Value(2)),
+                    When(priority="low", then=Value(3)),
+                    output_field=IntegerField(),
+                )
+            ).order_by('priority_order')
 
             return render(request, 'dashboard.html',
                           {
@@ -129,21 +129,20 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
     """
     ticket = get_object_or_404(Ticket, id=ticket_id)
 
-    # Verifica si el usuario es el propietario del ticket o un administrador
     if ticket.user_id == request.user or request.user.role == 'admin':
         if request.method == 'POST':
-            # Lógica para manejar el ticket (solo para admins)
+
             documentation = request.POST.get('documentation')
-            # Asegúrate de que el campo exista en el modelo Ticket
+
             ticket.documentation = documentation
-            ticket.status = 'Closed'  # O cualquier lógica que necesites
+            ticket.status = 'Closed'  # Assign a closed status
             ticket.save()
 
             workspace_name = ticket.assigned_department_id.workspace_id.name
             department_name = ticket.assigned_department_id.name
             return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)
         else:
-            # Renderiza la plantilla con los detalles del ticket
+
             return render(request, 'ticket_detail.html', {'ticket': ticket})
     else:
         return render(request, 'ticket_detail.html', {
@@ -188,11 +187,17 @@ def get_ai_solution(description):
 def manage_tickets(request, workspace_id, department_id):
     workspace = Workspace.objects.get(id=workspace_id)
     department = Department.objects.get(id=department_id)
-    tickets = Ticket.objects.filter(
-        user_id=request.user, assigned_department_id=department).exclude(status='Closed')
+    tickets_department = Ticket.objects.filter(
+        assigned_department_id=department).exclude(status='Closed').annotate(
+            priority_order=Case(
+                When(priority="high", then=Value(1)),
+                When(priority="medium", then=Value(2)),
+                When(priority="low", then=Value(3)),
+                output_field=IntegerField(),
+            )).order_by('priority_order')
 
     return render(request, 'show_manage_tickets.html', {
-        'tickets_department': tickets,
+        'tickets_department': tickets_department,
         'workspace': workspace,
         'department': department,
     })

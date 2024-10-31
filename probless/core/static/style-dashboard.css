@@ -25,92 +25,14 @@
 	overflow: hidden;
 }
 
-.custom-row {
-    display: grid;
-    grid-template-columns: repeat(2, auto) 1px repeat(2, auto);
-    gap: 10px;
-}
-
-.custom-row>[class*='col-'] {
-    padding-right: 0;
-    padding-left: 0;
-}
-
-.border-bottom {
-    border-bottom: 1px solid #303030;
-    /* Adjust color as needed */
-}
-
-.mb-0 {
-    margin-bottom: 0;
-}
-
-.ms-2 {
-    margin-left: 0.5rem;
-    /* Adjust spacing as needed */
-}
-
-.d-flex.align-items-center {
-    height: 80px;
-    /* Ensure the height matches the status square */
-}
-
-.vertical-divider {
-    width: 1px;
-    height: 85%;
-    background-color: #000;
-}
-
-.col-2 p {
-    margin-bottom: 0;
-    padding-left: 0;
-}
-
-.col-2 .d-flex {
-    margin-bottom: 0.5rem;
-}
-
-hr {
-    color: black;
-    margin: 20px auto;
-}
-
-.status-circle {
-    width: 18px;
-    height: 18px;
+.circle {
+    width: 10px;
+    height: 10px;
     background-color: orange;
-    display: inline-block;
 }
 
-.ticket-row div {
-    position: relative;
-}
-
-.ticket-row div:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 1px;
-    /* Width of the vertical line */
-    background-color: #000;
-    /* Color of the vertical line */
-    z-index: 1;
-}
-
-.managing-ticket {
-    font-size: 1.5rem;
-    color: #000;
-}
-
-.ticket-row div:not(:last-child)::after {
-	content: '';
-	position: absolute;
-	right: 0;
-	top: 0;
-	height: 100%;
-	width: 1px;
-	background-color: #000;
-	z-index: 1;
+.status-square {
+    width: 60px;
+    height: 60px;
+    background-color: green;
 }
