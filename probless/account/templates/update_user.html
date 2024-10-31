@@ -11,53 +11,56 @@
                         <div class="card-body p-5">
                             <h2 class="text-uppercase text-center mb-5">Update {{ user.username }}</h2>
 
-                            <form method="POST", action="{% url 'update_user' user.id %}">
+                            <form method="POST", action="{% url 'update_user' user.id %}" 
+                                    {% if not request.user.is_owner %}disabled{% endif %}>
                                 {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div data-mdb-input-init class="form-outline mb-4">
-                                            <strong><label class="form-label form-label-lg" for="form3Example1cg">First Name: </label></strong>
-                                            {{ view_detail_user.first_name }}
+                                            <label class="form-label form-label-lg" for="form3Example1cg">First Name</label>
+                                            {{ form.first_name }}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div data-mdb-input-init class="form-outline mb-4">
-                                            <label class="form-label form-label-lg" for="form3Example2cg">Last Name: </label>
-                                            {{ view_detail_user.last_name }}
+                                            <label class="form-label form-label-lg" for="form3Example2cg">Last Name</label>
+                                            {{ form.last_name }}
                                         </div>
                                     </div>
                                 </div>
 
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <label class="form-label" for="form3Example3cg">Email: </label>
-                                    {{ view_detail_user.email }}
+                                    <label class="form-label" for="form3Example3cg">User Email</label>
+                                    {{ form.email }}
                                 </div>
 
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <label class="form-label" for="form3Example3cg">Username: </label>
-                                    {{ view_detail_user.username}}
+                                    <label class="form-label" for="form3Example3cg">Username</label>
+                                    {{ form.username}}
                                 </div>
                                 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div data-mdb-input-init class="form-outline mb-4">
-                                            <label class="form-label form-label-lg" for="form3Example1cg">Role: </label>
-                                            {{ view_detail_user.role }}
+                                            <label class="form-label form-label-lg" for="form3Example1cg">Role</label>
+                                            {{ form.role }}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div data-mdb-input-init class="form-outline mb-4">
-                                            <label class="form-label form-label-lg" for="form3Example2cg">Department: </label>
-                                            {{ view_detail_user.dept }}
-                                        </div>
+                                        {% if not request.user.is_owner %}
+                                            <div data-mdb-input-init class="form-outline mb-4">
+                                                <label class="form-label form-label-lg" for="form3Example2cg">Department</label>
+                                                {{ form.dept }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
-                                
-                                <div class="d-flex justify-content-center">
-                                    <a href="{% url 'change_password' user.id %}" class="btn" title="Change Password">Change Password</a>
-                                    <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-block custom-button-auth text-white" style="background: #4d9afd">Update</button>
-                                </div>
-
+                                {% if request.user.is_owner%}
+                                    <div class="d-flex justify-content-center">
+                                        <a href="{% url 'change_password' user.id %}" class="btn" title="Change Password">Change Password</a>
+                                        <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-block custom-button-auth text-white" style="background: #4d9afd">Update</button>
+                                    </div>
+                                {% endif %}
                             </form>
                         </div>
                     </div>

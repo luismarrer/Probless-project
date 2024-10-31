@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Update User{% endblock %}
-<h2>Update User: {{ user.username }}</h2>
+{% block title %}User Profile{% endblock %}
 
 {% block content %}
     <div class="mask d-flex align-items-center h-100 pt-5 pb-5 gradient-custom-3">
@@ -9,9 +8,10 @@
                 <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                     <div class="card" style="border-radius: 15px; border: none; box-shadow: 0px 4px 8px rgb(192, 192, 192); margin-top: 20px">
                         <div class="card-body p-5">
-                            <h2 class="text-uppercase text-center mb-5">Update {{ user.username }}</h2>
+                            <h2 class="text-uppercase text-center mb-5">{{ user.username }}'s profile</h2>
 
-                            <form method="POST", action="{% url 'update_user' user.id %}">
+                            <form method="POST", action="{% url 'update_user' user.id %}" 
+                                    {% if not request.user.is_owner %}disabled{% endif %}>
                                 {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-6">
@@ -46,18 +46,20 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div data-mdb-input-init class="form-outline mb-4">
-                                            <label class="form-label form-label-lg" for="form3Example2cg">Department</label>
-                                            {{ form.dept }}
-                                        </div>
+                                        {% if not request.user.is_owner %}
+                                            <div data-mdb-input-init class="form-outline mb-4">
+                                                <label class="form-label form-label-lg" for="form3Example2cg">Department</label>
+                                                {{ form.dept }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
-                                
                                 <div class="d-flex justify-content-center">
                                     <a href="{% url 'change_password' user.id %}" class="btn" title="Change Password">Change Password</a>
-                                    <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-block custom-button-auth text-white" style="background: #4d9afd">Update</button>
-                                </div>
-
+                                    {% if request.user.is_owner%}
+                                        <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-block custom-button-auth text-white" style="background: #4d9afd">Update</button>
+                                    </div>
+                                {% endif %}
                             </form>
                         </div>
                     </div>

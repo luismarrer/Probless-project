@@ -30,6 +30,7 @@ class Ticket(models.Model):
 	user_id = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
 	priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='low')
 	assigned_department_id = models.ForeignKey('workspace.Department', on_delete=models.CASCADE)
+	incoming_department_id = models.ForeignKey('workspace.Department', on_delete=models.CASCADE, related_name='incoming_department', null=True, blank=True)
 	image = models.ImageField(upload_to='tickets/', null=True, blank=True)
 	status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='open')
 	tags = models.ManyToManyField(Tag, blank=True)

@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block title %} {{department.name }} Tickets{% endblock %}
+
+{% block content %}
+	<div class="container mt-5">
+		<div>
+			<h2>{{ department.name }}</h2>
+			<p>{{ department.description }}</p>
+			<h3>Tickets to manage</h3>
+		</div>
+		<div>
+			{% if tickets_department %}
+				
+			{% else %}
+				<p>No tickets.</p>
+			{% endif %}
+		</div>
+
+{% endblock %}

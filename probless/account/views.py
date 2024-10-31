@@ -2,7 +2,7 @@ from pyexpat.errors import messages
 from django.views import View
 from workspace.models import Department
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from .forms import ChangePasswordForm, OwnerSignupForm, LoginForm, CreateUserForm, UpdateUserForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -149,8 +149,15 @@ def change_password(request, user_id):
             new_password = form.cleaned_data['new_password']
             user.set_password(new_password)
             user.save()
+
+            if request.user == user:
+                update_session_auth_hash(request, user)
+
             # Redirige de nuevo al perfil de usuario
-            return redirect('update_user', user_id=user.id)
+            if user.is_owner:
+                return redirect('update_user', user_id=user.id)
+            else:
+                return redirect('view_detail_user', user_id=user.id)
     else:
         form = ChangePasswordForm()
 
@@ -160,5 +167,14 @@ def change_password(request, user_id):
 # View detail info of the user
 @login_required
 def view_detail_user(request, user_id):
-    user = get_object_or_404(CustomUser, id=user_id)
-    return render(request, 'view_detail_user.html', {'view_detail_user': user})
+    user_to_view = get_object_or_404(CustomUser, id=user_id)
+    form = UpdateUserForm(instance=user_to_view)
+
+    if not request.user.is_owner:
+        for field in form.fields.values():
+            field.widget.attrs['readonly'] = 'readonly'
+        
+        form.fields['role'].widget.attrs['disabled'] = 'disabled'
+        form.fields['dept'].widget.attrs['disabled'] = 'disabled'
+
+    return render(request, 'view_detail_user.html', {'form': form, 'user': user_to_view})

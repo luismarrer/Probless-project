@@ -10,17 +10,13 @@
 	overflow-y: auto;
 }
 
-.top-half {
-    height: 50%;
-    background-color: #cccccc;
-    overflow-y: auto;
+.bottom-half {
+    background-color: white;
 }
 
-.bottom-half {
-    height: 50%;
-    background-color: white;
-    overflow-y: auto;
-
+.table.table-ticket td, 
+.table.table-ticket th {
+    background-color: transparent !important;
 }
 
 .ticket {

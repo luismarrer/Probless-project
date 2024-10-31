@@ -1,3 +1,4 @@
+from django.db.models import Case, When, Value, IntegerField
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -36,12 +37,19 @@ class DashboardView(LoginRequiredMixin, View):
             if not request.user.is_owner and request.user.dept != department:
                 return redirect('error_page')
 
-			# Get the department workspace
-            workspace = department.workspace_id  
+                # Get the department workspace
+            workspace = department.workspace_id
             tickets = Ticket.objects.filter(
                 user_id=request.user).exclude(status='Closed')
             tickets_department = Ticket.objects.filter(
-                assigned_department_id=department).exclude(status='Closed')
+                assigned_department_id=department).exclude(status='Closed').annotate(
+    priority_order=Case(
+        When(priority="high", then=Value(1)),
+        When(priority="medium", then=Value(2)),
+        When(priority="low", then=Value(3)),
+        output_field=IntegerField(),
+    )
+).order_by('priority_order')
 
             return render(request, 'dashboard.html',
                           {
@@ -82,10 +90,11 @@ def create_ticket(request, workspace_id, department_id):
             for line in ai_response.splitlines():
                 line = line.strip()  # Limpiar espacios en blanco
                 if re.match(r'^\s*[\*\-•]\s*', line) or re.match(r'^\s*\d+\.\s*', line):
-                    processed_response.append(f"<li>{line}</li>")  # Convertir bullet a elemento de lista
+                    # Convertir bullet a elemento de lista
+                    processed_response.append(f"<li>{line}</li>")
                 elif line:  # Si no está vacío, lo agrega como párrafo
                     processed_response.append(f"<p>{line}</p>")
-                
+
             full_response = "<br/>".join(processed_response)
 
             return render(request, 'create_ticket.html', {
@@ -100,6 +109,7 @@ def create_ticket(request, workspace_id, department_id):
                 form = TicketForm(request.POST, workspace=workspace)
                 new_ticket = form.save(commit=False)
                 new_ticket.user_id = request.user
+                new_ticket.incoming_department_id = department
                 new_ticket.save()
                 return redirect('dashboard', workspace_id=workspace.id, department_id=department.id)
             except ValueError:
@@ -141,6 +151,7 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
             'error': 'You do not have permission to manage this ticket.'
         })
 
+
 @login_required
 def tickets_history(request, workspace_id, department_id):
     workspace = Workspace.objects.filter(id=workspace_id)
@@ -173,5 +184,20 @@ def get_ai_solution(description):
         return f"Error in AI processing: {str(e)}"
 
 
+@login_required
+def manage_tickets(request, workspace_id, department_id):
+    workspace = Workspace.objects.get(id=workspace_id)
+    department = Department.objects.get(id=department_id)
+    tickets = Ticket.objects.filter(
+        user_id=request.user, assigned_department_id=department).exclude(status='Closed')
+
+    return render(request, 'show_manage_tickets.html', {
+        'tickets_department': tickets,
+        'workspace': workspace,
+        'department': department,
+    })
+
+
+# Error view
 def error(request):
-	return render(request, 'error_page.html')
+    return render(request, 'error_page.html')

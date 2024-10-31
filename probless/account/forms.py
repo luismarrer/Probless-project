@@ -76,21 +76,23 @@ class UpdateUserForm(forms.ModelForm):
         model = CustomUser
         fields = ['first_name', 'last_name', 'username', 'email', 'dept', 'role']  # All info of user except for the password
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control form-control-lg',}),
             'last_name': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
             'username': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
             'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg'}),
-            'role': forms.Select(attrs={'class': 'form-control form-control-lg'}),  # Select para 'role'
+            'role': forms.Select(attrs={'class': 'form-control form-control-lg'}),
             'dept': forms.Select(attrs={'class': 'form-control form-control-lg'}),
         }
 
     def __init__(self, *args, user=None, **kwargs):
-        super().__init__(*args, **kwargs) 
+        super().__init__(*args, **kwargs)
         
         if user:
             self.fields['dept'].queryset = Department.objects.filter(user=user)
 
         self.fields['dept'].label_from_instance = self.format_department_label
+
+         
     
     def format_department_label(self, department):
         return f"{department.workspace_id.name} - {department.name}"
