@@ -48,7 +48,7 @@
 									</div>
 									<!-- Button to get AI suggestion -->
 									<div class="col-md-4 col-sm3">
-										<button type="button" class="btn btn-info btn-lg text-white" style="background: #4d9afd; white-space: nowrap;" onclick="useAI()">Get AI Solution</button>
+										<button type="submit" name="use_ai" class="btn btn-info btn-lg text-white" style="background: #4d9afd; white-space: nowrap;" >Get AI Solution</button>
 									</div>
 								</div>
 							</form>
@@ -56,31 +56,25 @@
 					</div>
 				</div>
 				{% if ai_response %}
-					<!-- Tarjeta de respuesta de la IA -->
+					<!-- AI response card -->
 					<div class="col-md-4">
 						<div class="card shadow" style="border-radius: 15px; background: #e0e0e0;">
 							<div class="card-body p-4">
 								<h4 class="card-title text-center">AI Suggested Solution</h4>
-								<p>It sounds like you're having trouble with your monitor. First, try checking the connections—ensure the power cable is plugged in securely and the video cable is properly connected to both the monitor and the computer. If the monitor is on but displaying a blank screen, try adjusting the brightness and contrast settings or switching to a different input source using the monitor's menu buttons. If none of these steps work, try connecting the monitor to a different computer to see if the issue persists; this will help determine whether the problem is with the monitor or the computer itself. If the monitor is still not functioning, it may need professional repair or replacement. Let me know if you need more specific guidance!</p>
 								<p class="card-text mt-3">{{ ai_response|safe }}</p>
+								<div class="d-flex justify-content-end mt-4">
+									<div>
+										<button type="submit" class="btn">Not Solved</button>
+									</div>
+									<div class="text-end">
+										<button type="button" class="btn btn-primary" onclick="window.history.back();">Solved</button>
+									</div>
+								</div>
 							</div>
-							<!-- <h4 class="mt-4 mb-3">AI Suggested Solution:</h4>
-							<p class="card-text mt-3">{{ ai_response|safe }}</p> -->
 						</div>
 					</div>
 				{% endif %}
 			</div>
 		</div>
 	</div>
-
-	<script>
-	function useAI() {
-		const form = document.getElementById('ticket-form');
-		const useAIInput = document.createElement('input');
-		useAIInput.type = 'hidden';
-		useAIInput.name = 'use_ai';
-		form.appendChild(useAIInput);
-		form.submit();
-	}
-	</script>
 {% endblock %}

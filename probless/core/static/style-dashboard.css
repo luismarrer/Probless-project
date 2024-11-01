@@ -10,7 +10,12 @@
 	overflow-y: auto;
 }
 
+.top-half {
+    height: 35vh;
+}
+
 .bottom-half {
+    height: 50vh;
     background-color: white;
 }
 
@@ -37,12 +42,18 @@
 .circle {
     width: 10px;
     height: 10px;
+}
+
+.open {
     background-color: green;
+}
+
+.in_progress {
+    background-color: orange;
 }
 
 .status-square {
     width: 50px;
     height: 50px;
-    background-color: green;
 	margin-bottom: 3rem
 }

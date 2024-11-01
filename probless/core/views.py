@@ -133,14 +133,16 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
         if request.method == 'POST':
 
             documentation = request.POST.get('documentation')
+            status = request.POST.get('status')
+            priority = request.POST.get('priority')
 
             ticket.documentation = documentation
-            ticket.status = 'Closed'  # Assign a closed status
+            ticket.status = status
+            ticket.priority = priority
             ticket.save()
 
-            workspace_name = ticket.assigned_department_id.workspace_id.name
-            department_name = ticket.assigned_department_id.name
-            return redirect('dashboard', workspace_name=workspace_name, department_name=department_name)
+
+            return redirect('dashboard', workspace_id=workspace_id, department_id=department_id)
         else:
 
             return render(request, 'ticket_detail.html', {'ticket': ticket})
@@ -153,16 +155,16 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
 
 @login_required
 def tickets_history(request, workspace_id, department_id):
-    workspace = Workspace.objects.filter(id=workspace_id)
+    workspace = Workspace.objects.get(id=workspace_id)
     department = Department.objects.get(
-        id=department_id, workspace_id=workspace_id)
+        id=department_id, workspace_id=workspace.id)
     closed_tickets = Ticket.objects.filter(
         user_id=request.user, status='Closed', assigned_department_id=department)
 
     return render(request, 'tickets_history.html', {
         'closed_tickets': closed_tickets,
-        'workspace_name': workspace,
-        'department_name': department.name,
+        'workspace': workspace,
+        'department': department,
     })
 
 

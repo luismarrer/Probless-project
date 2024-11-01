@@ -11,7 +11,7 @@
                         <div class="card-body p-5">
                             <h2 class="text-uppercase text-center mb-5">Update {{ user.username }}</h2>
 
-                            <form method="POST", action="{% url 'update_user' user.id %}" 
+                            <form method="POST", action="{% url 'update_user' user.id %}"
                                     {% if not request.user.is_owner %}disabled{% endif %}>
                                 {% csrf_token %}
                                 <div class="row">
@@ -38,7 +38,7 @@
                                     <label class="form-label" for="form3Example3cg">Username</label>
                                     {{ form.username}}
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div data-mdb-input-init class="form-outline mb-4">

@@ -27,7 +27,7 @@
 						<tbody>
 						{% for ticket_department in tickets_department %}
 								<tr onclick="window.location.href='{% url 'ticket_detail' workspace.id department.id ticket_department.id %}'">
-									<td class="d-flex align-items-center"><div class="circle rounded-circle me-2"></div>{{ ticket_department.status }}</td>
+									<td class="d-flex align-items-center"><div class="circle {% if ticket_department.status == 'open' %}open{% elif ticket_department.status == 'in_progress'%}in_progress{% endif %} rounded-circle me-2"></div>{{ ticket_department.status }}</td>
 									<td class="{% if ticket_department.priority == 'high' %}table-danger{% elif ticket_department.priority == 'medium' %}table-warning{% endif %}">{{ ticket_department.priority }}</td>
 									<td>{{ ticket_department.user_id.first_name }} {{ ticket_department.user_id.last_name }}</td>
 									<td>{{ ticket_department.title }}</td>

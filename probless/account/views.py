@@ -57,7 +57,7 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         # Redirect to login after log out
-        return redirect('login')  
+        return redirect('login')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -94,7 +94,7 @@ class CreateUserView(View):
         if form.is_valid():
             user = form.save(commit=False)
             # Ensures that the user is not an owner
-            user.is_owner = False  
+            user.is_owner = False
             user.save()
 
             department = user.dept
@@ -173,7 +173,7 @@ def view_detail_user(request, user_id):
     if not request.user.is_owner:
         for field in form.fields.values():
             field.widget.attrs['readonly'] = 'readonly'
-        
+
         form.fields['role'].widget.attrs['disabled'] = 'disabled'
         form.fields['dept'].widget.attrs['disabled'] = 'disabled'
 

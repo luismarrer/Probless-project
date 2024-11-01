@@ -17,3 +17,7 @@
 .floating-button button {
     width: 100%;
 }
+
+.card {
+    border-radius: 15px;
+}
