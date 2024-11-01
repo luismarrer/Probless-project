@@ -59,7 +59,7 @@
             <div class="container mt-3">
 				<div class="d-flex align-items-center">
                 	<h3>My Tickets</h3>
-					<a href="" class="mx-2">See All</a>
+					<a href="{% url 'my_tickets' workspace.id department.id %}" class="mx-2">See All</a>
 				</div>
                 {% if tickets %}
 					<ol class="list-group list-group-horizontal-sm list-unstyled">				
@@ -73,7 +73,7 @@
 											</div>
 											<div class="col-md-8">
 												<div class="card-body">
-													<h5 class="card-title">{{ ticket.title }}</h5>
+													<h5 class="card-title card-title-ticket">{{ ticket.title }}</h5>
 													<p class="card-text">{{ ticket.description }}</p>
 													<p class="card-text"><small class="text-body-secondary">{{ ticket.created_at|date:"SHORT_DATE_FORMAT" }}</small></p>
 												</div>

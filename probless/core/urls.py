@@ -7,6 +7,7 @@ urlpatterns = [
 	path('<int:workspace_id>/<int:department_id>/dashboard/', views.DashboardView.as_view(), name='dashboard'),
 	path('<int:workspace_id>/<int:department_id>/create_ticket/', views.create_ticket, name='create_ticket'),
 	path('<int:workspace_id>/<int:department_id>/tickets/', views.manage_tickets, name='manage_tickets'),
+	path('<int:workspace_id>/<int:department_id>/my_tickets/', views.my_tickets, name='my_tickets'),
 	path('<int:workspace_id>/<int:department_id>/ticket/<int:ticket_id>/', views.ticket_detail, name='ticket_detail'),
 	path('<int:workspace_id>/<int:department_id>/closed_tickets/', views.tickets_history, name='tickets_history'),
 	path('error/', views.error, name='error_page'),

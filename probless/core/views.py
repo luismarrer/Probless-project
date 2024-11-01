@@ -203,6 +203,26 @@ def manage_tickets(request, workspace_id, department_id):
     })
 
 
+@login_required
+def my_tickets(request, workspace_id, department_id):
+    workspace = Workspace.objects.get(id=workspace_id)
+    department = Department.objects.get(id=department_id)
+    tickets = Ticket.objects.filter(
+        user_id=request.user).exclude(status='Closed').annotate(
+            priority_order=Case(
+				When(priority="high", then=Value(1)),
+				When(priority="medium", then=Value(2)),
+				When(priority="low", then=Value(3)),
+				output_field=IntegerField(),
+			)).order_by('priority_order')
+
+    return render(request, 'show_my_tickets.html', {
+        'tickets': tickets,
+        'workspace': workspace,
+        'department': department,
+    })
+
+
 # Error view
 def error(request):
     return render(request, 'error_page.html')
