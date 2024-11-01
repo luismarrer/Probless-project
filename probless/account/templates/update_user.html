@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        {% if not request.user.is_owner %}
+                                        {% if not user.is_owner %}
                                             <div data-mdb-input-init class="form-outline mb-4">
                                                 <label class="form-label form-label-lg" for="form3Example2cg">Department</label>
                                                 {{ form.dept }}

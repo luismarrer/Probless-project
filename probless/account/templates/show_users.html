@@ -22,11 +22,11 @@
                 </thead>
                 <tbody>
                         {% for user in users %}
-                        <tr onclick="window.location.href='{% url "update_user" user.id %}'">
+                        <tr onclick="window.location.href='{% url 'update_user' user.id %}'">
                             <td>
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="event.stopPropagation(); 
-                                                            if(confirm('Are you sure want to delete {{ user.username }}?')) { 
-                                                                window.location.href='{% url "delete_user" user.id %}';}">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="event.stopPropagation();
+                                                            if(confirm('Are you sure want to delete {{ user.username }}?')) {
+                                                                window.location.href='{% url 'delete_user' user.id %}';">
                                     delete
                                 </button>
                                 {{ user.first_name }} {{ user.last_name }}
