@@ -10,21 +10,37 @@
 		</div>
 		{% if departments %}
 			<div class="table-responsive-sm">
-				<table class="table table-light caption-top table-hover">
-					<caption>Departments</caption>
+				<caption>Departments</caption>
+				<table class="table table-hover table-ticket">
 					<thead>
 						<tr>
+
 							<th>Name</th>
 							<th>Description</th>
 							<th>Created</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for department in departments %}
 							<tr onclick="window.location.href='{% url 'dashboard' workspace.id department.id %}'" >
+
 								<td>{{ department.name }}</td>
 								<td>{{ department.description }}</td>
 								<td>{{ department.created_at|date:"SHORT_DATE_FORMAT" }}</td>
+								<td>
+									<div class="d-flex justify-content-end">
+										<button type="button" class="btn btn-sm me-1" onclick="event.stopPropagation();
+																	window.location.href='{% url 'update_department' workspace.id department.id %}';">
+												edit
+										</button>
+										<button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();
+																if(confirm('Are you sure want to delete {{ department.name }}?')) {
+																	window.location.href='{% url 'delete_department' workspace.id department.id %}';}">
+												delete
+										</button>
+									</div>
+								</td>
 							</tr>
 						{% endfor %}
 					</tbody>
@@ -33,12 +49,12 @@
 		{% endif %}
 		<!-- Buttons -->
 		<div class="d-flex justify-content-end">
-			<a href="{% url 'delete_workspace' workspace.id %}" class="btn btn-danger mx-1">
+			{% comment %} <a href="{% url 'delete_workspace' workspace.id %}" class="btn btn-danger mx-1">
 				Delete Workspace
 			</a>
 			<a href="{% url 'update_workspace' workspace.id %}" class="btn btn-primary mx-1">
 				Update Workspace
-			</a>
+			</a> {% endcomment %}
 			<a href="{% url 'create_department' workspace.id %}" class="btn btn-primary mx-1">
 				Create New Department
 			</a>

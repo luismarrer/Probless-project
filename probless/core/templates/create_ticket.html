@@ -64,10 +64,13 @@
 								<p class="card-text mt-3">{{ ai_response|safe }}</p>
 								<div class="d-flex justify-content-end mt-4">
 									<div>
-										<button type="submit" class="btn">Not Solved</button>
+										<form method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" name="not_solved" class="btn">Not Solved</button>
+                                        </form>
 									</div>
 									<div class="text-end">
-										<button type="button" class="btn btn-primary" onclick="window.history.back();">Solved</button>
+										<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'dashboard' workspace.id department.id %}';">Solved</button>
 									</div>
 								</div>
 							</div>

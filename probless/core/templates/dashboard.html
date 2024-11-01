@@ -89,14 +89,14 @@
                 {% endif %}
 					<!-- Buttons -->
 					<div class="d-flex justify-content-end">
-						{% if user.is_owner %}
+						{% comment %} {% if user.is_owner %}
 						<a href="{% url 'delete_department' workspace.id department.id %}" class="btn btn-danger mt-2 mx-1">
 							Delete Department
 						</a>
 						<a href="{% url 'update_department' workspace.id department.id %}" class="btn btn-primary mt-2 mx-1" >
 							Update Department
 						</a>
-						{% endif %}
+						{% endif %} {% endcomment %}
 						<a href="{% url 'create_ticket' workspace.id department.id %}" class="btn btn-primary mt-2 mx-1" >
 							Create a new ticket
 						</a>

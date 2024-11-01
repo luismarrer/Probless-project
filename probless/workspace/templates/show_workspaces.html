@@ -3,26 +3,39 @@
 {% block title %}Workspaces{% endblock %}
 
 {% block content %}
-	<div class="container mt-5">
-		<h2>Workspaces</h2>
-		<div class="d-flex flex-wrap mt-4">
-			<ul class="list-group list-group-horizontal-sm list-unstyled">
-				{% for workspace in workspaces %}
-					<li class="mx-2 my-2 card workspace">
-						<a href="{% url 'workspace_detail' workspace.id %}" class="text-decoration-none h-100 w-100 ">
-							<div class="card-title">
-								<h3 class="workspace-title">{{ workspace.name }}</h3>
-							</div>
-						</a>
-					</li>
-				{% endfor %}
-				<!-- Card to Create New Workspace -->
-				<li class="mx-2 my-2 card text-bg-secondary workspace">
-					<a href="{% url 'create_workspace' %}" class="text-decoration-none workspace-title text-center text-white h-100 w-100 d-flex align-items-center justify-content-center">
-						Create Workspace
-					</a>
-				</li>
-			</ul>
-		</div>
-	</div>
+    <div class="container mt-5">
+        <h2>Workspaces</h2>
+        <div class="d-flex flex-wrap mt-4">
+            <ul class="list-group list-group-horizontal-sm list-unstyled">
+                {% for workspace in workspaces %}
+                    <li class="mx-2 my-2 card workspace" style="width: 15rem;">
+                        <div class="card-body d-flex flex-column">
+                            <div class="card-title">
+                                <a href="{% url 'workspace_detail' workspace.id %}" class="text-decoration-none">
+                                    <h3 class="workspace-title">{{ workspace.name }}</h3>
+                                </a>
+                            </div>
+                            <div class="mt-auto d-flex justify-content-end">
+                                <button type="button" class="btn btn-sm me-1" onclick="event.stopPropagation();
+														window.location.href='{% url 'update_workspace' workspace.id %}';">
+										edit
+								</button>
+                                <button type="button" class="btn btn-sm" onclick="event.stopPropagation();
+															if(confirm('Are you sure want to delete {{ department.name }}?')) {
+																window.location.href='{% url 'delete_workspace' workspace.id %}';}">
+										delete
+								</button>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                <!-- Card to Create New Workspace -->
+                <li class="mx-2 my-2 card text-bg-secondary workspace" style="width: 15rem;">
+                    <a href="{% url 'create_workspace' %}" class="text-decoration-none workspace-title text-center text-white h-100 w-100 d-flex align-items-center justify-content-center">
+                        Create Workspace
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 {% endblock %}
