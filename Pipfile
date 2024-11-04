@@ -12,6 +12,11 @@ pylint-django = "2.5.5"
 pylint-celery = "0.3"
 openai = "1.52.2"
 python-dotenv = "*"
+psycopg2-binary = "*"
+dj-database-url = "*"
+whitenoise = {extras = ["brotli"], version = "*"}
+gunicorn = "*"
+uvicorn = "*"
 
 [dev-packages]
 

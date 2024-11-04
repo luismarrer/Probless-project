@@ -163,9 +163,6 @@ __pycache__/
 venv/
 ENV/
 
-# pipenv
-Pipfile.lock
-
 # database
 *.sqlite3
 
