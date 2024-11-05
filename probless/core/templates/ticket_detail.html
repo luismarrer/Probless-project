@@ -12,78 +12,76 @@
                     <div class="card shadow" style="border-radius: 15px;">
                         <div class="card-body p-5">
                             <h2 class="text-uppercase text-center mb-5">Ticket Details</h2>
-
                             <form method="POST">
                                 {% csrf_token %}
-
                                 {% if messages %}
-
-                                    {% for message in messages %}
-                                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
-                                        {{ message }}
-                                    </div>
-                                    {% endfor %}
+                                        {% for message in messages %}
+                                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                                                {{ message }}
+                                            </div>
+                                        {% endfor %}
                                 {% endif %}
-                                {% if error %}
-                                    <div class="alert alert-danger" role="alert">{{ error }}</div>
-                                {% endif %}
+                            {% if error %}
+                            <div class="alert alert-danger" role="alert">{{ error }}</div>
+                            {% endif %}
 
-                                <div class="mb-4">
-                                    <label class="form-label form-label-lg">Title</label>
-                                    <p class="form-control form-control-lg">{{ ticket.title }}</p>
-                                </div>
-
-                                <div class="mb-4">
+                            <!-- Title Field -->
+                            <div class="mb-4">
+                                <label class="form-label form-label-lg">Title</label>
+                                <p class="form-control form-control-lg">{{ ticket.title }}</p>
+                            </div>
+                            
+                            <!-- Description Field -->
+                            <div class="mb-4">
                                     <label class="form-label form-label-lg">Description</label>
                                     <p class="form-control form-control-lg">{{ ticket.description }}</p>
                                 </div>
-
+                                
+                                <!-- Assigned Department Field -->
                                 <div class="form-outline mb-4">
                                     <label class="form-label form-label-lg" for="assigned_department_id">Assigned Department</label>
                                     <p class="form-control form-control-lg">{{ ticket.assigned_department_id.name }}</p>
                                 </div>
-
+                                
                                 {% if request.user.role == 'admin' %}
-
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label form-label-lg" for="priority">Priority</label>
-                                        <select id="priority" name="priority" class="form-control form-control-lg">
-                                            <option value="low" {% if ticket.priority == 'Low' %}selected{% endif %}>Low</option>
-                                            <option value="medium" {% if ticket.priority == 'Medium' %}selected{% endif %}>Medium</option>
-                                            <option value="high" {% if ticket.priority == 'High' %}selected{% endif %}>High</option>
-                                        </select>
-                                    </div>
-
-
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label form-label-lg" for="status">Status</label>
-                                        <select id="status" name="status" class="form-control form-control-lg">
-                                            <option value="open" {% if ticket.status == 'open' %}selected{% endif %}>Open</option>
-                                            <option value="in_progress" {% if ticket.status == 'in_Progress' %}selected{% endif %}>In Progress</option>
-                                            <option value="Closed" {% if ticket.status == 'closed' %}selected{% endif %}>Closed</option>
-                                        </select>
-                                    </div>
-                                    <div class="text-center mt-4">
-                                        <button type="button" class="btn" onclick="window.history.back();">Cancel</button>
-                                        <button type="submit" class="btn btn-primary btn-lg">Update Ticket</button>
-                                    </div>
-                                {% else %}
-                                <p>You do not have permission to manage this ticket.</p>
-                                {% endif %}
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-                    <div class="col-md-4">
-                        <div class="card shadow gradient-custom-3">
-                            <div class="card-body p-4">
-                                <label class="form-label form-label-lg" for="documentation">Documentation</label>
-                                <textarea id="documentation" name="documentation" class="form-control" rows="25">{{ ticket.documentation }}</textarea>
+                                <!-- Priority and Status for Admins -->
+                                <div class="form-outline mb-4">
+                                    <label class="form-label form-label-lg" for="priority">Priority</label>
+                                    <select id="priority" name="priority" class="form-control form-control-lg">
+                                        <option value="low" {% if ticket.priority == 'low' %}selected{% endif %}>Low</option>
+                                        <option value="medium" {% if ticket.priority == 'medium' %}selected{% endif %}>Medium</option>
+                                        <option value="high" {% if ticket.priority == 'high' %}selected{% endif %}>High</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-outline mb-4">
+                                    <label class="form-label form-label-lg" for="status">Status</label>
+                                    <select id="status" name="status" class="form-control form-control-lg">
+                                        <option value="open" {% if ticket.status == 'open' %}selected{% endif %}>Open</option>
+                                        <option value="in_progress" {% if ticket.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+                                        <option value="closed" {% if ticket.status == 'closed' %}selected{% endif %}>Closed</option>
+                                </select>
                             </div>
-                        </div>
+                            {% else %}
+                            <p>You do not have permission to manage this ticket.</p>
+                            {% endif %}
+                            <div class="text-center mt-4">
+                                <button type="button" class="btn" onclick="window.history.back();">Cancel</button>
+                                <button type="submit" class="btn btn-primary btn-lg">Update Ticket</button>
+                            </div>
+                            
+                        </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- Documentation Field -->
+        <div class="col-md-4">
+            <div class="card shadow" style="border-radius: 15px; background: #e0e0e0;">
+                <div class="card-body p-4">
+                <label class="form-label form-label-lg" for="documentation">Documentation</label>
+                {{ form.documentation }}
             </div>
         </div>
     </div>

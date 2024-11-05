@@ -1,4 +1,5 @@
 from django.db import models
+from django_ckeditor_5.fields import CKEditor5Field
 
 # Create your models here.
 
@@ -26,7 +27,7 @@ class Ticket(models.Model):
 
 	title = models.CharField(max_length=255)
 	description = models.TextField()
-	documentation = models.TextField(blank=True, null=True)
+	documentation = CKEditor5Field(blank=True, null=True, help_text="Documentation on how the ticket was solved")
 	user_id = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
 	priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='low')
 	assigned_department_id = models.ForeignKey('workspace.Department', on_delete=models.CASCADE)

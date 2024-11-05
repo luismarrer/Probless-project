@@ -2,6 +2,7 @@ from django.db.models import Case, When, Value, IntegerField
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from .models import Ticket
@@ -131,21 +132,33 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
 
     if ticket.user_id == request.user or request.user.role == 'admin':
         if request.method == 'POST':
+            form = TicketForm(request.POST, workspace=ticket.assigned_department_id.workspace, instance=ticket)
 
-            documentation = request.POST.get('documentation')
-            status = request.POST.get('status')
-            priority = request.POST.get('priority')
+            if form.is_valid():
 
-            ticket.documentation = documentation
-            ticket.status = status
-            ticket.priority = priority
-            ticket.save()
+                if form.cleaned_data['status'] == 'Closed' and not form.cleaned_data['documentation']:
+                    messages.error(request, "Documentation is obligatory")
 
 
-            return redirect('dashboard', workspace_id=workspace_id, department_id=department_id)
+                else:
+                    form.save()
+                    return redirect('dashboard', workspace_id=workspace_id, department_id=department_id)
+
+            # documentation = request.POST.get('documentation')
+            # status = request.POST.get('status')
+            # priority = request.POST.get('priority')
+
+
+            # ticket.documentation = documentation
+            # ticket.status = status
+            # ticket.priority = priority
+            # ticket.save()
+
+            else:
+                messages.error(request, "There was an error in the submission.")
         else:
-
-            return render(request, 'ticket_detail.html', {'ticket': ticket})
+            form = TicketForm(instance=ticket, workspace=ticket.assigned_department_id.workspace_id, show_documentation=True)
+            return render(request, 'ticket_detail.html', {'ticket': ticket, 'form':form})
     else:
         return render(request, 'ticket_detail.html', {
             'ticket': ticket,
