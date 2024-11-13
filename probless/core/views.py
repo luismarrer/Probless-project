@@ -41,9 +41,9 @@ class DashboardView(LoginRequiredMixin, View):
                 # Get the department workspace
             workspace = department.workspace_id
             tickets = Ticket.objects.filter(
-                user_id=request.user).exclude(status='Closed')
+                user_id=request.user).exclude(status='closed')
             tickets_department = Ticket.objects.filter(
-                assigned_department_id=department).exclude(status='Closed').annotate(
+                assigned_department_id=department).exclude(status='closed').annotate(
                 priority_order=Case(
                     When(priority="high", then=Value(1)),
                     When(priority="medium", then=Value(2)),
@@ -72,7 +72,7 @@ def create_ticket(request, workspace_id, department_id):
     workspace = Workspace.objects.get(id=workspace_id)
     department = Department.objects.get(id=department_id)
     if request.method == 'GET':
-        form = TicketForm(workspace=workspace, show_documentation=False)
+        form = TicketForm(workspace=workspace, show_documentation=False, show_status=False)
         return render(request, 'create_ticket.html',
                       {
                           'form': form,
@@ -132,33 +132,29 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
 
     if ticket.user_id == request.user or request.user.role == 'admin':
         if request.method == 'POST':
-            form = TicketForm(request.POST, workspace=ticket.assigned_department_id.workspace, instance=ticket)
+            form = TicketForm(request.POST, workspace=ticket.assigned_department_id.workspace_id, instance=ticket, show_documentation=True, show_status=True)
 
             if form.is_valid():
 
-                if form.cleaned_data['status'] == 'Closed' and not form.cleaned_data['documentation']:
-                    messages.error(request, "Documentation is obligatory")
+                documentation_value = form.cleaned_data.get('documentation', '')
 
+                cleaned_documentation = documentation_value.strip()  # Eliminate the spaces at the start and the end
+                if not cleaned_documentation or cleaned_documentation == "<p>&nbsp;</p>":
+                    documentation_value = ''
+
+                if form.cleaned_data['status'] == 'closed' and not documentation_value:
+                    messages.error(request, "Documentation is obligatory")
+                    return render(request, 'ticket_detail.html', {'ticket': ticket, 'form':form})
 
                 else:
                     form.save()
                     return redirect('dashboard', workspace_id=workspace_id, department_id=department_id)
 
-            # documentation = request.POST.get('documentation')
-            # status = request.POST.get('status')
-            # priority = request.POST.get('priority')
-
-
-            # ticket.documentation = documentation
-            # ticket.status = status
-            # ticket.priority = priority
-            # ticket.save()
-
             else:
                 messages.error(request, "There was an error in the submission.")
         else:
-            form = TicketForm(instance=ticket, workspace=ticket.assigned_department_id.workspace_id, show_documentation=True)
-            return render(request, 'ticket_detail.html', {'ticket': ticket, 'form':form})
+            form = TicketForm(instance=ticket, workspace=ticket.assigned_department_id.workspace_id, show_documentation=True, show_status=True)
+        return render(request, 'ticket_detail.html', {'ticket': ticket, 'form':form})
     else:
         return render(request, 'ticket_detail.html', {
             'ticket': ticket,
@@ -172,7 +168,7 @@ def tickets_history(request, workspace_id, department_id):
     department = Department.objects.get(
         id=department_id, workspace_id=workspace.id)
     closed_tickets = Ticket.objects.filter(
-        user_id=request.user, status='Closed', assigned_department_id=department)
+        user_id=request.user, status='closed', assigned_department_id=department)
 
     return render(request, 'tickets_history.html', {
         'closed_tickets': closed_tickets,
@@ -203,7 +199,7 @@ def manage_tickets(request, workspace_id, department_id):
     workspace = Workspace.objects.get(id=workspace_id)
     department = Department.objects.get(id=department_id)
     tickets_department = Ticket.objects.filter(
-        assigned_department_id=department).exclude(status='Closed').annotate(
+        assigned_department_id=department).exclude(status='closed').annotate(
             priority_order=Case(
                 When(priority="high", then=Value(1)),
                 When(priority="medium", then=Value(2)),
@@ -223,7 +219,7 @@ def my_tickets(request, workspace_id, department_id):
     workspace = Workspace.objects.get(id=workspace_id)
     department = Department.objects.get(id=department_id)
     tickets = Ticket.objects.filter(
-        user_id=request.user).exclude(status='Closed').annotate(
+        user_id=request.user).exclude(status='closed').annotate(
             priority_order=Case(
 				When(priority="high", then=Value(1)),
 				When(priority="medium", then=Value(2)),

@@ -152,6 +152,10 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
 
 # OpenAI config
 
@@ -193,11 +197,14 @@ customColorPalette = [
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
-            'heading', '|', 'bold', 'italic', 'link', 'bulletedList',
-            'numberedList', 'blockQuote', 'imageUpload', '|', 'undo', 'redo'
+            'heading', '|', 'bold', 'italic', 'bulletedList',
+            'numberedList', 'blockQuote', '|', 'undo', 'redo'
         ],
-        'height': 300,
-        'width': '100%',
+        'height': 400,
+        'language': 'en',
+        'mediaEmbed': {
+            'previewsInData': True
+        },
     },
     'extends': {
         'blockToolbar': [
@@ -256,3 +263,5 @@ CKEDITOR_5_CONFIGS = {
 
 # Define a constant in settings.py to specify file upload permissions
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"  # Possible values: "staff", "authenticated", "any"
+
+CKEDITOR_5_UPLOAD_PATH = "uploads/"

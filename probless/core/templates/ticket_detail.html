@@ -7,7 +7,7 @@
 {% block content %}
     <div class="mask d-flex align-items-center h-100 gradient-custom-3">
         <div class="container h-100 mt-3 pt-3">
-            <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100 gap-2">
                 <div class="col-md-6">
                     <div class="card shadow" style="border-radius: 15px;">
                         <div class="card-body p-5">
@@ -28,21 +28,21 @@
                             <!-- Title Field -->
                             <div class="mb-4">
                                 <label class="form-label form-label-lg">Title</label>
-                                <p class="form-control form-control-lg">{{ ticket.title }}</p>
+                                {{ form.title }}
                             </div>
-                            
+
                             <!-- Description Field -->
                             <div class="mb-4">
                                     <label class="form-label form-label-lg">Description</label>
-                                    <p class="form-control form-control-lg">{{ ticket.description }}</p>
+                                    {{ form.description }}
                                 </div>
-                                
+
                                 <!-- Assigned Department Field -->
                                 <div class="form-outline mb-4">
                                     <label class="form-label form-label-lg" for="assigned_department_id">Assigned Department</label>
-                                    <p class="form-control form-control-lg">{{ ticket.assigned_department_id.name }}</p>
+                                   {{ form.assigned_department_id }}
                                 </div>
-                                
+
                                 {% if request.user.role == 'admin' %}
                                 <!-- Priority and Status for Admins -->
                                 <div class="form-outline mb-4">
@@ -53,13 +53,13 @@
                                         <option value="high" {% if ticket.priority == 'high' %}selected{% endif %}>High</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-outline mb-4">
                                     <label class="form-label form-label-lg" for="status">Status</label>
                                     <select id="status" name="status" class="form-control form-control-lg">
-                                        <option value="open" {% if ticket.status == 'open' %}selected{% endif %}>Open</option>
-                                        <option value="in_progress" {% if ticket.status == 'in_progress' %}selected{% endif %}>In Progress</option>
-                                        <option value="closed" {% if ticket.status == 'closed' %}selected{% endif %}>Closed</option>
+                                        <option value="open" {% if form.status.value == 'open' %}selected{% endif %}>Open</option>
+                                        <option value="in_progress" {% if form.status.value == 'in_progress' %}selected{% endif %}>In Progress</option>
+                                        <option value="closed" {% if form.status.value == 'closed' %}selected{% endif %}>Closed</option>
                                 </select>
                             </div>
                             {% else %}
@@ -69,20 +69,21 @@
                                 <button type="button" class="btn" onclick="window.history.back();">Cancel</button>
                                 <button type="submit" class="btn btn-primary btn-lg">Update Ticket</button>
                             </div>
-                            
-                        </form>
+
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-md-4">
+                    <div class="card-doc">
+                        <div class="card-body p-4">
+                            <label class="form-label form-label-lg" for="documentation">Documentation</label>
+                            {{ form.media }}
+                            {{ form.documentation }}
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <!-- Documentation Field -->
-        <div class="col-md-4">
-            <div class="card shadow" style="border-radius: 15px; background: #e0e0e0;">
-                <div class="card-body p-4">
-                <label class="form-label form-label-lg" for="documentation">Documentation</label>
-                {{ form.documentation }}
-            </div>
-        </div>
     </div>
 {% endblock %}
