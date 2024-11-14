@@ -154,6 +154,14 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
                 messages.error(request, "There was an error in the submission.")
         else:
             form = TicketForm(instance=ticket, workspace=ticket.assigned_department_id.workspace_id, show_documentation=True, show_status=True)
+
+            if not request.user.is_owner:
+                for field in form.fields.values():
+                    field.widget.attrs['readonly'] = 'readonly'
+                    if request.user.role == 'user':
+                        field.widget.attrs['disabled'] = 'disabled'
+
+            print(form)
         return render(request, 'ticket_detail.html', {'ticket': ticket, 'form':form})
     else:
         return render(request, 'ticket_detail.html', {
