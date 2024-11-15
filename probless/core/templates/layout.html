@@ -35,7 +35,7 @@
 							<!-- Users Dropdown -->
 							<li class="nav-item dropdown">
 								<a class="nav-link" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									<button type="button" class="btn btn-sm text-white" style="background: #2a309c;">Manage Users</button>
+									<button type="button" class="btn btn-sm text-white i-btn">Manage Users</button>
 								</a>
 								<ul class="dropdown-menu" aria-labelledby="userDropdown">
 									<li><a class="dropdown-item" href="{% url 'create_user' %}">Create User</a></li>
@@ -46,7 +46,7 @@
 							<!-- Create Workspace Link -->
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'create_workspace' %}">
-									<button type="button" class="btn btn-sm text-white" style="background: #2a309c;">Create a new workspace</button>
+									<button type="button" class="btn btn-sm text-white i-btn">Create a new workspace</button>
 								</a>
 							</li>
 							
@@ -66,7 +66,7 @@
                         {% if workspace and department %}
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'tickets_history' workspace.id department.id %}">
-									<button type="button" class="btn btn-sm text-white" style="background: #2a309c;">Tickets History</button>
+									<button type="button" class="btn btn-sm text-white" style="background: #6D28D9;">Tickets History</button>
 								</a>
 							</li>
                         {% endif %}
@@ -79,7 +79,7 @@
 							</li>
 							<li class="nav-item">
 								<a class="btn nav-link" href="{% url 'logout' %}">
-									<button type="button" class="btn btn-sm text-white" style="background: #2a309c;">Log Out</button>
+									<button type="button" class="btn btn-sm text-black log-out-btn">Log Out</button>
 								</a>
 							</li>
 						{% else %}

@@ -4,7 +4,7 @@
 {% block title %}Create Ticket{% endblock %}
 
 {% block content %}
-	<div class="mask d-flex align-items-center h-100 gradient-custom-3 mt-5">
+	<div class="mask d-flex align-items-center h-100 gradient-custom-3 mt-3 mb-4">
 		<div class="container h-100 mt-3 pt-7">
 			<div class="row d-flex justify-content-center align-items-center h-100">
 				<div class="col-md-6">
@@ -45,7 +45,7 @@
 											<button type="button" class="btn" onclick="window.history.back();">Cancel</button>
 										</div>
 										<div class="col-md-5 col-sm-6">
-											<button type="submit" class="btn btn-primary">Create</button>
+											<button type="submit" class="btn text-white" style="background: #6D28D9">Create</button>
 										</div>
 									{% else %}
 										<div class="col-md-1 col-sm-3 text-end">
@@ -58,7 +58,7 @@
 									<!-- Button to get AI suggestion -->
 									{% if not ai_response %}
 										<div class="col-md-4 col-sm3">
-											<button type="submit" name="use_ai" class="btn btn-info btn-lg text-white" style="background: #4d9afd; white-space: nowrap;" >Get AI Solution</button>
+											<button type="submit" name="use_ai" class="btn btn-lg text-white" style="background: #CF8BF5; white-space: nowrap;" >Get AI Solution</button>
 										</div>
 									{% endif %}
 								</div>
