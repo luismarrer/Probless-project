@@ -58,7 +58,7 @@
                                 {% if request.user.is_owner%}
                                     <div class="d-flex justify-content-center">
                                         <a href="{% url 'change_password' user.id %}" class="btn" title="Change Password">Change Password</a>
-                                        <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-block custom-button-auth text-white"">Update</button>
+                                        <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-block custom-button-auth text-white" style="background:#6D28D9">Update</button>
                                     </div>
                                 {% endif %}
                             </form>
