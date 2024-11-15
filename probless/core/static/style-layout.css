@@ -33,3 +33,20 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.i-btn {
+    background: #6D28D9;
+}
+.i-btn:hover {
+    background: #CF8BF5;
+}
+
+.log-out-btn {
+    background: none;
+    border-color: #CF8BF5;
+}
+
+.log-out-btn:hover {
+    background: none;
+    border-color: #6D28D9;
+}

@@ -49,7 +49,7 @@ class CreateUserForm(UserCreationForm):
             'username': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
             'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg'}),
             'role': forms.Select(attrs={'class': 'form-control form-control-lg'}),  # Select para 'role'
-            'dept': forms.Select(attrs={'class': 'form-control form-control-lg'}),
+            'dept': forms.Select(attrs={'class': 'form-control form-control-lg', 'required':'required'}),  # Select para 'dept'
             'password1': forms.PasswordInput(attrs={'class': 'form-control form-control-lg'}),
             'password2': forms.PasswordInput(attrs={'class': 'form-control form-control-lg'}),
         }
