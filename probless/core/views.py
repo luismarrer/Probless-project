@@ -161,7 +161,6 @@ def ticket_detail(request, ticket_id, workspace_id, department_id):
                     if request.user.role == 'user':
                         field.widget.attrs['disabled'] = 'disabled'
 
-            print(form)
         return render(request, 'ticket_detail.html', {'ticket': ticket, 'form':form})
     else:
         return render(request, 'ticket_detail.html', {
