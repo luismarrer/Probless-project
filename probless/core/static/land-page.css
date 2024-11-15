@@ -4,7 +4,11 @@ html {
 }
 
 .sign-up-btn {
-    background-color: #6D28D9
+    background-color: #6D28D9;
+}
+
+.sign-up-btn:hover {
+    background-color: #CF8BF5;
 }
 
 .log-in-btn {
@@ -12,13 +16,27 @@ html {
     border-color: #CF8BF5;
 }
 
+.log-in-btn:hover {
+    background: none;
+    border-color: #6D28D9;
+}
+
 .app-btn {
     background: none;
     border-color: #CF8BF5;
 }
 
+.app-btn:hover {
+    background: none;
+    border-color: #6D28D9;
+}
+
 .start-btn {
-    background: #6D28D9
+    background: #6D28D9;
+}
+
+.start-btn:hover {
+    background-color: #CF8BF5;
 }
 
 .purple-prob {

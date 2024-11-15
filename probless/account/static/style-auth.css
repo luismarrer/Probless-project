@@ -11,6 +11,15 @@ body {
 .custom-button-auth {
 
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-background: #4d9afd !important;
+background: #6D28D9;
 color: white;
 }
+
+.custom-button-auth:hover {
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #CF8BF5;
+
+    }
+
+
