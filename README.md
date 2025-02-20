@@ -6,9 +6,9 @@ All of this is supported by a minimalist and user-friendly interface.
 
 ## Stack
 
-- Bootstrap
-- Django
-- OpenAI API
+- **Bootstrap**: Provides a responsive and modern UI.
+- **Django**: Web framework used for handling authentication, data management, and API logic.
+- **OpenAI API**: AI-powered functionalities to assist users in ticket creation and resolution.
 
 ## Development
 
@@ -50,7 +50,7 @@ python manage.py runserver
 ### Disclaimer
 
 >[!WARNING]
->The AI functionalities are comented
+>AI functionalities are currently commented out and not active by default. To use them, you must have an OpenAI API key and uncomment the code in the views.py file.
 
 ## Developers
 
@@ -63,7 +63,7 @@ python manage.py runserver
 Home page:
 ![home page](images/home_page.png)
 
-The web count with sign up and login form:
+The web includes a sign-up and login form:
 ![login form](images/login_form.png)
 
 You can manage your Workspaces:
@@ -81,7 +81,7 @@ Create and manage Tickets:
 ![create ticket form](images/create_ticket_form.png)
 ![dashboard with my ticket](images/dashboard_with_ticket.png)
 
-The web count with diferents views depends the user role.
+The web has different views depending on the user role.
 
 Admin view:
 ![admin view](images/admin_view.png)
