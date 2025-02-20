@@ -89,8 +89,9 @@ Admin view:
 Normal user view:
 ![normal user role](images/normal_user_view.png)
 
-
+Interaction with the AI:
+![AI interaction](images/ai_interaction.png)
 
 ## Landing Page
 
-
+[Probless Landing Page](/)
