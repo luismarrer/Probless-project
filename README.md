@@ -1,5 +1,11 @@
 # Probless Project
 
+Archived project.
+
+This was a Holberton School capstone/project-based learning application built in 2024 to practice full-stack development, databases, agile workflows, and AI API integration.
+
+I am no longer actively maintaining this project.
+
 Probless is a web application for managing tickets, inspired by Jira. It is designed primarily to reduce friction between users and maintenance teams. By leveraging Artificial Intelligence tools, the goal is to make ticket creation and resolution easier than ever before.
 
 All of this is supported by a minimalist and user-friendly interface.
